@@ -84,8 +84,7 @@ footer figure {
   .form-group {
     width: 100%;
   }
-  .main_title,
-  . {
+  .main_title {
     margin-top: 80px;
   }
 }
