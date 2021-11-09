@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.1.9/dist/css/splide.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
 
-  <title>Il Salone | <%- nombrePagina  %></title>
+  <title>Capza | <%- nombrePagina  %></title>
   <link rel=icon type="image/png" href="assetsInicio/img/icono.svg">
 
 </head>
@@ -33,38 +33,7 @@
   </div>
 </div>
 
-<div class=navbar-area>
-  <div class=luvion-responsive-nav>
-    <div class=container>
-      <div class=luvion-responsive-menu>
-        <div class=logo>
-          <a href=index.html> <img src="assetsInicio/img/icono.svg" alt=logo> <img src="assetsInicio/img/icono_white.svg" alt=logo> </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class=luvion-nav>
-    <div class=container>
-      <nav class="navbar navbar-expand-md navbar-light">
-        <a class=navbar-brand href="/"> <img src="assetsInicio/img/logo.svg" alt=logo> <img src="assetsInicio/img/logo.svg" alt=logo width="150px"> </a>
-        <div class="collapse navbar-collapse mean-menu" id=navbarSupportedContent>
-          <ul class=navbar-nav>
-            <li class=nav-item><a data-scroll href="#inicio" class=nav-link>Nosotros</a></li>
-            <li class=nav-item><a data-scroll href="#nosotros" class=nav-link>Servicios</a></li>
-            <li class=nav-item><a data-scroll href="#clientes" class=nav-link>Servicios</a></li>
-            
-            <li class="nav-item ingreso boton_principal"><a style="
-              height: 38px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-          " data-scroll href="/ingreso" class=nav-link>Iniciar sesión</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </div>
-</div>
+<%- include('layauts/head') %>
 
 <section class="banner-home" id="inicio">
   <div class="splide" id="splide">
