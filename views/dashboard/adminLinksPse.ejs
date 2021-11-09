@@ -1,0 +1,442 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-primary-transparent rounded-circle text-primary">
+                    <i class="fas fa-link"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Links PSE<br>Pendientes</p>
+                  <h3 class="mb-0"><%= countLinks %></h3>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- End Row -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-12">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Links PSE solicitados</h6>
+                    <p class="text-muted card-sub-title">A continuación encontrara un reporte detallado de todas los links PSE solicitados para cargar saldo en nuestra plataforma.</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap w-100 key-buttons" id="exportexample_date">
+                      <thead>
+                        <tr>
+                          <th>Usuario</th>
+                          <th>Fecha</th>
+                          <th>Link PSE</th>
+                          <th>Valor</th>
+                          <th>Estado</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(linksPse.length) { %>
+                        <% linksPse.forEach(listaLinks => { %>
+                        <% if(!(listaLinks.usuarioIdUsuario === null)) { %>
+                        <tr>
+                          <td class="text-left text-capitalize">
+                            <%= listaLinks.usuario.nombre;%>
+                          </td>
+                          <td class="text-center">
+                            <%= moment(listaLinks.fecha).format('DD:MM:YYYY HH:MM:SS')%>
+                          </td>
+                          <td class="text-center text-lowercase">
+                            <%- listaLinks.link === null ? '-' : '<a href="'+listaLinks.link+'" target="_blank">'+listaLinks.link+'</a>' %>
+                          </td>
+                          <td class="text-left text-capitalize">
+                            <% if(usuario.pais === 'Colombia') { %>
+                            <% var saldoFormateado = new Intl.NumberFormat("es-CO", {style: "currency", currency: "COP", maximumSignificantDigits: 7}).format(listaLinks.valor); %>
+                            <% } else { %>
+                            <% var saldoFormateado = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(listaLinks.valor); %>
+                            <% } %>
+                            <%- saldoFormateado %>
+                          </td>
+                          <td class="text-capitalize text-center">
+                            <span class="text-muted"><i class="far <%= listaLinks.estado === 1 ? 'fa-check-circle text-success' : listaLinks.estado === 2 ? 'fa-times-circle text-danger' : 'fa-circle text-warning' %> mr-1"></i><%= listaLinks.estado === 1 ? 'Aprobada' : listaLinks.estado === 2 ? 'Rechazada' : 'En revisión' %></span>
+                          </td>
+                          <td class="text-capitalize">
+                            <div class="btn btn-list">
+                              <a class="btn ripple btn-primary modal-effect" title="Gestionar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalLink" onclick="modalLink(event, '<%= listaLinks.idLink %>')"><i class="fe fe-link"></i></a>
+                              <a class="btn ripple btn-warning modal-effect" title="Editar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEditar" onclick="modalEditar(event, '<%= listaLinks.idLink %>', '<%= listaLinks.link %>')"><i class="far fa-edit"></i></a>
+                              <a class="btn ripple btn-danger modal-effect" title="Eliminar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEliminar" onclick="modalEliminar(event, '<%= listaLinks.idLink %>')"><i class="far fa-trash-alt"></i></a>
+                            </div>
+                          </td>
+                        </tr>
+                        <% } %>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Crear -->
+  <div class="modal" id="modalLink">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Asignar link de pago PSE</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form action="POST" enctype="multipart/form-data">
+            <p class="mt-2 mb-3 p-0">Ingresa la url o link para que el usuario pueda realizar el pago por PSE.</p>
+            <div class="form-group p-2">
+              <div class="row row-sm">
+                <label class="form-label">Ingrese el link</label>
+                <input type="url" class="form-control" placeholder="https://ejemplopse.com" value="" id="link" name="link">
+                <input type="hidden" name="" id="idUsuario" value="">
+              </div>
+            </div>
+          </form>
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaAsignar">
+            Hola
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="asignar(event)">Asignar Link</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar -->
+  <div class="modal" id="modalEditar">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Editar link de pago PSE</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form action="POST" enctype="multipart/form-data">
+            <p class="mt-2 mb-3 p-0">Edite la url o link para que el usuario pueda realizar el pago por PSE.</p>
+            <div class="form-group p-2">
+              <div class="row row-sm">
+                <label class="form-label">Editar link</label>
+                <input type="url" class="form-control" placeholder="https://ejemplopse.com" value="" id="linkEditar" name="linkEditar">
+                <input type="hidden" name="" id="idUsuarioEditar" value="">
+              </div>
+            </div>
+          </form>
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaAsignar">
+            Hola
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="editarLink(event)">Editar Link</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Eliminar -->
+
+  <div class="modal" id="modalEliminar">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content tx-size-sm">
+        <div class="modal-body tx-center pd-y-20 pd-x-20">
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+          <i class="icon icon ion-ios-close-circle-outline tx-100 tx-danger lh-1 mg-t-20 d-inline-block"></i>
+          <h4 class="tx-danger mg-b-20">¡Hola!</h4>
+          <p class="mg-b-2 mg-x-20 mb-4">¿Esta seguro de eliminar link PSE?</p>
+          <input type="hidden" value="" id="idUsuarioEliminar">
+          <button aria-label="Close" class="btn ripple btn-danger pd-x-25" data-dismiss="modal" type="button" onclick="eliminarLink(event)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+
+  <script>
+    function modalLink(e, i) {
+
+      const idUsuario = document.getElementById('idUsuario');
+      idUsuario.value = i;
+
+    }
+
+    function asignar(e) {
+
+      const link = document.getElementById('link').value;
+      const id = document.getElementById('idUsuario').value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminLinksPse/asignarLink', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            link: link,
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            $('#alertaAsignar').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaAsignar').html(error);
+            $('#alertaAsignar').delay(2000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Links PSE',
+            type: 'error'
+          });
+        })
+
+    }
+
+    function modalEditar(e, i, l) {
+
+      const idUsuario = document.getElementById('idUsuarioEditar');
+      idUsuario.value = i;
+      const linkEditar = document.getElementById('linkEditar');
+      linkEditar.value = l;
+
+    }
+
+    function editarLink(e) {
+
+      const link = document.getElementById('linkEditar').value;
+      const id = document.getElementById('idUsuarioEditar').value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminLinksPse/editarLink', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            link: link,
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            $('#alertaEditar').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaEditar').html(error);
+            $('#alertaEditar').delay(2000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Links PSE',
+            type: 'error'
+          });
+        })
+
+    }
+
+    function modalEliminar(e, i) {
+
+      const idUsuario = document.getElementById('idUsuarioEliminar');
+      idUsuario.value = i;
+
+    }
+
+    function eliminarLink(e) {
+
+      const id = document.getElementById("idUsuarioEliminar").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminLinksPse/eliminarLink', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Links PSE',
+            type: 'error'
+          });
+        })
+
+    }
+  </script>

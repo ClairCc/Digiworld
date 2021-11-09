@@ -1,0 +1,456 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+            <div class="d-flex">
+              <div class="justify-content-center">
+                <a class="btn btn-primary my-2 btn-icon-text" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalSubir">
+                  <i class="fe fe-upload mr-2"></i> Subir preguntas
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-primary-transparent rounded-circle text-primary">
+                    <i class="far fa-question-circle"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Total<br>Preguntas</p>
+                  <h3 class="mb-0"><%= preguntas.length %></h3>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- End Row -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-12">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Total Preguntas</h6>
+                    <p class="text-muted card-sub-title">A continuación encontrara un reporte detallado de todas las preguntas frecuentes creadas en esta red.</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap w-100 key-buttons" id="exportexample">
+                      <thead>
+                        <tr>
+                          <th>Pregunta</th>
+                          <th>Video</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(preguntas.length) { %>
+                        <% preguntas.forEach(listaPreguntas => { %>
+                        <tr>
+                          <td><%= listaPreguntas.pregunta%></td>
+                          <td>
+                            <a data-toggle="modal" href="#modalVideo" onclick="modalVideo(event, '<%= listaPreguntas.video %>', '<%= listaPreguntas.pregunta %>')">https://www.youtube.com/embed/<%= listaPreguntas.video%></a>
+                          </td>
+                          <td class="text-capitalize">
+                            <div class="btn btn-list">
+                              <a class="btn ripple btn-warning modal-effect" title="Editar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEditar" onclick="modalEditar(event, '<%= listaPreguntas.idPregunta %>', '<%= listaPreguntas.pregunta %>', '<%= listaPreguntas.video %>')"><i class="far fa-edit"></i></a>
+                              <a class="btn ripple btn-danger modal-effect" title="Eliminar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEliminar" onclick="modalEliminar(event, '<%= listaPreguntas.idPregunta %>')"><i class="far fa-trash-alt"></i></a>
+                            </div>
+                          </td>
+                        </tr>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Subir -->
+  <div class="modal" id="modalSubir">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Subir Pregunta</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Pregunta</label>
+              <input type="text" class="form-control" placeholder="Titulo Pregunta" value="" id="preguntaSubir">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Video pregunta<br><span>(Ingrese el codigo del link de youtube)</span></label>
+              <input type="text" class="form-control" placeholder="https://www.youtube.com/embed/ejemplo" value="" id="videoSubir">
+            </div>
+          </div>
+
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaSubir">
+            Hola
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="subirPregunta(event)">Subir Pregunta</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar -->
+  <div class="modal" id="modalEditar">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Editar Cuenta</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group ">
+            <input type="hidden" name="" id="idPregunta" value="">
+            <div class="row row-sm">
+              <label class="form-label">Pregunta</label>
+              <input type="text" class="form-control" placeholder="Titulo Pregunta" value="" id="preguntaEditar">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Video pregunta<br><span>(Ingrese el codigo del link de youtube)</span></label>
+              <input type="text" class="form-control" placeholder="https://www.youtube.com/embed/ejemplo" value="" id="videoEditar">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="editarPregunta(event)">Editar Pregunta</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Eliminar -->
+
+  <div class="modal" id="modalEliminar">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content tx-size-sm">
+        <div class="modal-body tx-center pd-y-20 pd-x-20">
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+          <i class="icon icon ion-ios-close-circle-outline tx-100 tx-danger lh-1 mg-t-20 d-inline-block"></i>
+          <h4 class="tx-danger mg-b-20">¡Hola!</h4>
+          <p class="mg-b-2 mg-x-20 mb-3">¿Esta seguro de eliminar esta pregunta?.</p>
+          <input type="hidden" value="" id="idEliminar">
+          <button aria-label="Close" class="btn ripple btn-danger pd-x-25" data-dismiss="modal" type="button" onclick="eliminarPregunta(event)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal video -->
+  <div class="modal" id="modalVideo">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Video pregunta - <span id="titulo"></span></h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <iframe width="100%" height="315" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen id="iframeVideo"></iframe>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+
+  <script>
+    function modalVideo(e, video, pregunta) {
+
+      const iframeVideo = document.getElementById('iframeVideo');
+      iframeVideo.src = 'https://www.youtube.com/embed/' + video;
+      const titulo = document.getElementById('titulo');
+      titulo.innerHTML = pregunta;
+
+    }
+
+    function modalEditar(e, id, pregunta, video) {
+
+      const idPregunta = document.getElementById("idPregunta");
+      idPregunta.value = id;
+
+      const preguntaEditar = document.getElementById("preguntaEditar");
+      preguntaEditar.value = pregunta;
+
+      const videoEditar = document.getElementById("videoEditar");
+      videoEditar.value = video;
+
+    }
+
+    function editarPregunta(e) {
+
+      const idPregunta = document.getElementById("idPregunta").value;
+      const preguntaEditar = document.getElementById("preguntaEditar").value;
+      const videoEditar = document.getElementById("videoEditar").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminFaq/editarPregunta', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: idPregunta,
+            pregunta: preguntaEditar,
+            video: videoEditar,
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Faq',
+            type: 'error'
+          });
+        })
+    }
+
+    function modalEliminar(e, id, user) {
+
+      const idEliminar = document.getElementById("idEliminar");
+      idEliminar.value = id;
+
+    }
+
+    function eliminarPregunta(e) {
+
+      const id = document.getElementById("idEliminar").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminFaq/eliminarPregunta', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Faq',
+            type: 'error'
+          });
+        })
+
+    }
+
+    function subirPregunta(e) {
+
+      const preguntaSubir = document.getElementById("preguntaSubir").value;
+      const videoSubir = document.getElementById("videoSubir").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminFaq/subirPregunta', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            pregunta: preguntaSubir,
+            video: videoSubir
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            $('#alertaSubir').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaSubir').html(error);
+            $('#alertaSubir').delay(15000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Faq',
+            type: 'error'
+          });
+        })
+    }
+  </script>

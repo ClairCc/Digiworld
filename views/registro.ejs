@@ -1,0 +1,295 @@
+<%- include('layauts/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layauts/loader') %>
+
+  <%- include('layauts/head') %>
+
+  <!-- Page -->
+  <div class="page main-signin-wrapper">
+
+    <!-- Row -->
+    <div class="row signpages sombra-card text-center">
+      <div class="col-md-12 px-0">
+        <div class="card">
+          <div class="row row-sm">
+            <div class="col-lg-6 col-xl-5 d-none d-lg-block text-center bg-registro">
+              <h1 class="img-persona-ingreso text-login-primary p-4 text-left font-weight-light color-white position-absolute" style="bottom: 0;">¡Bienvenidos a<br><span class="font-weight-bold">Il Salone</span>!</h1>
+            </div>
+            <div class="col-lg-6 col-xl-7 col-xs-12 col-sm-12 login_form ">
+              <div class="container-fluid">
+                <div class="row row-sm">
+                  <div class="card-body mt-2 mb-2">
+                    <img src="/assetsInicio/img/logo.svg" class="text-center d-lg-none header-brand-img mb-5 mt-4" alt="logo">
+                    <div class="clearfix"></div>
+                    <h5 class="text-left mb-4">REGISTRATE AHORA!</h5>
+
+                      <div class="form-group text-left">
+                        <label>Nombres Completos (Persona de contácto)</label>
+                        <input class="form-control" name="nombre" id="nombre" placeholder="Ingrese su nombre" type="text" required>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group text-left">
+                            <label>Razón Social</label>
+                            <input class="form-control" name="razonSocial" id="razonSocial" placeholder="Ingrese el nombre de su comercio" type="text" required>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group text-left">
+                            <label>Nit</label>
+                            <input class="form-control" name="nit" id="nit" placeholder="Ingrese el documento de identificación de su empresa" type="number" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group text-left">
+                            <label>Email</label>
+                            <input class="form-control" name="email" id="email" placeholder="Ingrese su correo electrónico" type="email" required>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group text-left position-relative">
+                            <label>Contraseña</label>
+                            <i class="fe fe-eye position-absolute ver-input" onclick="verInput()" id="iconoOjo"></i>
+                            <input class="form-control" name="password" id="password" placeholder="Ingresa tu contraseña" type="password" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="alertaPassword" class="mt-2"></div>
+                      <div class="row row-sm">
+                        <div class="col-lg-6 col-md-6">
+                          <div class="form-group text-left">
+                            <label>Dirección</label>
+                            <input class="form-control" name="direccion" id="direccion" placeholder="Ingrese su dirección" type="text" required>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                          <div class="form-group text-left">
+                            <label>Teléfono</label>
+                            <div class="input-group telephone-input w-100">
+                              <input type="tel" id="mobile-number" name="telefono" placeholder="e.g. +1 702 123 4567" required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-1">
+                        <div class="col-md-4">
+                          <div class="form-group text-left">
+                            <label class="text-left">Camara de comercio <span class="text-secondary">(*)</span></label>
+                            <div class="container-input">
+                              <input type="file" accept="application/pdf" name="camaraComercio" id="camaraComercio" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" required />
+                              <label for="camaraComercio">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                              <span id="camaraComercio_name" class="iborrainputfile">Seleccionar archivo adjunto</span>
+                              </label>
+                            </div>
+                            <p class="text-left text-gray">Formato PDF, Tamaño máximo: 3 Mb.</p>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group text-left">
+                            <label class="text-left">RUT <span class="text-secondary">(*)</span></label>
+                            <div class="container-input">
+                              <input type="file" accept="application/pdf" name="rut" id="rut" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" required />
+                              <label for="rut">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                              <span id="rut_name" class="iborrainputfile">Seleccionar archivo adjunto</span>
+                              </label>
+                            </div>
+                            <p class="text-left text-gray">Formato PDF, Tamaño máximo: 3 Mb.</p>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group text-left">
+                            <label class="text-left">Documento Identidad <span class="text-secondary">(*)</span></label>
+                            <div class="container-input">
+                              <input type="file" accept="application/pdf" name="documentoIdentidad" id="documentoIdentidad" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" required />
+                              <label for="documentoIdentidad">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                              <span id="documentoIdentidad_name" class="iborrainputfile">Seleccionar archivo adjunto</span>
+                              </label>
+                            </div>
+                            <p class="text-left text-gray">Formato PDF, Tamaño máximo: 3 Mb.</p>
+                          </div>
+                        </div>
+                        
+                      </div>
+
+                      <button type="button" class="btn ripple btn-main-primary btn-block mt-4" id="btnEnviar" onclick="crearCuenta();">
+                        Crear una cuenta
+                      </button>
+                    <div class="text-left mt-5 ml-0">
+                      <p class="mb-0">¿Ya tienes una cuenta? <a href="/ingreso">Iniciar sesión</a></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Row -->
+
+  </div>
+  <!-- End Page -->
+
+  <%- include('layauts/foot') %>
+
+  <%- include('layauts/footer') %>
+
+  <script>
+    $("#password").keyup(function() {
+      const input = document.getElementById('password');
+      const passwordSeguro = /^(?=(?:.*\d))(?=.*[A-Z])(?=.*[a-z])(?=.*[.,*!?¿¡/#$%&])\S{10,20}$/;
+      const alerta = document.getElementById('alertaPassword');
+
+      if (passwordSeguro.test(input.value)) {
+        alerta.innerHTML =
+          `<div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Que bien!</strong> Contraseña valida.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>`;
+        document.getElementById('btnEnviar').disabled = false;
+      } else {
+        alerta.innerHTML =
+          `<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Lo sentimos!</strong> Contraseña no valida, debe tener los siguientes parametros:
+                        <ul class="mt-2 mb-0">
+                            <li>Al menos un número 0-9</li>
+                            <li>Al menos una mayúscula</li>
+                            <li>Al menos una minúscula</li>
+                            <li>Al menos un carácter especial (.,*!?¿¡/#$%&)</li>
+                            <li>Longitud mínima de 10 caracteres, 20 máxima</li>
+                            <li>No acepta espacios</li>
+                        </ul>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>`;
+        document.getElementById('btnEnviar').disabled = true;
+      }
+    });
+
+    function verInput() {
+      const password = document.getElementById("password");
+      const tipo = password.type;
+
+      if (tipo == 'text') {
+        $('#iconoOjo').removeClass('fe-eye-off');
+        $('#iconoOjo').addClass('fe-eye');
+        password.type = 'password';
+      } else {
+        $('#iconoOjo').removeClass('fe-eye');
+        $('#iconoOjo').addClass('fe-eye-off');
+        password.type = 'text';
+      }
+    }
+
+    $(document).ready(function(){
+
+      document.getElementById('camaraComercio').onchange = function () {
+          document.getElementById('camaraComercio_name').innerHTML = document.getElementById('camaraComercio').files[0].name;
+          
+          if(!(document.getElementById('camaraComercio').files[0].type == 'application/pdf')) {
+              alertValidacion('warning', '¡Atención!', 'En camara de comercio solo admite archivos con extencion (PDF)');
+              return;
+          }
+      }
+
+      document.getElementById('rut').onchange = function () {
+          document.getElementById('rut_name').innerHTML = document.getElementById('rut').files[0].name;
+          
+          if(!(document.getElementById('rut').files[0].type == 'application/pdf')) {
+              alertValidacion('warning', '¡Atención!', 'El RUT solo admite archivos con extencion (PDF)');
+              return;
+          }
+      }
+
+      document.getElementById('documentoIdentidad').onchange = function () {
+          document.getElementById('documentoIdentidad_name').innerHTML = document.getElementById('documentoIdentidad').files[0].name;
+          
+          if(!(document.getElementById('documentoIdentidad').files[0].type == 'application/pdf')) {
+              alertValidacion('warning', '¡Atención!', 'El documento de identidad solo admite archivos con extencion (PDF)');
+              return;
+          }
+      }
+
+    });
+
+    crearCuenta = () => {
+
+      const nombre = document.getElementById('nombre').value;
+      const razonSocial = document.getElementById('razonSocial').value;
+      const nit = document.getElementById('nit').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const direccion = document.getElementById('direccion').value;
+      const telefono = document.getElementById('mobile-number').value;
+      const camaraComercio = document.getElementById('camaraComercio');
+      const rut = document.getElementById('rut');
+      const documentoIdentidad = document.getElementById('documentoIdentidad');
+
+      const formData = new FormData();
+      formData.append('nombre', nombre);
+      formData.append('razonSocial', razonSocial);
+      formData.append('nit', nit);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('direccion', direccion);
+      formData.append('telefono', telefono);
+      formData.append('camaraComercio', camaraComercio.files[0]);
+      formData.append('rut', rut.files[0]);
+      formData.append('documentoIdentidad', documentoIdentidad.files[0]);
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+
+      axios({
+          method: 'POST',
+          headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+          },
+          url: '/registra-user',
+          data: formData
+      }).then(function (res) {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = res.data;
+          if(respuesta.resp === 'success') {
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#57a94f',
+              closeOnClickOutside: false
+            },
+            function(isConfirm) {
+              if (isConfirm) {
+                location.href = "/ingreso";
+              }
+            });
+          } else {
+            alertValidacion(respuesta.resp, respuesta.titulo, respuesta.descripcion);
+          }
+      }).catch(function (err) {
+          console.log(err);
+      });
+
+    };
+
+    alertValidacion = (tipo, titulo, mensaje) => {
+        swal({
+            title: titulo,
+            text: mensaje,
+            type: tipo,
+            confirmButtonColor: '#57a94f',
+            closeOnClickOutside: false
+        });
+    }
+
+  </script>

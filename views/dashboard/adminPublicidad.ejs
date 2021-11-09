@@ -1,0 +1,367 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+            <div class="d-flex">
+              <div class="justify-content-center">
+                <a class="btn btn-primary my-2 btn-icon-text" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalSubir">
+                  <i class="fe fe-upload mr-2"></i> Subir pauta
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+                <% if(publicidad.length) { %>
+                <% var i = Number(-1); %>
+                <% publicidad.forEach(listaPublicidad => { %>
+                <% if(listaPublicidad.tipo === '1') { %>
+                <% i++ %>
+                <li data-target="#carouselExampleIndicators" data-slide-to="<%- i %>" class="dots-carousel"></li>
+                <% } %>
+                <% }) %>
+                <% } %>
+              </ol>
+              <div class="carousel-inner">
+                <% if(publicidad.length) { %>
+                <% publicidad.forEach(listaPublicidad => { %>
+                <% if(listaPublicidad.tipo === '1') { %>
+                <div class="carousel-item">
+                  <button class="btn btn-danger position-absolute" style="top: 1rem; right: 1rem; z-index: 2;" title="Eliminar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEliminar" onclick="modalEliminar(event, '<%= listaPublicidad.idPublicidad %>')"><i class="far fa-trash-alt"></i></button>
+                  <img src="<%= listaPublicidad.imagen%>" class="d-block w-100" alt="..." style="border-radius: 15px;">
+                </div>
+                <% } %>
+                <% }) %>
+                <% } %>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+
+          <h2 class="main-content-title tx-24 mg-b-5 mt-5">Publicidad para descargar</h2>
+          <p class="text-muted mb-4">Los usuarios en su red podran descargar esta publicidad, para realizar pautas en redes sociales.</p>
+
+          <!-- Row -->
+          <div class="row row-sm mb-5">
+            <div class="owl-carousel owl-theme">
+              <% if(publicidad.length) { %>
+              <% publicidad.forEach(listaPublicidad => { %>
+              <% if(listaPublicidad.tipo === '2') { %>
+              <div class="item">
+                <button class="btn btn-danger position-absolute" style="top: 1rem; right: 1rem; z-index: 999;" title="Eliminar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEliminar" onclick="modalEliminar(event, '<%= listaPublicidad.idPublicidad %>')"><i class="far fa-trash-alt"></i></button>
+                <img src="<%= listaPublicidad.imagen%>" class="d-block w-100" alt="..." style="border-radius: 15px;">
+              </div>
+              <% } %>
+              <% }) %>
+              <% } %>
+            </div>
+          </div>
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Subir -->
+  <div class="modal" id="modalSubir">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Subir Pauta publicitaria</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="row row-sm mb-3">
+            <label class="form-label">Seleccionar tipo pauta</label>
+            <select class="form-control select2" name="tipo" id="tipo">
+              <option value="">
+                Seleccione una opción
+              </option>
+              <option value="1">
+                Slider
+              </option>
+              <option value="2">
+                Imagen publicitaria
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Imagen</label>
+              <div class="input-group file-browser px-0">
+                <input type="text" class="form-control border-right-0 browse-file" placeholder="Subir Imagen" readonly>
+                <label class="input-group-btn">
+                  <span class="btn btn-primary">
+                    Seleccionar <input type="file" name="files" id="files" style="display: none;">
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaSubir">
+            Hola
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="subirPauta(event)">Subir Pauta</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Eliminar -->
+
+  <div class="modal" id="modalEliminar">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content tx-size-sm">
+        <div class="modal-body tx-center pd-y-20 pd-x-20">
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+          <i class="icon icon ion-ios-close-circle-outline tx-100 tx-danger lh-1 mg-t-20 d-inline-block"></i>
+          <h4 class="tx-danger mg-b-20">¡Hola!</h4>
+          <p class="mg-b-2 mg-x-20">¿Esta seguro de eliminar esta pauta?.</p>
+          <p class="mg-b-30 mg-x-20 text-center text-capitalize" id="nombrePlataformaEliminar"></p>
+          <input type="hidden" value="" id="idEliminar">
+          <button aria-label="Close" class="btn ripple btn-danger pd-x-25" data-dismiss="modal" type="button" onclick="eliminarPauta(event)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+  <script>
+    $('.owl-carousel').owlCarousel({
+      loop: true,
+      margin: 10,
+      center: true,
+      autoplay: true,
+      // dots: false,
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 3
+        },
+        1000: {
+          items: 3
+        }
+      }
+    })
+
+    $('.carousel-item').each(function(i, obj) {
+      if (i == 0) {
+        $(this).addClass('active');
+      }
+    });
+
+    $('.dots-carousel').each(function(i, obj) {
+      if (i == 0) {
+        $(this).addClass('active');
+      }
+    });
+
+    function subirPauta(e) {
+
+      const tipo = document.getElementById("tipo").value;
+      const files = document.getElementById('files');
+
+      const data = new FormData();
+      data.append('files', files.files[0]);
+      data.append('tipo', tipo);
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminPublicidad/subirPauta', {
+          method: 'POST',
+          body: data
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            $('#alertaSubir').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaSubir').html(error);
+            $('#alertaSubir').delay(2000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Publicidad',
+            type: 'error'
+          });
+        })
+    }
+
+    function modalEliminar(e, id, nombre) {
+
+      const idEliminar = document.getElementById("idEliminar");
+      idEliminar.value = id;
+
+    }
+
+    function eliminarPauta(e) {
+
+      const id = document.getElementById("idEliminar").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminPublicidad/eliminarPauta', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Publicidad',
+            type: 'error'
+          });
+        })
+
+    }
+  </script>

@@ -1,0 +1,601 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-warning-transparent rounded-circle text-warning">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Cuentas Personalizadas<br>Pendientes</p>
+                  <h3 class="mb-0"><%= cuentasPersonalizadas %></h3>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- End Row -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-12">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Total cuentas personalizadas</h6>
+                    <p class="text-muted card-sub-title">A continuación encontrara un reporte detallado de todas las cuentas personalizadas solicitadas en la red de este superdistribuidor.</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap w-100 key-buttons" id="tablageneralsinfiltro">
+                      <thead>
+                        <tr>
+                          <th>Distribuidor</th>
+                          <th>Vendedor</th>
+                          <th>Perfil vendedor</th>
+                          <th>Logo</th>
+                          <th>Plataforma</th>
+                          <th>Tipo plataforma</th>
+                          <th>Estado</th>
+                          <th>Usuario</th>
+                          <th>Password</th>
+                          <th>Pantalla</th>
+                          <th>Pin</th>
+                          <th>Fecha Compra</th>
+                          <th>Fecha Solcitud</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% moment.locale('es'); %>
+                        <% if(cuentas.length) { %>
+                        <% cuentas.forEach(listaCuentas => { %>
+                        <% if(!(listaCuentas.usuario == null || listaCuentas.plataforma == null)) {%>
+                        <% const distribuidor = usuarios.filter(function(element){ %>
+                        <% return element.id_usuario == listaCuentas.idDistribuidor; %>
+                        <% }); %>
+                        <% const nombre = distribuidor[0].nombre; %>
+                        <tr>
+                          <td class="text-left text-capitalize"><%= nombre %></td>
+                          <td class="text-left text-capitalize"><%= listaCuentas.usuario.nombre %></td>
+                          <td class="text-left text-capitalize text-primary font-weight-bold"><%= listaCuentas.usuario.perfil %></td>
+                          <td class="text-center">
+                            <img src="<%= listaCuentas.plataforma.logo === null ? '/assetsDashboard/img/users/default.jpg' : listaCuentas.plataforma.logo %>" alt="" class="img-circle">
+                          </td>
+                          <td class="text-capitalize"><%= listaCuentas.plataforma.plataforma %></td>
+                          <td class="text-capitalize text-center">
+                            <span class="badge <%= listaCuentas.plataforma.tipo_plataforma === 1 ? 'badge-primary' : listaCuentas.plataforma.tipo_plataforma === 2 ? 'badge-secondary' : listaCuentas.plataforma.tipo_plataforma === 3 ? 'badge-danger' : listaCuentas.plataforma.tipo_plataforma === 4 ? 'badge-info' : listaCuentas.plataforma.tipo_plataforma === 5 ? 'badge-warning' : 'badge-light' %>">
+                              <%= listaCuentas.plataforma.tipo_plataforma === 1 ? 'Normal' : listaCuentas.plataforma.tipo_plataforma === 2 ? 'Bajo Pedido' : listaCuentas.plataforma.tipo_plataforma === 3 ? 'Personalizada' : listaCuentas.plataforma.tipo_plataforma === 4 ? 'Renovaciones' : listaCuentas.plataforma.tipo_plataforma === 5 ? 'Juegos' : 'N/A' %>
+                            </span>
+                          </td>
+                          <td class="text-capitalize text-center">
+                            <span class="text-muted"><i class="far <%= listaCuentas.estado === 1 ? 'fa-check-circle text-success' : 'fa-minus-square text-warning' %> mr-1"></i><%= listaCuentas.estado === 1 ? 'Gestionada' : 'Sin Gestionar' %></span>
+                          </td>
+                          <td class="text-left"><%= listaCuentas.user === null ? 'Sin dato ingresado' : listaCuentas.user %></td>
+                          <td class="text-left"><%= listaCuentas.password === null ? 'Sin dato ingresado' : listaCuentas.password %></td>
+                          <td class="text-left"><%= listaCuentas.pantalla === null ? 'Sin dato ingresado' : listaCuentas.pantalla %></td>
+                          <td class="text-left"><%= listaCuentas.pin === null ? 'Sin dato ingresado' : listaCuentas.pin %></td>
+                          <td class="text-center <%= listaCuentas.fechaCompra === null ? 'text-warning' : '' %>"><%= listaCuentas.fechaCompra === null ? 'Sin fecha de compra' : moment(listaCuentas.fechaCompra).format('MMMM Do YYYY, h:mm:ss a') %></td>
+                          <td class="text-center"><%= moment(listaCuentas.fechaSubida).format('MMMM Do YYYY, h:mm:ss a') %></td>
+                          <td class="text-capitalize">
+                            <div class="btn btn-list">
+                              <a class="btn ripple btn-primary modal-effect" title="Renovar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalPersonalizar" onclick="modalPersonalizar(event, '<%= listaCuentas.idCuenta %>')"><i class="fe fe-upload"></i></a>
+                              <a class="btn ripple btn-warning modal-effect" title="Editar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEditar" onclick="modalEditar(event, '<%= listaCuentas.idCuenta %>')"><i class="far fa-edit"></i></a>
+                              <a class="btn ripple btn-danger modal-effect" title="Eliminar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEliminar" onclick="modalEliminar(event, '<%= listaCuentas.idCuenta %>')"><i class="far fa-trash-alt"></i></a>
+                            </div>
+                          </td>
+                        </tr>
+                        <% } %>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Subir -->
+  <div class="modal" id="modalPersonalizar">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">Personalizar cuenta</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body background-primary">
+
+          <h3 class="text-center text-uppercase" id="nombrePlataforma"></h3>
+
+          <center>
+            <div class="picture img-descripcion border-img online text-center my-4">
+              <img alt="avatar" class="rounded-circle" id="logoSubir" src="">
+            </div>
+          </center>
+
+          <input type="hidden" id="idSubir" value="">
+
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Usuario</label>
+              <input type="text" class="form-control" placeholder="Usuario cuenta" value="" id="usuarioSubir">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Contraseña</label>
+              <input type="text" class="form-control" placeholder="Contraseña cuenta" value="" id="passwordSubir">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Pantalla</label>
+              <input type="text" class="form-control" placeholder="Pantalla cuenta" value="" id="pantallaSubir">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Pin</label>
+              <input type="text" class="form-control" placeholder="PIN cuenta" value="" id="pinSubir">
+            </div>
+          </div>
+
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaSubir">
+            Hola
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="subirCuenta(event)">Personalizar cuenta</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar -->
+  <div class="modal" id="modalEditar">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">Editar datos de la cuenta</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body background-warning">
+
+          <h3 class="text-center text-uppercase" id="nombrePlataformaEditar"></h3>
+
+          <input type="hidden" id="idEditar" value="">
+
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Usuario</label>
+              <input type="text" class="form-control" placeholder="Usuario cuenta" value="" id="usuarioEditar">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Contraseña</label>
+              <input type="text" class="form-control" placeholder="Contraseña cuenta" value="" id="passwordEditar">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Pantalla</label>
+              <input type="text" class="form-control" placeholder="Pantalla cuenta" value="" id="pantallaEditar">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Pin</label>
+              <input type="text" class="form-control" placeholder="PIN cuenta" value="" id="pinEditar">
+            </div>
+          </div>
+
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaEditar">
+            Hola
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="editarCuenta(event)">Editar cuenta personalizada</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Eliminar -->
+
+  <div class="modal" id="modalEliminar">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content tx-size-sm">
+        <div class="modal-body tx-center pd-y-20 pd-x-20">
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+          <i class="icon icon ion-ios-close-circle-outline tx-100 tx-danger lh-1 mg-t-20 d-inline-block"></i>
+          <h4 class="tx-danger mg-b-20">¡Hola!</h4>
+          <p class="mg-b-2 mg-x-20 mb-4">¿Esta seguro de eliminar esta cuenta personalizada?</p>
+          <input type="hidden" value="" id="idEliminar">
+          <button aria-label="Close" class="btn ripple btn-danger pd-x-25" data-dismiss="modal" type="button" onclick="eliminarCuenta(event)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+  <script>
+    function modalPersonalizar(e, id) {
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminCuentasPersonalizadas/infoCuenta', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+
+          const logoSubir = document.getElementById("logoSubir");
+          logoSubir.src = respuesta.cuentas.plataforma.logo;
+
+          const nombrePlataforma = document.getElementById("nombrePlataforma");
+          nombrePlataforma.innerHTML = respuesta.cuentas.plataforma.plataforma;
+
+          const idSubir = document.getElementById("idSubir");
+          idSubir.value = respuesta.cuentas.idCuenta;
+
+          const usuarioSubir = document.getElementById("usuarioSubir");
+          usuarioSubir.value = respuesta.cuentas.user;
+
+          const passwordSubir = document.getElementById("passwordSubir");
+          passwordSubir.value = respuesta.cuentas.password;
+
+          const pantallaSubir = document.getElementById("pantallaSubir");
+          pantallaSubir.value = respuesta.cuentas.pantalla;
+
+          const pinSubir = document.getElementById("pinSubir");
+          pinSubir.value = respuesta.cuentas.pin;
+
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Cuentas personalizadas',
+            type: 'error'
+          });
+        })
+
+    }
+
+    function subirCuenta(e) {
+
+      const idSubir = document.getElementById("idSubir").value.trim();
+      const usuarioSubir = document.getElementById("usuarioSubir").value.trim();
+      const passwordSubir = document.getElementById("passwordSubir").value.trim();
+      const pantallaSubir = document.getElementById("pantallaSubir").value.trim();
+      const pinSubir = document.getElementById("pinSubir").value.trim();
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminCuentasPersonalizadas/subirDatosPersonalizada', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: idSubir,
+            usuario: usuarioSubir,
+            password: passwordSubir,
+            pantalla: pantallaSubir,
+            pin: pinSubir
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            $('#alertaSubir').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaSubir').html(error);
+            $('#alertaSubir').delay(15000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Cuentas personalizadas',
+            type: 'error'
+          });
+        })
+
+    }
+
+    function modalEditar(e, id) {
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminCuentasPersonalizadas/infoCuenta', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+
+          const nombrePlataformaEditar = document.getElementById("nombrePlataformaEditar");
+          nombrePlataformaEditar.innerHTML = respuesta.cuentas.plataforma.plataforma;
+
+          const idEditar = document.getElementById("idEditar");
+          idEditar.value = respuesta.cuentas.idCuenta;
+
+          const usuarioEditar = document.getElementById("usuarioEditar");
+          usuarioEditar.value = respuesta.cuentas.user;
+
+          const passwordEditar = document.getElementById("passwordEditar");
+          passwordEditar.value = respuesta.cuentas.password;
+
+          const pantallaEditar = document.getElementById("pantallaEditar");
+          pantallaEditar.value = respuesta.cuentas.pantalla;
+
+          const pinEditar = document.getElementById("pinEditar");
+          pinEditar.value = respuesta.cuentas.pin;
+
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Cuentas personalizadas',
+            type: 'error'
+          });
+        })
+
+    }
+
+    function editarCuenta(e) {
+
+      const idEditar = document.getElementById("idEditar").value.trim();
+      const usuarioEditar = document.getElementById("usuarioEditar").value.trim();
+      const passwordEditar = document.getElementById("passwordEditar").value.trim();
+      const pantallaEditar = document.getElementById("pantallaEditar").value.trim();
+      const pinEditar = document.getElementById("pinEditar").value.trim();
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminCuentasPersonalizadas/editarDatosPersonalizada', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: idEditar,
+            usuario: usuarioEditar,
+            password: passwordEditar,
+            pantalla: pantallaEditar,
+            pin: pinEditar
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            $('#alertaEditar').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaEditar').html(error);
+            $('#alertaEditar').delay(15000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Cuentas personalizadas',
+            type: 'error'
+          });
+        })
+
+    }
+
+    function modalEliminar(e, id) {
+
+      const idEliminar = document.getElementById("idEliminar");
+      idEliminar.value = id;
+
+    }
+
+    function eliminarCuenta(e) {
+
+      const id = document.getElementById("idEliminar").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminCuentasPersonalizadas/eliminarCuentaPersonalizada', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Cuentas personalizadas',
+            type: 'error'
+          });
+        })
+
+    }
+  </script>

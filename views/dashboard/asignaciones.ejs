@@ -1,0 +1,370 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-12">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Asignar Plataformas</h6>
+                  </div>
+
+                  <div class="table-responsive box-asignar">
+                    <table class="table table-bordered text-nowrap w-100" id="tablaAsignar">
+                      <thead>
+                        <tr>
+                          <th><i class="fe fe-check-square"></i></th>
+                          <th>Logo</th>
+                          <th>Plataforma</th>
+                          <th>Valor</th>
+                          <!-- <th>Acciones</th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(asignaciones.length) { %>
+                        <% asignaciones.forEach(asignacion => { %>
+                        <tr>
+                          <td>
+                            <input type='checkbox' class='asignarCheckbox' id-asignacion='<%= asignacion.plataforma.id_plataforma %>' id="check_<%= asignacion.plataforma.id_plataforma %>">
+                          </td>
+                          <td class="text-center">
+                            <img src="<%= asignacion.plataforma.logo === null ? '/assetsDashboard/img/users/default.jpg' : asignacion.plataforma.logo %>" alt="" class="img-circle">
+                          </td>
+                          <td class="text-capitalize text-left"><%= asignacion.plataforma.plataforma %></td>
+                          <td>
+                            <input class="form-control input-md inputValor" type="text" name="valorPlataforma" id="valorPlataforma_<%= asignacion.plataforma.id_plataforma %>" data-id="<%= asignacion.plataforma.id_plataforma %>" value="<%= asignacion.valor %>" placeholder="0.00">
+                          </td>
+                        </tr>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                    <button type="button" class="btn ripple btn-secondary checkbox-toggle">
+                      <i class="far fa-square"></i> <span class="ml-1">Seleccionar todo</span>
+                    </button>
+                    <button class="btn ripple btn-primary btnAsignar" type="button" arrayAsignacion arrayValores onclick="realizarAsignacion(this)"><i class="fe fe-check-square"></i> Asignar Plataformas</button>
+                    <button class="btn ripple btn-danger btnEliminar" type="button" arrayAsignacion onclick="eliminarAsignacion(this)"><i class="fe fe-check-square"></i> Eliminar Asignación</button>
+                    <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+  <% asignaciones %>
+  <script>
+    // Cargar Saldo
+
+    $("#tablaAsignar").on("draw.dt", function() {
+      $(".box-asignar input[type='checkbox']").iCheck('disable');
+
+      $(".box-asignar input[type='checkbox']").iCheck({
+        checkboxClass: 'icheckbox_square-purple',
+        radioClass: 'iradio_square-purple',
+      });
+
+      /*=============================================
+      ENVIAR TICKETS DE FORMA MASIVA A LA PAPELERA
+      =============================================*/
+
+      var asignacionesCheckbox = $(".asignarCheckbox");
+
+      var idAsignaciones = [];
+      var valorAsignaciones = [];
+
+      for (var i = 0; i < asignacionesCheckbox.length; i++) {
+
+        /*=============================================
+        Checkear para enviar a la papelera
+        =============================================*/
+
+        $(asignacionesCheckbox[i]).on("ifChecked", function(event) {
+
+          var valorPlataforma = $("#valorPlataforma_" + $(this).attr("id-asignacion")).val();
+
+          idAsignaciones.push($(this).attr("id-asignacion"));
+          valorAsignaciones.push(valorPlataforma);
+
+          if ($(".btnAsignar").attr("arrayAsignacion") != "") {
+
+            ChecksAsignaciones = $(".btnAsignar").attr("arrayAsignacion").split(",");
+            ChecksAsignaciones.push($(this).attr("id-asignacion"));
+            $(".btnAsignar").attr("arrayAsignacion", ChecksAsignaciones.toString());
+
+          } else {
+
+            $(".btnAsignar").attr("arrayAsignacion", idAsignaciones.toString());
+
+          }
+
+          if ($(".btnAsignar").attr("arrayValores") != "") {
+
+            ChecksValores = $(".btnAsignar").attr("arrayValores").split(",");
+            ChecksValores.push(valorPlataforma);
+            $(".btnAsignar").attr("arrayValores", ChecksValores.toString());
+
+          } else {
+
+            $(".btnAsignar").attr("arrayValores", valorAsignaciones.toString());
+
+          }
+
+        })
+
+        /*=============================================
+        Quitar el Check para enviar a la papelera
+        =============================================*/
+
+        $(asignacionesCheckbox[i]).on("ifUnchecked", function(event) {
+
+          var quitarChecksAsignaciones = $(".btnAsignar").attr("arrayAsignacion").split(",");
+          var valorPlataforma = $("#valorPlataforma_" + $(this).attr("id-asignacion")).val();
+
+          for (var f = 0; f < quitarChecksAsignaciones.length; f++) {
+
+            if (quitarChecksAsignaciones[f] == $(this).attr("id-asignacion")) {
+
+              quitarChecksAsignaciones.splice(f, 1);
+
+              idAsignaciones.splice(f, 1);
+
+              $(".btnAsignar").attr("arrayAsignacion", quitarChecksAsignaciones.toString());
+
+            }
+
+          }
+
+          var quitarChecksValores = $(".btnAsignar").attr("arrayValores").split(",");
+
+          for (var k = 0; k < quitarChecksValores.length; k++) {
+
+            if (quitarChecksValores[k] == valorPlataforma) {
+
+              quitarChecksValores.splice(k, 1);
+
+              valorAsignaciones.splice(k, 1);
+
+              $(".btnAsignar").attr("arrayValores", quitarChecksValores.toString());
+
+            }
+
+          }
+
+        })
+
+      }
+
+    })
+
+    $(".inputValor").keyup(function() {
+      const id = $(this).attr("data-id");
+      const checkbox = $("#check_" + id);
+      const input = $("#valorPlataforma_" + id);
+      if (input.val().length == 0) {
+        checkbox.iCheck('disable');
+      } else {
+        checkbox.iCheck('enable');
+      }
+    });
+
+    $(".checkbox-toggle").click(function() {
+
+      var clicks = $(this).data('clicks');
+      // si esta deshabilitado
+      if (clicks) {
+
+        $(".box-asignar input[type='checkbox']").iCheck("uncheck");
+        $(".far", this).removeClass("fa-check-square").addClass("fa-square");
+
+      } else {
+
+        var asignacionesCheckbox = $(".asignarCheckbox");
+
+        if (asignacionesCheckbox.is(':enabled')) {
+          $(".box-asignar input[type='checkbox']").iCheck("check");
+          $(".far", this).removeClass("fa-square").addClass("fa-check-square");
+        }
+
+      }
+
+      $(this).data("clicks", !clicks);
+
+    })
+
+    function realizarAsignacion(btnAsignar) {
+
+      const arrayId = btnAsignar.getAttribute('arrayAsignacion');
+      console.log(arrayId);
+      const objetoSplitId = arrayId.split(',');
+
+      const arrayValores = btnAsignar.getAttribute('arrayValores');
+      console.log(arrayValores);
+      const objetoSplitValores = arrayValores.split(',');
+
+      const objetoId = [];
+
+      for (var i = 0; i < objetoSplitId.length; i++) {
+        objetoId.push(objetoSplitId[i]);
+      }
+
+      const objetoValores = [];
+
+      for (var f = 0; f < objetoSplitValores.length; f++) {
+        objetoValores.push(objetoSplitValores[f]);
+      }
+
+      console.log(objetoId);
+      console.log(objetoValores);
+
+      const resultado = objetoId.map((item, ix) => [{
+        id: item,
+        valor: objetoValores[ix]
+      }]);
+      console.log(resultado);
+
+      let url = window.location.pathname;
+      let idParams = url.substring(url.lastIndexOf('/') + 1);
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/usuarios/asignarPlataformas', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: idParams,
+            asignaciones: resultado
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#fd6074'
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              }
+            )
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - usuarios',
+            type: 'error'
+          });
+        })
+
+    }
+  </script>

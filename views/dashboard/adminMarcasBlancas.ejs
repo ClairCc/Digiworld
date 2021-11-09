@@ -1,0 +1,596 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-8">
+              <!-- Row -->
+              <div class="row row-sm">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <div class="card custom-card">
+                    <div class="card-body">
+                      <div class="card-order ">
+                        <label class="main-content-label mb-3 pt-1">Total Marcas Blancas</label>
+                        <h2 class="text-right card-item-icon card-icon">
+                          <i class="ti-panel icon-size float-left text-primary"></i>
+                          <span class="font-weight-bold"><%= countTotal %></span>
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <a data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalCrearMarca">
+                    <div class="card custom-card background-secondary">
+                      <div class="card-body">
+                        <div class="card-order ">
+                          <label class="main-content-label mb-3 pt-1 text-white">Marca Blanca</label>
+                          <h2 class="text-right card-item-icon card-icon">
+                            <i class="fe fe-upload icon-size float-left text-primary"></i><span class="font-weight-bold">CREAR</span>
+                          </h2>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <!-- End Row -->
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Total Marcas Blancas</h6>
+                    <p class="text-muted card-sub-title">A continuación encontrara un reporte detallado de todas las marcas blancas activas actualmente en la plataforma.</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap w-100 key-buttons" id="exportexample">
+                      <thead>
+                        <tr>
+                          <th>Marca</th>
+                          <th>Url</th>
+                          <th>Activar</th>
+                          <th>Estado</th>
+                          <th>Logo</th>
+                          <th>Icono</th>
+                          <th>Logo Blanco</th>
+                          <th>Icono Blanco</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(marcas.length) { %>
+                        <% marcas.forEach(listaMarcas => { %>
+                        <tr>
+                          <td class="text-capitalize"><%= listaMarcas.nombre_marca %></td>
+                          <td class="text-left"><%= listaMarcas.url %></td>
+                          <td class="text-center">
+                            <div class="main-toggle main-toggle-success <%= listaMarcas.estado === 1 ? 'on' : '' %>" onclick="cambioEstado(this, '<%= listaMarcas.id_marca %>')">
+                              <span></span>
+                            </div>
+                          </td>
+                          <td class="text-capitalize text-center">
+                            <span class="text-muted"><i class="far <%= listaMarcas.estado === 1 ? 'fa-check-circle text-success' : 'fa-times-circle text-danger' %> mr-1"></i><%= listaMarcas.estado === 1 ? 'Activa' : 'Inactiva' %></span>
+                          </td>
+                          <td class="text-center">
+                            <img src="<%= listaMarcas.logo === null ? '/assetsDashboard/img/users/default.jpg' : listaMarcas.logo %>" alt="" class="img-75px">
+                          </td>
+                          <td class="text-center">
+                            <img src="<%= listaMarcas.icono === null ? '/assetsDashboard/img/users/default.jpg' : listaMarcas.icono %>" alt="" class="img-33px">
+                          </td>
+                          <td class="text-center background-secondary">
+                            <img src="<%= listaMarcas.logo === null ? '/assetsDashboard/img/users/default.jpg' : listaMarcas.logoBlanco %>" alt="" class="img-75px">
+                          </td>
+                          <td class="text-center background-secondary">
+                            <img src="<%= listaMarcas.icono === null ? '/assetsDashboard/img/users/default.jpg' : listaMarcas.iconoBlanco %>" alt="" class="img-33px">
+                          </td>
+                          <td class="text-capitalize">
+                            <div class="btn btn-list">
+                              <a class="btn ripple btn-warning modal-effect" title="Editar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEditar" onclick="modalEditar(event, '<%= listaMarcas.id_marca %>', '<%= listaMarcas.nombre_marca %>', '<%= listaMarcas.url %>')"><i class="far fa-edit"></i></a>
+                              <a class="btn ripple btn-danger modal-effect" title="Eliminar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEliminar" onclick="modalEliminar(event, '<%= listaMarcas.id_marca %>', '<%= listaMarcas.nombre_marca %>')"><i class="far fa-trash-alt"></i></a>
+                            </div>
+                          </td>
+                        </tr>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row -->
+            <div class="col-sm-12 col-md-4">
+              <div class="card custom-card">
+                <div class="card-header border-bottom-0 custom-card-header">
+                  <h6 class="main-content-label mb-0">Status Conexión Marca Blanca</h6>
+                </div>
+                <div class="card-body">
+                  <div class="border">
+                    <% if(marcas.length) { %>
+                    <% marcas.forEach(listaMarcas => { %>
+                    <div class="p-3">
+                      <h6 class="text-capitalize"><%= listaMarcas.nombre_marca %></h6>
+                      <div class="main-traffic-detail-item">
+                        <div>
+                          <span>Conexión Status</span> <span><%= listaMarcas.estado === 1 ? '(200) OK' : '(403) FORBIDDEN' %></span>
+                        </div>
+                        <div class="progress">
+                          <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="progress-bar progress-bar-striped progress-bar-animated <%= listaMarcas.estado === 1 ? 'bg-success wd-100p' : 'bg-danger wd-50p' %>" role="progressbar"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <% }) %>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Crear -->
+  <div class="modal" id="modalCrearMarca">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Crear Marca Blanca</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form action="POST" enctype="multipart/form-data" id="formCrearMarca">
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Nombre Marca Blanca</label>
+                <input type="text" class="form-control" placeholder="Nombre Marca Blanca" value="" id="marca" name="marca">
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">URL</label>
+                <input type="text" class="form-control" placeholder="https://example.com" value="" id="url" name="url">
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Icono</label>
+                <span class="pl-2 form-label">(Debe tener un formato cuadrado 500x500)</span>
+                <div class="input-group file-browser px-0">
+                  <input type="text" class="form-control border-right-0 browse-file" placeholder="Subir Icono" readonly>
+                  <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                      Seleccionar <input type="file" name="icono" id="icono" style="display: none;">
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Logo</label>
+                <span class="pl-2 form-label">(Debe tener un formato horizontal 1080x250)</span>
+                <div class="input-group file-browser px-0">
+                  <input type="text" class="form-control border-right-0 browse-file" placeholder="Subir logo" readonly>
+                  <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                      Seleccionar <input type="file" name="logo" id="logo" style="display: none;">
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Icono Blanco</label>
+                <span class="pl-2 form-label">(Debe tener un formato cuadrado 500x500)</span>
+                <div class="input-group file-browser px-0">
+                  <input type="text" class="form-control border-right-0 browse-file" placeholder="Subir Icono" readonly>
+                  <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                      Seleccionar <input type="file" name="iconoBlanco" id="iconoBlanco" style="display: none;">
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Logo Blanco</label>
+                <span class="pl-2 form-label">(Debe tener un formato horizontal 1080x250)</span>
+                <div class="input-group file-browser px-0">
+                  <input type="text" class="form-control border-right-0 browse-file" placeholder="Subir logo" readonly>
+                  <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                      Seleccionar <input type="file" name="logoBlanco" id="logoBlanco" style="display: none;">
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaCrear">
+            Hola
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="crearMarca(event)">Crear plataforma</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar -->
+  <div class="modal" id="modalEditar">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Editar Marca Blanca</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+
+          <input type="hidden" value="" id="idMarca">
+
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Nombre Marca</label>
+              <input type="text" class="form-control" placeholder="Nombre marca blanca" value="" id="marcaEdit">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">URL</label>
+              <input type="text" class="form-control" placeholder="Nombre marca blanca" value="" id="urlEdit">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="editarMarca(event)">Editar marca blanca</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Eliminar -->
+
+  <div class="modal" id="modalEliminar">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content tx-size-sm">
+        <div class="modal-body tx-center pd-y-20 pd-x-20">
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+          <i class="icon icon ion-ios-close-circle-outline tx-100 tx-danger lh-1 mg-t-20 d-inline-block"></i>
+          <h4 class="tx-danger mg-b-20">¡Hola!</h4>
+          <p class="mg-b-2 mg-x-20">¿Esta seguro de eliminar esta marca blanca?.</p>
+          <p class="mg-b-30 mg-x-20 text-center text-capitalize" id="nombreMarcaEliminar"></p>
+          <input type="hidden" value="" id="idEliminar">
+          <button aria-label="Close" class="btn ripple btn-danger pd-x-25" data-dismiss="modal" type="button" onclick="eliminarMarca(event)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+  <script>
+    function cambioEstado(input, id) {
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminMarcasBlancas/cambioEstado', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: respuesta.resp === 'error' ? '#fd6074' : '#57a94f'
+            },
+            function(isConfirm) {
+              if (isConfirm) {
+                location.reload();
+              }
+            }
+          )
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Marcas blancas',
+            type: 'error'
+          });
+        })
+    };
+
+    function crearMarca(e) {
+
+      const marca = document.getElementById("marca").value.trim();
+      const url = document.getElementById("url").value.trim();
+      const icono = document.getElementById('icono');
+      const logo = document.getElementById('logo');
+      const iconoBlanco = document.getElementById('iconoBlanco');
+      const logoBlanco = document.getElementById('logoBlanco');
+
+      const data = new FormData();
+      data.append('icono', icono.files[0]);
+      data.append('logo', logo.files[0]);
+      data.append('iconoBlanco', iconoBlanco.files[0]);
+      data.append('logoBlanco', logoBlanco.files[0]);
+      data.append('marca', marca);
+      data.append('url', url);
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminMarcasBlancas/crearMarca', {
+          method: 'POST',
+          body: data
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            $('#alertaCrear').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaCrear').html(error);
+            $('#alertaCrear').delay(2000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Marcas blancas',
+            type: 'error'
+          });
+        })
+    }
+
+    function modalEditar(e, id, marca, url) {
+
+      const idMarca = document.getElementById("idMarca");
+      idMarca.value = id;
+
+      const marcaEdit = document.getElementById("marcaEdit");
+      marcaEdit.value = marca;
+
+      const urlEdit = document.getElementById("urlEdit");
+      urlEdit.value = url;
+
+    }
+
+    function editarMarca(e) {
+
+      const id = document.getElementById("idMarca").value;
+      const marca = document.getElementById("marcaEdit").value;
+      const url = document.getElementById("urlEdit").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminMarcasBlancas/editarMarca', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id,
+            marca: marca,
+            url: url
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Marcas blancas',
+            type: 'error'
+          });
+        })
+    }
+
+    function modalEliminar(e, id, nombre) {
+
+      const idEliminar = document.getElementById("idEliminar");
+      idEliminar.value = id;
+
+      const nombreEliminar = document.getElementById("nombreMarcaEliminar");
+      nombreEliminar.innerHTML = nombre;
+
+    }
+
+    function eliminarMarca(e) {
+
+      const id = document.getElementById("idEliminar").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminMarcasBlancas/eliminarMarca', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Marcas blancas',
+            type: 'error'
+          });
+        })
+
+    }
+  </script>

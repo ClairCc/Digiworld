@@ -1,0 +1,171 @@
+<%- include('layauts/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+    <%- include('layauts/loader') %>
+
+    <%- include('layauts/head') %>
+
+    <!-- Page --> 
+    <div class="page main-signin-wrapper">
+        
+        <!-- Row -->
+        <div class="row signpages sombra-card text-center">
+            <div class="col-md-12 px-0">
+                <div class="card">
+                    <div class="row row-sm">
+                        <div class="col-lg-6 col-xl-5 d-none d-lg-block text-center bg-ingreso">
+                            <h1 class="img-persona-ingreso text-login-primary p-4 text-left font-weight-light color-white position-absolute" style="bottom: 0;">¡Bienvenidos a<br><span class="font-weight-bold">Il Salone</span>!</h1>
+                        </div>
+                        <div class="col-lg-6 col-xl-7 col-xs-12 col-sm-12 login_form ">
+                            <div class="container-fluid">
+                                <div class="row row-sm">
+                                    <div class="card-body mt-2 mb-2">
+                                        <img src="/assetsInicio/img/logo.svg" class="text-center d-lg-none header-brand-img mb-5 mt-4" alt="logo">
+                                        <div class="clearfix"></div>
+                                        <form action="/ingreso" method="POST">
+                                            <h5 class="text-left mb-2">INICIAR SESIÓN</h5>
+                                            <p class="mb-4 text-muted tx-13 ml-0 text-left">Inicie sesión para crear, descubrir y conectarse con toda la comunidad <strong>Full Entretenimiento</strong></p>
+                                            <div class="form-group text-left">
+                                                <label>Correo electrónico</label>
+                                                <input class="form-control" name="email" placeholder="Introduce tu correo electrónico" type="text">
+                                            </div>
+                                            <div class="form-group text-left position-relative">
+                                                <label>Contraseña</label>
+                                                <i class="fe fe-eye position-absolute ver-input" onclick="verInput()" id="iconoOjo"></i>
+                                                <input class="form-control" name="password" id="password" placeholder="Ingresa tu contraseña" type="password">
+                                            </div>
+
+                                            <% if(locals.mensajes) { %>
+                                                <% var erroresIngreso = Object.keys(locals.mensajes) %>
+                                                <% if(erroresIngreso.length) { %>
+                                                    <% locals.mensajes[erroresIngreso].forEach(alerta => { %>
+
+                                                        <% if(erroresIngreso == 'error') { %>
+                                                            <% erroresIngreso = 'danger' %> 
+                                                        <% }; %>
+                                                        
+                                                        <div class="alert alert-<%= erroresIngreso %> alert-dismissible fade show" role="alert">
+                                                            <strong>Hola!</strong> <%= alerta %>.
+                                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                    <% }); %> 
+
+                                                <% } %> 
+                                            <% } %>
+
+                                            <input type="submit" class="btn ripple btn-main-primary btn-block mt-4" value="Iniciar sesión">
+                                            
+                                        </form>
+                                        <div class="text-left mt-5 ml-0">
+                                            <div class="mb-1"><a data-effect="effect-flip-horizontal" data-toggle="modal" href="#recuperarPassword">¿Se te olvidó tu contraseña?</a></div>
+                                            <div>¿No tienes una cuenta? <a href="/registro">Registrarse aquí</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Row -->
+
+    </div>
+    <!-- End Page -->
+
+<!-- Modal Cambiar valor en red -->
+<div class="modal" id="recuperarPassword">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Recuperar Contraseña</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+
+                    <div class="form-group ">
+                        <div class="row row-sm">
+                            <label class="form-label">
+                                Ingrese su correo electronico
+                            </label>
+                            <input type="email" class="form-control" placeholder="Ingrese su Email" value="" id="emailRecuperar" name="emailRecuperar">
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn ripple btn-primary" type="button" onclick="recuperarPassword(event)">Recuperar</button>
+                <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('layauts/foot') %>
+
+<%- include('layauts/footer') %> 
+
+<script>
+    function verInput() {
+        const password = document.getElementById("password");
+        const tipo = password.type;
+        
+        if(tipo == 'text') {
+            $('#iconoOjo').removeClass('fe-eye-off');
+            $('#iconoOjo').addClass('fe-eye');
+            password.type = 'password';
+        } else {
+            $('#iconoOjo').removeClass('fe-eye');
+            $('#iconoOjo').addClass('fe-eye-off');
+            password.type = 'text';
+        }
+    }
+
+    function recuperarPassword (e) {
+
+        const emailRecuperar = document.getElementById('emailRecuperar').value;
+
+        fetch('/ingreso/recuperarPassword', {
+			method: 'POST',
+			headers: {'Content-type': 'application/json'},
+			body: JSON.stringify({
+				emailRecuperar: emailRecuperar
+			})
+		})
+		.then(res => res.text())
+		.then(data => {
+			const respuesta = JSON.parse(data);
+			if(respuesta.resp === 'success'){
+
+				swal(
+					{
+						title: respuesta.titulo,
+						text: respuesta.descripcion,
+						type: respuesta.resp,
+						confirmButtonColor: '#57a94f',
+						closeOnClickOutside: false
+					},
+					function(isConfirm) {
+					if (isConfirm) {
+						location.reload();
+					}
+				});
+
+			} else {
+
+				swal(
+					{
+						title: respuesta.titulo,
+						text: respuesta.descripcion,
+						type: respuesta.resp,
+						confirmButtonColor: '#fd6074'
+					}
+				)
+			}
+		})
+
+    }
+
+</script>

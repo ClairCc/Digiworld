@@ -1,0 +1,193 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-info-transparent rounded-circle text-info">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Cuentas Juegos<br>Pendientes</p>
+                  <h3 class="mb-0"><%= cuentasJuegos %></h3>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- End Row -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-12">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Total cuentas juegos</h6>
+                    <p class="text-muted card-sub-title">A continuación encontrara un reporte detallado de todas las cuentas de tipo juegos solicitadas en su red.</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap w-100 key-buttons" id="exportexample">
+                      <thead>
+                        <tr>
+                          <th>Logo</th>
+                          <th>Fecha Solcitud</th>
+                          <th>Plataforma</th>
+                          <th>Tipo plataforma</th>
+                          <th>Estado</th>
+                          <th>Usuario facebook</th>
+                          <th>Password facebook</th>
+                          <th>ID Usuario Juego</th>
+                          <th>Comprobante</th>
+                          <th>Fecha Compra</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% moment.locale('es'); %>
+                        <% if(cuentas.length) { %>
+                        <% cuentas.forEach(listaCuentas => { %>
+                        <tr>
+                          <td class="text-center">
+                            <img src="<%= listaCuentas.plataforma.logo === null ? '/assetsDashboard/img/users/default.jpg' : listaCuentas.plataforma.logo %>" alt="" class="img-circle">
+                          </td>
+                          <td class="text-center"><%= listaCuentas.fechaSubida.toLocaleString('es-CO'); %></td>
+                          <td class="text-capitalize"><%= listaCuentas.plataforma.plataforma %></td>
+                          <td class="text-capitalize text-center">
+                            <span class="badge <%= listaCuentas.plataforma.tipo_plataforma === 1 ? 'badge-primary' : listaCuentas.plataforma.tipo_plataforma === 2 ? 'badge-secondary' : listaCuentas.plataforma.tipo_plataforma === 3 ? 'badge-danger' : listaCuentas.plataforma.tipo_plataforma === 4 ? 'badge-info' : listaCuentas.plataforma.tipo_plataforma === 5 ? 'badge-warning' : 'badge-light' %>">
+                              <%= listaCuentas.plataforma.tipo_plataforma === 1 ? 'Normal' : listaCuentas.plataforma.tipo_plataforma === 2 ? 'Bajo Pedido' : listaCuentas.plataforma.tipo_plataforma === 3 ? 'Personalizada' : listaCuentas.plataforma.tipo_plataforma === 4 ? 'Renovaciones' : listaCuentas.plataforma.tipo_plataforma === 5 ? 'Juegos' : 'N/A' %>
+                            </span>
+                          </td>
+                          <td class="text-capitalize text-center">
+                            <span class="text-muted"><i class="far <%= listaCuentas.estado === 1 ? 'fa-check-circle text-success' : 'fa-minus-square text-warning' %> mr-1"></i><%= listaCuentas.estado === 1 ? 'Gestionada' : 'Sin Gestionar' %></span>
+                          </td>
+                          <td class="text-left"><%= listaCuentas.user === null ? 'No aplica' : listaCuentas.user %></td>
+                          <td class="text-left"><%= listaCuentas.password === null ? 'No aplica' : listaCuentas.password %></td>
+                          <td class="text-left"><%= listaCuentas.idJuego === null ? 'No aplica' : listaCuentas.idJuego %></td>
+                          <td class="text-left">
+                            <a data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalComprobante" onclick="modalComprobante(event, '<%= listaCuentas.comprobanteJuego %>')"><%- listaCuentas.comprobanteJuego %></a>
+                          </td>
+                          <td class="text-center <%= listaCuentas.fechaCompra === null ? 'text-warning' : '' %>"><%= listaCuentas.fechaCompra === null ? 'Sin fecha de compra' : moment(listaCuentas.fechaCompra).format('MMMM Do YYYY, h:mm:ss a') %></td>
+                        </tr>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Comprobante -->
+  <div class="modal" id="modalComprobante">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Ver comprobante</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <img src="" alt="Comprobante" id="imgComprobante">
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+  <script>
+    function modalComprobante(e, img) {
+
+      const imgComprobante = document.getElementById('imgComprobante');
+      imgComprobante.src = img;
+
+    }
+    ç
+  </script>

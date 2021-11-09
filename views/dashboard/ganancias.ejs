@@ -1,0 +1,283 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+            <div class="d-flex">
+              <div class="justify-content-center">
+                <a class="btn btn-primary my-2 btn-icon-text" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalReporte">
+                  <i class="fe fe-download  mr-2"></i> Generar Reporte ganancias
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+
+          </div>
+          <!-- End Row -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-12">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Total ganancias en red</h6>
+                    <p class="text-muted card-sub-title">A continuación encontrara un reporte detallado de todas las ganancias recibidas en su red.</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap w-100 key-buttons" id="exportexamplecuentas_red">
+                      <thead>
+                        <tr>
+                          <th>Distribuidor</th>
+                          <th>Vendedor</th>
+                          <th>Perfil vendedor</th>
+                          <th>Logo</th>
+                          <th>Plataforma</th>
+                          <th>Ganancia</th>
+                          <th>Tipo plataforma</th>
+                          <th>Fecha</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% moment.locale('es'); %>
+                        <% if(ganancias.length) { %>
+                        <% ganancias.forEach(listaGanancias => { %>
+                        <% const distribuidor = usuarios.filter(function(element){ %>
+                        <% return element.id_usuario == listaGanancias.distribuidor; %>
+                        <% }); %>
+                        <% const nombre = distribuidor[0].nombre; %>
+                        <% if(!(listaGanancias.length < 1 || !listaGanancias.usuario)) {%>
+                        <% if(listaGanancias.usuario.pais === 'Colombia') { %>
+                        <% var valorFormateado = new Intl.NumberFormat("es-CO", {style: "currency", currency: "COP", maximumSignificantDigits: 7}).format(listaGanancias.ganancia); %>
+                        <% } else { %>
+                        <% var valorFormateado = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(listaGanancias.ganancia); %>
+                        <% } %>
+                        <tr>
+                          <td class="text-left text-capitalize"><%= nombre %></td>
+                          <td class="text-left text-capitalize"><%= listaGanancias.usuario.nombre %></td>
+                          <td class="text-left text-capitalize text-primary font-weight-bold"><%= listaGanancias.usuario.perfil %></td>
+                          <td class="text-center">
+                            <img src="<%= listaGanancias.plataforma.logo === null ? '/assetsDashboard/img/users/default.jpg' : listaGanancias.plataforma.logo %>" alt="" class="img-circle">
+                          </td>
+                          <td class="text-capitalize"><%= listaGanancias.plataforma.plataforma %></td>
+                          <td class="text-capitalize text-right"><%= valorFormateado %></td>
+                          <td class="text-capitalize text-center">
+                            <span class="badge <%= listaGanancias.plataforma.tipo_plataforma === 1 ? 'badge-primary' : listaGanancias.plataforma.tipo_plataforma === 2 ? 'badge-secondary' : listaGanancias.plataforma.tipo_plataforma === 3 ? 'badge-danger' : listaGanancias.plataforma.tipo_plataforma === 4 ? 'badge-info' : listaGanancias.plataforma.tipo_plataforma === 5 ? 'badge-warning' : 'badge-light' %>">
+                              <%= listaGanancias.plataforma.tipo_plataforma === 1 ? 'Normal' : listaGanancias.plataforma.tipo_plataforma === 2 ? 'Bajo Pedido' : listaGanancias.plataforma.tipo_plataforma === 3 ? 'Personalizada' : listaGanancias.plataforma.tipo_plataforma === 4 ? 'Renovaciones' : listaGanancias.plataforma.tipo_plataforma === 5 ? 'Juegos' : 'N/A' %>
+                            </span>
+                          </td>
+                          <td class="text-center"><%= moment(listaGanancias.fecha).format('DD:MM:YYYY HH:MM:SS') %></td>
+                        </tr>
+                        <% } %>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Reporte -->
+  <div class="modal" id="modalReporte" style="z-index: 1999 !important;">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Generar reporte ganancias</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="row row-sm">
+            <label class="form-label">Seleccionar Usuario</label>
+            <select class="form-control select2" name="usuarios" id="usuarios">
+              <option value="0">
+                Todos
+              </option>
+              <% usuarios.forEach(usuario => { %>
+              <option value="<%= usuario.id_usuario %>">
+                <%= usuario.nombre %>
+              </option>
+              <% }) %>
+
+            </select>
+          </div>
+          <div class="row row-sm mt-2">
+            <label class="form-label">Seleccione un rango de fecha</label>
+            <div class="input-group p-0">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fe fe-calendar  lh--9 op-6"></i>
+                </div>
+              </div>
+              <input type="text" class="form-control pull-right" id="reservation">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a class="btn ripple btn-success display-none" href="" download="" id="btnDescargar" onclick="archivoDescargado(event)"><i class="fas fa-file-excel"></i> Descargar Reporte</a>
+          <button class="btn ripple btn-primary" type="button" onclick="generarReporte(event)">Generar Reporte</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+  <script>
+    function archivoDescargado(e) {
+      const btnDescargar = document.getElementById('btnDescargar');
+      setTimeout(() => {
+        fetch('/ganancias/eliminarArchivo', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            data: btnDescargar.dataset.file,
+          })
+        })
+
+        btnDescargar.dataset.file = '';
+        btnDescargar.setAttribute("download", "");
+        btnDescargar.classList.add('display-none');
+      }, 3000);
+
+    }
+
+    function generarReporte(e) {
+
+      const fechas = document.getElementById('reservation').value;
+      console.log(fechas);
+      const user = document.getElementById('usuarios').value;
+      const btnDescargar = document.getElementById('btnDescargar');
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/ganancias/reporteGanancias', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            user: user,
+            fecha: fechas
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+            btnDescargar.setAttribute('data-file', respuesta.url);
+            btnDescargar.href = respuesta.url;
+            btnDescargar.setAttribute("download", respuesta.url);
+            btnDescargar.classList.remove('display-none');
+
+          } else {
+            btnDescargar.setAttribute('data-file', respuesta.url);
+            btnDescargar.href = '';
+            btnDescargar.setAttribute("download", "");
+            btnDescargar.classList.add('display-none');
+
+            $('#alertaDescarga').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Error realizar la descarga del archivo.';
+            $('#alertaDescarga').html(error);
+            $('#alertaDescarga').delay(2000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Ganancias',
+            type: 'error'
+          });
+        })
+
+    }
+  </script>

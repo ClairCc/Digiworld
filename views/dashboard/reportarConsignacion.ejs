@@ -1,0 +1,571 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+            <div class="d-flex">
+              <div class="justify-content-center">
+                <a class="btn btn-primary my-2 btn-icon-text" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalReporte">
+                  <i class="fe fe-download  mr-2"></i> Generar Reporte Consignaciones
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <% if(medios.length) { %>
+            <% medios.forEach(listaMedios => { %>
+            <div class="col-md-6 col-lg-3">
+              <div class="card overflow-hidden custom-card ">
+                <img alt="Image" class="img-fluid b-img" src="<%- listaMedios.imagen %>">
+                <div class="card-body">
+                  <p class="text-uppercase font-weight-bold"><%- listaMedios.titulo %></p>
+                  <p class="card-text"><%- listaMedios.descripcionCorta %></p>
+                  <button class="btn btn-secondary" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalInformacion" onclick="modalInformacion(event, '<%= listaMedios.idMedio %>')"><i class="fe fe-eye"></i></button>
+                  <button class="btn btn-primary" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalConsignacion" onclick="modalConsignacion(event, '<%= listaMedios.idMedio %>')">Reportar consignación</button>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+            <% } %>
+          </div>
+          <!-- End Row -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-12">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Mis consignaciones</h6>
+                    <p class="text-muted card-sub-title">A continuación encontrara un reporte detallado de todas las consignaciones que has realizado en nuestra plataforma.</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap w-100 key-buttons" id="exportexample">
+                      <thead>
+                        <tr>
+                          <th>Banco</th>
+                          <th>Fecha</th>
+                          <th>Valor</th>
+                          <th>Referencia</th>
+                          <th>Estado</th>
+                          <th>Comprobante</th>
+                          <th>Observaciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(consignaciones.length) { %>
+                        <% consignaciones.forEach(listaConsignaciones => { %>
+
+                        <tr>
+                          <td class="text-left text-capitalize">
+                            <%- listaConsignaciones.tipoConsignacion %>
+                          </td>
+                          <td class="text-center">
+                            <%= listaConsignaciones.fecha.toLocaleString('es-CO');%>
+                          </td>
+                          <td class="text-left text-capitalize">
+                            <% if(usuario.pais === 'Colombia') { %>
+                            <% var saldoFormateado = new Intl.NumberFormat("es-CO", {style: "currency", currency: "COP", maximumSignificantDigits: 7}).format(listaConsignaciones.valor); %>
+                            <% } else { %>
+                            <% var saldoFormateado = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(listaConsignaciones.valor); %>
+                            <% } %>
+                            <%- saldoFormateado %>
+                          </td>
+                          <td class="text-left text-uppercase">
+                            <%- listaConsignaciones.referencia %>
+                          </td>
+                          <td class="text-capitalize text-center">
+                            <span class="text-muted"><i class="far <%= listaConsignaciones.estado === 1 ? 'fa-check-circle text-success' : listaConsignaciones.estado === 2 ? 'fa-times-circle text-danger' : 'fa-circle text-warning' %> mr-1"></i><%= listaConsignaciones.estado === 1 ? 'Aprobada' : listaConsignaciones.estado === 2 ? 'Rechazada' : 'En revisión' %></span>
+                          </td>
+                          <td class="text-left">
+                            <a data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalComprobante" onclick="modalComprobante(event, '<%= listaConsignaciones.comprobante %>')"><%- listaConsignaciones.comprobante %></a>
+                          </td>
+                          <td class="text-left">
+                            <%- listaConsignaciones.observaciones === null ? '<span class="text-muted">Sin observaciones</span>' : listaConsignaciones.observaciones %>
+                          </td>
+                        </tr>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Reporte -->
+  <div class="modal" id="modalReporte" style="z-index: 1999 !important;">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Generar reporte consignaciones</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="row row-sm mt-2">
+            <label class="form-label">Seleccione un rango de fecha</label>
+            <div class="input-group p-0">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fe fe-calendar  lh--9 op-6"></i>
+                </div>
+              </div>
+              <input type="text" class="form-control pull-right" id="reservation">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a class="btn ripple btn-success display-none" href="" download="" id="btnDescargar" onclick="archivoDescargado(event)"><i class="fas fa-file-excel"></i> Descargar Reporte</a>
+          <button class="btn ripple btn-primary" type="button" onclick="generarReporte(event)">Generar Reporte</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Consignaciones -->
+  <div class="modal" id="modalConsignacion">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Reportar consignación</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-3">
+            La siguientes casillas son obligatorias para poder realizar un proceso efectivo de carga de saldo, por lo tanto deben coincidir en el comprobante tanto el monto consignado, como la referencia y el tipo de consignación por el que se haya realizado la transaccion.
+          </p>
+          <div class="form-group">
+            <label class="form-label">Ingrese fecha y hora en la que realizo la consignación</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fe fe-calendar lh--9 op-6"></i>
+                </div>
+              </div><input class="form-control" id="datetimepicker" placeholder="MM/DD/YYYY hh:mm:ss" type="text">
+            </div>
+          </div>
+          <div class="px-2">
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Valor consignado <br>
+                  (
+                  <%= usuario.pais === 'Colombia' ? 'Recuerde esta red esta en COP, no utilice ni puntos ni comas.' : 'Recuerde esta red esta en USD, para los decimales por favor utilice "."'; %>
+                  )</label>
+                <input type="number" class="form-control" placeholder="Valor consignado" value="" id="valorConsignado">
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Tipo Consignación</label>
+                <select class="form-control" id="tipoConsignacion">
+                  <option value="">Seleccione una opción</option>
+                  <% if(medios.length) { %>
+                  <% medios.forEach(listaMedio => { %>
+                  <option value="<%= listaMedio.titulo.toLowerCase() %>"><%= listaMedio.titulo %></option>
+                  <% }) %>
+                  <% } %>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row row-sm">
+                <label class="form-label">Referencia Consignación</label>
+                <input type="text" class="form-control" placeholder="Referencia de la consignación" value="" id="referencia">
+              </div>
+            </div>
+
+            <div class="form-group" id="noCelular">
+              <div class="row row-sm">
+                <label class="form-label">No. de celular <br>
+                  (Si realizo el pago a través de una billetera movil como NEQUI, Daviplata, RappiPay ó Movii, por favor ingrese el número de celular desde el cual se realiza la transferencia.)
+                </label>
+                <input type="text" class="form-control" placeholder="Numero de Celular" value="" id="telefonoCuenta">
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Comprobante consignación</label>
+                <div class="input-group file-browser px-0">
+                  <input type="text" class="form-control border-right-0 browse-file" placeholder="Subir comprobante" readonly>
+                  <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                      Seleccionar <input type="file" name="files" id="comprobante" style="display: none;">
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaConsignacion">
+            Hola
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="subirConsignacion(event)">Reportar consignación</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Informacion -->
+  <div class="modal" id="modalInformacion">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Como consignar con <span id="tituloInfo" class="text-capitalize"></span></h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div id="cuerpoInfo"></div>
+          <div class="display-none mt-5 position-relative" id="recursoInfo">
+            <h5 class="text-uppercase text-left">Scanea, descarga o imprime</h5>
+            <img src="" alt="" class="w-100" id="imgRecurso">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="" download="" id="btnDescargarRecurso" class="btn btn-primary display-none"><i class="fe fe-download"></i> Descargar</a>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal Comprobante -->
+  <div class="modal" id="modalComprobante">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Ver comprobante</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <img src="" alt="Comprobante" id="imgComprobante">
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+
+  <script>
+    function archivoDescargado(e) {
+
+      const btnDescargar = document.getElementById('btnDescargar');
+      setTimeout(() => {
+        fetch('/reportarConsignacion/eliminarArchivo', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            data: btnDescargar.dataset.file,
+          })
+        })
+
+        btnDescargar.dataset.file = '';
+        btnDescargar.setAttribute("download", "");
+        btnDescargar.classList.add('display-none');
+      }, 3000);
+    }
+
+    function generarReporte(e) {
+
+      const fechas = document.getElementById('reservation').value;
+      console.log(fechas);
+      const btnDescargar = document.getElementById('btnDescargar');
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/reportarConsignacion/reporteConsignacionesUser', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            fecha: fechas
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+            btnDescargar.setAttribute('data-file', respuesta.url);
+            btnDescargar.href = respuesta.url;
+            btnDescargar.setAttribute("download", respuesta.url);
+            btnDescargar.classList.remove('display-none');
+
+          } else {
+            btnDescargar.setAttribute('data-file', respuesta.url);
+            btnDescargar.href = '';
+            btnDescargar.setAttribute("download", "");
+            btnDescargar.classList.add('display-none');
+
+            $('#alertaDescarga').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Error realizar la descarga del archivo.';
+            $('#alertaDescarga').html(error);
+            $('#alertaDescarga').delay(2000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Reportar consignación',
+            type: 'error'
+          });
+        })
+
+    }
+
+    function modalComprobante(e, img) {
+
+      const imgComprobante = document.getElementById('imgComprobante');
+
+      imgComprobante.src = img;
+
+    }
+
+    function modalInformacion(e, id) {
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/reportarConsignacion/infoMedio', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          const tituloInfo = document.getElementById('tituloInfo');
+          tituloInfo.innerHTML = respuesta.medio.titulo;
+          const cuerpoInfo = document.getElementById('cuerpoInfo');
+          cuerpoInfo.innerHTML = respuesta.medio.descripcion;
+
+          const recursoInfo = document.getElementById('recursoInfo');
+          const imgRecurso = document.getElementById('imgRecurso');
+
+          const btnDescargarRecurso = document.getElementById('btnDescargarRecurso');
+
+          if (respuesta.medio.recurso !== null) {
+            recursoInfo.classList.remove('display-none');
+            imgRecurso.src = respuesta.medio.recurso;
+            btnDescargarRecurso.classList.remove('display-none');
+            btnDescargarRecurso.href = respuesta.medio.recurso;
+            const descarga = respuesta.medio.titulo;
+            btnDescargarRecurso.setAttribute("download", descarga);
+          } else {
+            recursoInfo.classList.add('display-none');
+            btnDescargarRecurso.classList.add('display-none');
+            imgRecurso.src = '';
+            btnDescargarRecurso.href = '';
+            btnDescargarRecurso.setAttribute("download", '');
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Reportar consignación',
+            type: 'error'
+          });
+        })
+
+
+    }
+
+    function modalConsignacion(e, id) {
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/reportarConsignacion/infoMedio', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          const tipoConsignacion = document.getElementById("tipoConsignacion");
+          tipoConsignacion.value = respuesta.medio.titulo.toLowerCase();
+          tipoConsignacion.disabled = true;
+          const noCelular = document.getElementById("noCelular");
+
+          if (respuesta.medio.titulo.toLowerCase() === 'tarjeta de recaudo' || respuesta.medio.titulo.toLowerCase() === 'efecty') {
+            noCelular.classList.add('display-none');
+          } else {
+            noCelular.classList.remove('display-none');
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Reportar consignación',
+            type: 'error'
+          });
+        })
+
+    }
+
+    function subirConsignacion(e) {
+
+      const datetimepicker = document.getElementById("datetimepicker").value.trim();
+      const valorConsignado = document.getElementById("valorConsignado").value.trim();
+      const tipoConsignacion = document.getElementById("tipoConsignacion").value.trim();
+      const referencia = document.getElementById("referencia").value.trim();
+      const telefonoCuenta = document.getElementById("telefonoCuenta").value.trim();
+      const comprobante = document.getElementById('comprobante');
+
+      const data = new FormData();
+      data.append('valorConsignado', valorConsignado);
+      data.append('tipoConsignacion', tipoConsignacion);
+      data.append('referencia', referencia);
+      data.append('telefonoCuenta', telefonoCuenta);
+      data.append('fechaHoraConsignacion', datetimepicker);
+      data.append('comprobante', comprobante.files[0]);
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/reportarConsignacion/subirConsignacion', {
+          method: 'POST',
+          body: data
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            $('#alertaConsignacion').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaConsignacion').html(error);
+            $('#alertaConsignacion').delay(2000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Reportar consignación',
+            type: 'error'
+          });
+        })
+    }
+  </script>

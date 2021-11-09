@@ -1,0 +1,287 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-warning-transparent rounded-circle text-warning">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Cuentas Personalizadas<br>Pendientes</p>
+                  <h3 class="mb-0"><%= cuentasPersonalizadas %></h3>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- End Row -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-12">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Total cuentas personalizadas</h6>
+                    <p class="text-muted card-sub-title">A continuación encontrara un reporte detallado de todas las cuentas personalizadas solicitadas en su red.</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap w-100 key-buttons" id="exportexample">
+                      <thead>
+                        <tr>
+                          <th>Logo</th>
+                          <th>Fecha Solcitud</th>
+                          <th>Plataforma</th>
+                          <th>Tipo plataforma</th>
+                          <th>Estado</th>
+                          <th>Usuario</th>
+                          <th>Password</th>
+                          <th>Pantalla</th>
+                          <th>Pin</th>
+                          <th>Fecha Compra</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% moment.locale('es'); %>
+                        <% if(cuentas.length) { %>
+                        <% cuentas.forEach(listaCuentas => { %>
+                        <tr>
+                          <td class="text-center">
+                            <img src="<%= listaCuentas.plataforma.logo === null ? '/assetsDashboard/img/users/default.jpg' : listaCuentas.plataforma.logo %>" alt="" class="img-circle">
+                          </td>
+                          <td class="text-center"><%= moment(listaCuentas.fechaSubida).format('DD:MM:YYYY HH:MM:SS') %></td>
+                          <td class="text-capitalize"><%= listaCuentas.plataforma.plataforma %></td>
+                          <td class="text-capitalize text-center">
+                            <span class="badge <%= listaCuentas.plataforma.tipo_plataforma === 1 ? 'badge-primary' : listaCuentas.plataforma.tipo_plataforma === 2 ? 'badge-secondary' : listaCuentas.plataforma.tipo_plataforma === 3 ? 'badge-danger' : listaCuentas.plataforma.tipo_plataforma === 4 ? 'badge-info' : listaCuentas.plataforma.tipo_plataforma === 5 ? 'badge-warning' : 'badge-light' %>">
+                              <%= listaCuentas.plataforma.tipo_plataforma === 1 ? 'Normal' : listaCuentas.plataforma.tipo_plataforma === 2 ? 'Bajo Pedido' : listaCuentas.plataforma.tipo_plataforma === 3 ? 'Personalizada' : listaCuentas.plataforma.tipo_plataforma === 4 ? 'Renovaciones' : listaCuentas.plataforma.tipo_plataforma === 5 ? 'Juegos' : 'N/A' %>
+                            </span>
+                          </td>
+                          <td class="text-capitalize text-center">
+                            <span class="text-muted"><i class="far <%= listaCuentas.estado === 1 ? 'fa-check-circle text-success' : 'fa-minus-square text-warning' %> mr-1"></i><%= listaCuentas.estado === 1 ? 'Gestionada' : 'Sin Gestionar' %></span>
+                          </td>
+                          <td class="text-left"><%= listaCuentas.user === null ? 'Sin dato ingresado' : listaCuentas.user %></td>
+                          <td class="text-left"><%= listaCuentas.password === null ? 'Sin dato ingresado' : listaCuentas.password %></td>
+                          <td class="text-left"><%= listaCuentas.pantalla === null ? 'Sin dato ingresado' : listaCuentas.pantalla %></td>
+                          <td class="text-left"><%= listaCuentas.pin === null ? 'Sin dato ingresado' : listaCuentas.pin %></td>
+                          <td class="text-center <%= listaCuentas.fechaCompra === null ? 'text-warning' : '' %>"><%= listaCuentas.fechaCompra === null ? 'Sin fecha de compra' : moment(listaCuentas.fechaCompra).format('MMMM Do YYYY, h:mm:ss a') %></td>
+                        </tr>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Subir -->
+  <div class="modal" id="modalPersonalizar">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">Personalizar cuenta</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body background-primary">
+
+          <h3 class="text-center text-uppercase" id="nombrePlataforma"></h3>
+
+          <center>
+            <div class="picture img-descripcion border-img online text-center my-4">
+              <img alt="avatar" class="rounded-circle" id="logoSubir" src="">
+            </div>
+          </center>
+
+          <input type="hidden" id="idSubir" value="">
+
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Usuario</label>
+              <input type="text" class="form-control" placeholder="Usuario cuenta" value="" id="usuarioSubir">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Contraseña</label>
+              <input type="text" class="form-control" placeholder="Contraseña cuenta" value="" id="passwordSubir">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Pantalla</label>
+              <input type="text" class="form-control" placeholder="Pantalla cuenta" value="" id="pantallaSubir">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Pin</label>
+              <input type="text" class="form-control" placeholder="PIN cuenta" value="" id="pinSubir">
+            </div>
+          </div>
+
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaSubir">
+            Hola
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="subirCuenta(event)">Personalizar cuenta</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar -->
+  <div class="modal" id="modalEditar">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">Editar datos de la cuenta</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body background-warning">
+
+          <h3 class="text-center text-uppercase" id="nombrePlataformaEditar"></h3>
+
+          <input type="hidden" id="idEditar" value="">
+
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Usuario</label>
+              <input type="text" class="form-control" placeholder="Usuario cuenta" value="" id="usuarioEditar">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Contraseña</label>
+              <input type="text" class="form-control" placeholder="Contraseña cuenta" value="" id="passwordEditar">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Pantalla</label>
+              <input type="text" class="form-control" placeholder="Pantalla cuenta" value="" id="pantallaEditar">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Pin</label>
+              <input type="text" class="form-control" placeholder="PIN cuenta" value="" id="pinEditar">
+            </div>
+          </div>
+
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaEditar">
+            Hola
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="editarCuenta(event)">Editar cuenta personalizada</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Eliminar -->
+
+  <div class="modal" id="modalEliminar">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content tx-size-sm">
+        <div class="modal-body tx-center pd-y-20 pd-x-20">
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+          <i class="icon icon ion-ios-close-circle-outline tx-100 tx-danger lh-1 mg-t-20 d-inline-block"></i>
+          <h4 class="tx-danger mg-b-20">¡Hola!</h4>
+          <p class="mg-b-2 mg-x-20 mb-4">¿Esta seguro de eliminar esta cuenta personalizada?</p>
+          <input type="hidden" value="" id="idEliminar">
+          <button aria-label="Close" class="btn ripple btn-danger pd-x-25" data-dismiss="modal" type="button" onclick="eliminarCuenta(event)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>

@@ -1,0 +1,436 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-sm-12 col-md-12 col-xl-12">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-primary-transparent rounded-circle text-primary">
+                    <i class="fe fe-users"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Total Comercios</p>
+                  <h3 class="mb-0"><%= usuarios.length %></h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-12">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Total Comercios en Plataforma</h6>
+                    <p class="text-muted card-sub-title">A continuación encontrara un reporte detallado con la información de todos los comercios registrados en la plataforma.</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap w-100" id="exportexample">
+                      <thead>
+                        <tr>
+                          <th>Foto</th>
+                          <th>Contá¡cto</th>
+                          <th>Razón Social</th>
+                          <th>Nit</th>
+                          <th>Aprobación</th>
+                          <th>Suscripción</th>
+                          <th>Status</th>
+                          <th>Email</th>
+                          <th>Teléfono</th>
+                          <th>Dirección</th>
+                          <th>Documentación</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(usuarios.length) { %>
+                        <% usuarios.forEach(listaUsuario => { %>
+                        <% const dataUserName = listaUsuario.razonSocial.split(' '); %>
+                        <tr>
+                          <td class="text-center">
+                            <%- listaUsuario.foto === null ? `<div class="main-avatar avatar online">${dataUserName[0].charAt(0)}</div>` : `<img src="${listaUsuario.foto}" alt="" class="img-circle">` %>
+                          </td>
+                          <td class="text-capitalize"><%= listaUsuario.nombre %></td>
+                          <td class="text-capitalize"><%= listaUsuario.razonSocial %></td>
+                          <td class="text-capitalize text-right"><%= listaUsuario.nit %></td>
+                          <td class="position-relative">
+                            <div class="main-toggle main-toggle-success <% listaUsuario.aprobacion === '0' ? '' : 'on' %>">
+                              <span></span>
+                            </div>
+                          </td>
+                          <td class="text-capitalize text-center">
+                            <span class="text-muted"><i class="far <%= listaUsuario.suscripcion === 1 ? 'bi bi-star-fill text-warning' : 'bi bi-star text-warning' %> mr-1"></i><%= listaUsuario.suscripcion === 1 ? 'Suscrito' : 'Sin suscripción' %></span>
+                          </td>
+                          <td class="text-capitalize text-center">
+                            <span class="text-muted"><i class="far <%= listaUsuario.bloqueo === 0 ? 'fa-check-circle text-success' : 'fa-times-circle text-danger' %> mr-1"></i><%= listaUsuario.bloqueo === 0 ? 'Activo' : 'Bloqueado' %></span>
+                          </td>
+                          <td class="text-lowercase"><%= listaUsuario.email %></td>
+                          <td class="text-capitalize"><%= listaUsuario.telefono_movil %></td>
+                          <td class="text-lowercase"><%= listaUsuario.direccion %></td>
+                          <td class="text-capitalize">
+                            <button class="btn ripple btn-primary" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalDocumentacion" onclick="modalDocumentacion(event, '<%= listaUsuario.camaraComercio %>', '<%= listaUsuario.rut %>', '<%= listaUsuario.documentoIdentidad %>', '<%= listaUsuario.razonSocial %>')"><i class="bi bi-archive"></i><span class="ml-2">Documentos</span></button>
+                          </td>
+                          <td class="text-capitalize">
+                            <div class="btn btn-list">
+                              <button class="btn ripple btn-light" title="Bloquear" onclick="bloqueoUsuario(event, '<%= listaUsuario.id_usuario %>')"><i class="ti-na"></i></button>
+                            </div>
+                          </td>
+                        </tr>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Editar -->
+  <div class="modal" id="modalEditar">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Editar Usuario</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+
+          <input type="hidden" value="" id="idUser">
+
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control" name="nombre" placeholder="Nombre Completo" value="" id="nombreEdit">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Email</label>
+              <input type="text" class="form-control" name="email" placeholder="Correo electrónico" value="" id="emailEdit">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Direccón</label>
+              <input type="text" class="form-control" name="telefono" placeholder="Dirección Completa" value="" id="direccionEdit">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <div class="col-md-6">
+                <label class="form-label">Teléfono</label>
+                <div class="input-group telephone-input w-100 pl-0">
+                  <input type="tel" id="mobile-number" name="telefono" placeholder="e.g. +1 702 123 4567" value="">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Pais</label>
+                <select class="form-control select2" name="pais" id="paisEdit">
+
+                  <% paises.data.forEach(pais => { %>
+
+                  <option value="<%= pais.name %>">
+                    <%= pais.name %>
+                  </option>
+
+                  <% }) %>
+
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="editarUsuario(event)">Editar usuario</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Eliminar -->
+
+  <div class="modal" id="modalEliminar">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content tx-size-sm">
+        <div class="modal-body tx-center pd-y-20 pd-x-20">
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+          <i class="icon icon ion-ios-close-circle-outline tx-100 tx-danger lh-1 mg-t-20 d-inline-block"></i>
+          <h4 class="tx-danger mg-b-20">¡Hola!</h4>
+          <p class="mg-b-2 mg-x-20">¿Esta seguro de eliminar este usuario?.</p>
+          <p class="mg-b-30 mg-x-20 text-center text-capitalize" id="nombreUsuarioEliminar"></p>
+          <input type="hidden" value="" id="idEliminar">
+          <button aria-label="Close" class="btn ripple btn-danger pd-x-25" data-dismiss="modal" type="button" onclick="eliminarUsuario(event)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+  <!-- Scripts Personalizados -->
+  <script>
+
+    function bloqueoUsuario(e, id) {
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/usuarios/bloqueoUsuario', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - usuarios',
+            type: 'error'
+          });
+        })
+    };
+
+    function modalEditar(e, id, nombre, direccion, telefono, pais, email) {
+
+      const idUser = document.getElementById("idUser");
+      idUser.value = id;
+
+      const nombreEdit = document.getElementById("nombreEdit");
+      nombreEdit.value = nombre;
+
+      const direccionEdit = document.getElementById("direccionEdit");
+      direccionEdit.value = direccion;
+
+      const emailEdit = document.getElementById("emailEdit");
+      emailEdit.value = email;
+
+      const telefonoEdit = document.getElementById("mobile-number");
+      telefonoEdit.value = telefono;
+
+      const paisEdit = document.getElementById("paisEdit");
+      const textPaisEdit = document.getElementById("select2-paisEdit-container");
+      paisEdit.value = pais;
+      textPaisEdit.innerHTML = pais;
+
+    }
+
+    function editarUsuario(e) {
+
+      const id = document.getElementById("idUser").value;
+      const nombre = document.getElementById("nombreEdit").value;
+      const direccion = document.getElementById("direccionEdit").value;
+      const email = document.getElementById("emailEdit").value;
+      const telefono = document.getElementById("mobile-number").value;
+      const pais = document.getElementById("paisEdit").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/usuarios/editarUsuario', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id,
+            nombre: nombre,
+            direccion: direccion,
+            email: email,
+            telefono: telefono,
+            pais: pais,
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - usuarios',
+            type: 'error'
+          });
+        })
+    }
+
+    function modalEliminar(e, id, nombre) {
+
+      const idEliminar = document.getElementById("idEliminar");
+      idEliminar.value = id;
+
+      const nombreEliminar = document.getElementById("nombreUsuarioEliminar");
+      nombreEliminar.innerHTML = nombre;
+
+    }
+
+    function eliminarUsuario(e) {
+
+      const id = document.getElementById("idEliminar").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/usuarios/eliminarUsuario', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - usuarios',
+            type: 'error'
+          });
+        })
+
+    }
+  </script>

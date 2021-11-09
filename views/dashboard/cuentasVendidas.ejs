@@ -1,0 +1,355 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+            <div class="d-flex">
+              <div class="justify-content-center">
+                <a class="btn btn-primary my-2 btn-icon-text" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalReporte">
+                  <i class="fe fe-download  mr-2"></i> Generar Reporte Cuentas Vendidas
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-sm-6 col-md-6 col-xl-2">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-success-transparent rounded-circle text-success">
+                    <i class="fe fe-upload-cloud"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Total<br>Cuentas Vendidas</p>
+                  <h3 class="mb-0"><%= cuentas.length %></h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-2">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-primary-transparent rounded-circle text-primary">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Cuentas<br>normales</p>
+                  <h3 class="mb-0"><%= cuentasNormales %></h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-2">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-secondary-transparent rounded-circle text-secondary">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Cuentas<br>bajo pedido</p>
+                  <h3 class="mb-0"><%= cuentasBajoPedido %></h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-2">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-danger-transparent rounded-circle text-danger">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Cuentas<br>personalizadas</p>
+                  <h3 class="mb-0"><%= cuentasPersonalizadas %></h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-2">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-info-transparent rounded-circle text-info">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Cuentas<br>renovaciones</p>
+                  <h3 class="mb-0"><%= cuentasRenovaciones %></h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-2">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-warning-transparent rounded-circle text-warning">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Cuentas<br>juegos</p>
+                  <h3 class="mb-0"><%= cuentasJuegos %></h3>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- End Row -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-12">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Total cuentas vendidas en red</h6>
+                    <p class="text-muted card-sub-title">A continuación encontrara un reporte detallado de todas las cuentas vendidas en su red.</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap w-100 key-buttons" id="exportexample">
+                      <thead>
+                        <tr>
+                          <th>Logo</th>
+                          <th>Fecha Compra</th>
+                          <th>Plataforma</th>
+                          <th>Valor pagado</th>
+                          <th>Tipo plataforma</th>
+                          <th>Usuario</th>
+                          <th>Password</th>
+                          <th>Pantalla</th>
+                          <th>Pin</th>
+                          <th>ID Jugador</th>
+                          <th>Fecha Subida</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% moment.locale('es'); %>
+                        <% if(cuentas.length) { %>
+                        <% cuentas.forEach(listaCuentas => { %>
+                        <% if(!(listaCuentas.usuario == null || listaCuentas.plataforma == null)) {%>
+                        <% if(listaCuentas.usuario.pais === 'Colombia') { %>
+                        <% var valorFormateado = new Intl.NumberFormat("es-CO", {style: "currency", currency: "COP", maximumSignificantDigits: 7}).format(listaCuentas.valorPagado); %>
+                        <% } else { %>
+                        <% var valorFormateado = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(listaCuentas.valorPagado); %>
+                        <% } %>
+                        <% if(listaCuentas.plataforma.tipo_plataforma === 5) { %>
+                        <% if(listaCuentas.user !== null || listaCuentas.password !== null) { %>
+                        <% const user_analizado = /^([^]+)@(\w+).(\w+)$/.exec(listaCuentas.user); %>
+                        <% const [,prefijo,servidor,dominio] = user_analizado; %>
+                        <% const reemplazo = prefijo.replace(/./g,"*"); %>
+                        <% var nuevo_email_user = `${reemplazo}@${servidor}.${dominio}`; %>
+                        <% var nuevo_password = listaCuentas.password.replace(/./g,"*"); %>
+                        <% var idJuego = 'no aplica' %>
+                        <% } else { %>
+                        <% var nuevo_email_user = 'no aplica' %>
+                        <% var nuevo_password = 'no aplica' %>
+                        <% var idJuego = listaCuentas.idJuego %>
+                        <% } %>
+                        <% } else { %>
+                        <% var nuevo_email_user = listaCuentas.user; %>
+                        <% var nuevo_password = listaCuentas.password; %>
+                        <% var idJuego = 'no aplica' %>
+                        <% } %>
+                        <tr>
+                          <td class="text-center">
+                            <img src="<%= listaCuentas.plataforma.logo === null ? '/assetsDashboard/img/users/default.jpg' : listaCuentas.plataforma.logo %>" alt="" class="img-circle">
+                          </td>
+                          <td class="text-center"><%=  moment(listaCuentas.fechaCompra).format('DD:MM:YYYY HH:MM:SS') %></td>
+                          <td class="text-capitalize"><%= listaCuentas.plataforma.plataforma %></td>
+                          <td class="text-capitalize text-right"><%= valorFormateado %></td>
+                          <td class="text-capitalize text-center">
+                            <span class="badge <%= listaCuentas.plataforma.tipo_plataforma === 1 ? 'badge-primary' : listaCuentas.plataforma.tipo_plataforma === 2 ? 'badge-secondary' : listaCuentas.plataforma.tipo_plataforma === 3 ? 'badge-danger' : listaCuentas.plataforma.tipo_plataforma === 4 ? 'badge-info' : listaCuentas.plataforma.tipo_plataforma === 5 ? 'badge-warning' : 'badge-light' %>">
+                              <%= listaCuentas.plataforma.tipo_plataforma === 1 ? 'Normal' : listaCuentas.plataforma.tipo_plataforma === 2 ? 'Bajo Pedido' : listaCuentas.plataforma.tipo_plataforma === 3 ? 'Personalizada' : listaCuentas.plataforma.tipo_plataforma === 4 ? 'Renovaciones' : listaCuentas.plataforma.tipo_plataforma === 5 ? 'Juegos' : 'N/A' %>
+                            </span>
+                          </td>
+                          <td class="text-left"><%= nuevo_email_user %></td>
+                          <td class="text-left"><%= nuevo_password %></td>
+                          <td class="text-left"><%= listaCuentas.pantalla %></td>
+                          <td class="text-left"><%= listaCuentas.pin %></td>
+                          <td class="text-left"><%= idJuego %></td>
+                          <td class="text-center"><%= moment(listaCuentas.fechaSubida).format('MMMM Do YYYY, h:mm:ss a') %></td>
+                        </tr>
+                        <% } %>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Reporte -->
+  <div class="modal" id="modalReporte" style="z-index: 1999 !important;">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Generar reporte cuentas vendidas</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="row row-sm mt-2">
+            <label class="form-label">Seleccione un rango de fecha</label>
+            <div class="input-group p-0">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <i class="fe fe-calendar  lh--9 op-6"></i>
+                </div>
+              </div>
+              <input type="text" class="form-control pull-right" id="reservation">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a class="btn ripple btn-success display-none" href="" download="" id="btnDescargar" onclick="archivoDescargado(event)"><i class="fas fa-file-excel"></i> Descargar Reporte</a>
+          <button class="btn ripple btn-primary" type="button" onclick="generarReporte(event)">Generar Reporte</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+  <script>
+    function archivoDescargado(e) {
+
+      const btnDescargar = document.getElementById('btnDescargar');
+      setTimeout(() => {
+        fetch('/cuentasVendidas/eliminarArchivo', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            data: btnDescargar.dataset.file,
+          })
+        })
+
+        btnDescargar.dataset.file = '';
+        btnDescargar.setAttribute("download", "");
+        btnDescargar.classList.add('display-none');
+
+
+      }, 3000);
+    }
+
+    function generarReporte(e) {
+
+      const fechas = document.getElementById('reservation').value;
+      console.log(fechas);
+      const btnDescargar = document.getElementById('btnDescargar');
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/cuentasVendidas/reporteCuentas', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            fecha: fechas
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+            btnDescargar.setAttribute('data-file', respuesta.url);
+            btnDescargar.href = respuesta.url;
+            btnDescargar.setAttribute("download", respuesta.url);
+            btnDescargar.classList.remove('display-none');
+
+          } else {
+            btnDescargar.setAttribute('data-file', respuesta.url);
+            btnDescargar.href = '';
+            btnDescargar.setAttribute("download", "");
+            btnDescargar.classList.add('display-none');
+
+            $('#alertaDescarga').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Error realizar la descarga del archivo.';
+            $('#alertaDescarga').html(error);
+            $('#alertaDescarga').delay(2000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Cuentas vendidas',
+            type: 'error'
+          });
+        })
+
+    }
+  </script>

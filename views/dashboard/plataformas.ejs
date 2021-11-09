@@ -1,0 +1,1795 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+            <div class="d-flex">
+              <div class="justify-content-center">
+                <a class="btn btn-primary my-2 btn-icon-text" href="/dashboard/reportarConsignacion">
+                  <i class="ti-wallet mr-2"></i> Recarga tu cuenta
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+          <div class="row row-sm">
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div class="card-widget">
+                    <% if(usuario.pais === 'Colombia') { %>
+                    <% var saldoFormateado = new Intl.NumberFormat("es-CO", {style: "currency", currency: "COP", maximumSignificantDigits: 7}).format(usuario.saldo); %>
+                    <% } else { %>
+                    <% var saldoFormateado = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(usuario.saldo); %>
+                    <% } %>
+                    <label class="main-content-label mb-3 pt-1">Saldo Actual Disponible</label>
+                    <h2 class="text-right"><i class="icon-size fas fa-coins float-left text-primary"></i><span class="font-weight-bold"><%- saldoFormateado %></span></h2>
+                    <p class="mb-0 text-muted">Fecha Actual<span class="float-right"><%- fecha %></span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- COL END -->
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div class="card-widget">
+                    <label class="main-content-label mb-3 pt-1">Plataformas Disponibles</label>
+                    <h2 class="text-right"><i class="icon-size fe fe-cast float-left text-primary"></i><span class="font-weight-bold"><%- plataformas.length %></span></h2>
+                    <p class="mb-0 text-muted">Directas, Renovaciones; Personalizadas, Juegos, Bajo pedido</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- COL END -->
+          </div>
+
+          <!-- ======================
+                            Plataformas Normales
+                        ======================= -->
+
+          <h2 class="main-content-title tx-24 mg-b-5 mt-4">Cuentas</h2>
+          <p class="text-muted">Usted podra comprar las siguientes cuentas de forma inmediata.</p>
+          <div class="row row-sm">
+
+            <% if(plataformasNormales.length) { %>
+            <% plataformasNormales.forEach(listaPlataformasNormales => { %>
+
+            <div class="col-sm-12 col-md-3">
+              <div class="card custom-card our-team">
+                <div class="card-body">
+                  <div class="mb-3 circulo-etiqueta"></div>
+                  <div class="picture avatar-lg online text-center">
+                    <img alt="avatar" class="rounded-circle" src="<%- listaPlataformasNormales.plataforma.logo %>">
+                  </div>
+                  <div class="text-center mt-3">
+                    <h5 class="pro-user-username text-dark mt-2 mb-0"><%- listaPlataformasNormales.plataforma.plataforma %></h5>
+                    <p class="user-info-rating mt-2">
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                    </p>
+                  </div>
+                  <h4 class="text-center color-primary">
+
+                    <% if(usuario.pais === 'Colombia') { %>
+                    <% var valorFormateado = new Intl.NumberFormat("es-CO", {style: "currency", currency: "COP", maximumSignificantDigits: 7}).format(listaPlataformasNormales.valor); %>
+                    <% } else { %>
+                    <% var valorFormateado = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(listaPlataformasNormales.valor); %>
+                    <% } %>
+                    <%- valorFormateado %>
+
+                  </h4>
+                  <div class="text-center">
+                    <button type="button" class="btn-informacion mt-2 mr-1" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalInformacion" onclick="modalInformacion(event, '<%= listaPlataformasNormales.plataforma.plataforma %>', '<%= listaPlataformasNormales.plataforma.logo %>', '<%= listaPlataformasNormales.plataforma.descripcion %>')"><i class="fas fa-info"></i></button>
+
+                    <% const stock = cuentas.filter(function(element){ %>
+                    <% return element.plataformaIdPlataforma == listaPlataformasNormales.plataforma.id_plataforma; %>
+                    <% }); %>
+
+                    <% if(stock.length === 0) { %>
+
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalSinCuentas"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+
+                    <% } else { %>
+
+                    <% if (Number(usuario.saldo) >= Number(listaPlataformasNormales.valor)) { %>
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalCompraNormal" onclick="modalCompraNormal(event, '<%= listaPlataformasNormales.plataforma.id_plataforma %>', '<%= listaPlataformasNormales.plataforma.plataforma %>', '<%= listaPlataformasNormales.plataforma.logo %>')"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+                    <% } else { %>
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalSinSaldo"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+                    <% } %>
+
+                    <% } %>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+            <% } %>
+
+          </div>
+
+
+          <!-- =========================
+                            Plataformas Bajo Pedido
+                        ========================== -->
+
+          <h2 class="main-content-title tx-24 mg-b-5 mt-4">Cuentas bajo pedido</h2>
+          <p class="text-muted">Usted podra comprar las siguientes cuentas realizando la solicitud.</p>
+          <div class="row row-sm">
+
+            <% if(plataformasBajoPedido.length) { %>
+            <% plataformasBajoPedido.forEach(listaplataformasBajoPedido => { %>
+
+            <div class="col-sm-12 col-md-3">
+              <div class="card custom-card our-team">
+                <div class="card-body">
+                  <div class="mb-3 circulo-etiqueta"></div>
+                  <div class="picture avatar-lg online text-center">
+                    <img alt="avatar" class="rounded-circle" src="<%- listaplataformasBajoPedido.plataforma.logo %>">
+                  </div>
+                  <div class="text-center mt-3">
+                    <h5 class="pro-user-username text-dark mt-2 mb-0"><%- listaplataformasBajoPedido.plataforma.plataforma %></h5>
+                    <p class="user-info-rating mt-2">
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                    </p>
+                  </div>
+                  <h4 class="text-center color-primary">
+
+                    <% if(usuario.pais === 'Colombia') { %>
+                    <% var valorFormateado = new Intl.NumberFormat("es-CO", {style: "currency", currency: "COP", maximumSignificantDigits: 7}).format(listaplataformasBajoPedido.valor); %>
+                    <% } else { %>
+                    <% var valorFormateado = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(listaplataformasBajoPedido.valor); %>
+                    <% } %>
+                    <%- valorFormateado %>
+                  </h4>
+                  <div class="text-center">
+                    <button type="button" class="btn-informacion mt-2 mr-1" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalInformacion" onclick="modalInformacion(event, '<%= listaplataformasBajoPedido.plataforma.plataforma %>', '<%= listaplataformasBajoPedido.plataforma.logo %>', '<%= listaplataformasBajoPedido.plataforma.descripcion %>')"><i class="fas fa-info"></i></button>
+                    <% if (Number(usuario.saldo) >= Number(listaplataformasBajoPedido.valor)) { %>
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalCompraPedido" onclick="modalCompraPedido(event, '<%= listaplataformasBajoPedido.plataforma.id_plataforma %>', '<%= listaplataformasBajoPedido.plataforma.plataforma %>', '<%= listaplataformasBajoPedido.plataforma.logo %>')"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+                    <% } else { %>
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalSinSaldo"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+            <% } %>
+
+          </div>
+
+          <!-- ===========================
+                            Plataformas Renovaciones
+                        ============================ -->
+
+          <h2 class="main-content-title tx-24 mg-b-5 mt-4">Renovaciones</h2>
+          <p class="text-muted">Usted podra renovar las cuentas compradas aqui, de cualquiera de las siguientes plataformas.</p>
+          <div class="row row-sm">
+
+            <% if(plataformasRenovaciones.length) { %>
+            <% plataformasRenovaciones.forEach(listaplataformasRenovaciones => { %>
+
+            <div class="col-sm-12 col-md-3">
+              <div class="card custom-card our-team">
+                <div class="card-body">
+                  <div class="mb-3 circulo-etiqueta"></div>
+                  <div class="picture avatar-lg online text-center">
+                    <img alt="avatar" class="rounded-circle" src="<%- listaplataformasRenovaciones.plataforma.logo %>">
+                  </div>
+                  <div class="text-center mt-3">
+                    <h5 class="pro-user-username text-dark mt-2 mb-0"><%- listaplataformasRenovaciones.plataforma.plataforma %></h5>
+                    <p class="user-info-rating mt-2">
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                    </p>
+                  </div>
+                  <h4 class="text-center color-primary">
+                    <% if(usuario.pais === 'Colombia') { %>
+                    <% var valorFormateado = new Intl.NumberFormat("es-CO", {style: "currency", currency: "COP", maximumSignificantDigits: 7}).format(listaplataformasRenovaciones.valor); %>
+                    <% } else { %>
+                    <% var valorFormateado = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(listaplataformasRenovaciones.valor); %>
+                    <% } %>
+                    <%- valorFormateado %>
+                  </h4>
+                  <div class="text-center">
+                    <button type="button" class="btn-informacion mt-2 mr-1" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalInformacion" onclick="modalInformacion(event, '<%= listaplataformasRenovaciones.plataforma.plataforma %>', '<%= listaplataformasRenovaciones.plataforma.logo %>', '<%= listaplataformasRenovaciones.plataforma.descripcion %>')"><i class="fas fa-info"></i></button>
+
+                    <% if (Number(usuario.saldo) >= Number(listaplataformasRenovaciones.valor)) { %>
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalCompraRenovacion" onclick="modalCompraRenovacion(event, '<%= listaplataformasRenovaciones.plataforma.id_plataforma %>', '<%= listaplataformasRenovaciones.plataforma.plataforma %>', '<%= listaplataformasRenovaciones.plataforma.logo %>')"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+                    <% } else { %>
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalSinSaldo"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+                    <% } %>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+            <% } %>
+
+          </div>
+
+
+          <!-- ============================
+                            Plataformas Personalizadas
+                        ============================= -->
+
+          <h2 class="main-content-title tx-24 mg-b-5 mt-4">Personalizadas</h2>
+          <p class="text-muted">Usted podra comprar las siguientes cuentas con correos personalizados.</p>
+          <div class="row row-sm">
+
+            <% if(plataformasPersonalizadas.length) { %>
+            <% plataformasPersonalizadas.forEach(listaPlataformasPersonalizadas => { %>
+
+            <div class="col-sm-12 col-md-3">
+              <div class="card custom-card our-team">
+                <div class="card-body">
+                  <div class="mb-3 circulo-etiqueta"></div>
+                  <div class="picture avatar-lg online text-center">
+                    <img alt="avatar" class="rounded-circle" src="<%- listaPlataformasPersonalizadas.plataforma.logo %>">
+                  </div>
+                  <div class="text-center mt-3">
+                    <h5 class="pro-user-username text-dark mt-2 mb-0"><%- listaPlataformasPersonalizadas.plataforma.plataforma %></h5>
+                    <p class="user-info-rating mt-2">
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                    </p>
+                  </div>
+                  <h4 class="text-center color-primary">
+                    <% if(usuario.pais === 'Colombia') { %>
+                    <% var valorFormateado = new Intl.NumberFormat("es-CO", {style: "currency", currency: "COP", maximumSignificantDigits: 7}).format(listaPlataformasPersonalizadas.valor); %>
+                    <% } else { %>
+                    <% var valorFormateado = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(listaPlataformasPersonalizadas.valor); %>
+                    <% } %>
+                    <%- valorFormateado %>
+                  </h4>
+                  <div class="text-center">
+                    <button type="button" class="btn-informacion mt-2 mr-1" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalInformacion" onclick="modalInformacion(event, '<%= listaPlataformasPersonalizadas.plataforma.plataforma %>', '<%= listaPlataformasPersonalizadas.plataforma.logo %>', '<%= listaPlataformasPersonalizadas.plataforma.descripcion %>')"><i class="fas fa-info"></i></button>
+
+                    <% if (Number(usuario.saldo) >= Number(listaPlataformasPersonalizadas.valor)) { %>
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalCompraPersonalizada" onclick="modalCompraPersonalizada(event, '<%= listaPlataformasPersonalizadas.plataforma.id_plataforma %>', '<%= listaPlataformasPersonalizadas.plataforma.plataforma %>', '<%= listaPlataformasPersonalizadas.plataforma.logo %>')"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+                    <% } else { %>
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalSinSaldo"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+                    <% } %>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+            <% } %>
+
+          </div>
+
+
+          <!-- ======================
+                            Plataformas Juegos
+                        ======================= -->
+
+          <h2 class="main-content-title tx-24 mg-b-5 mt-4">Juegos</h2>
+          <p class="text-muted">Usted podra comprar los siguientes pines, diamantes, monedas coins, etc.</p>
+          <div class="row row-sm">
+
+            <% if(plataformasJuegos.length) { %>
+            <% plataformasJuegos.forEach(listaPlataformasJuegos => { %>
+
+            <div class="col-sm-12 col-md-3">
+              <div class="card custom-card our-team">
+                <div class="card-body">
+                  <div class="mb-3 circulo-etiqueta"></div>
+                  <div class="picture avatar-lg online text-center">
+                    <img alt="avatar" class="rounded-circle" src="<%- listaPlataformasJuegos.plataforma.logo %>">
+                  </div>
+                  <div class="text-center mt-3">
+                    <h5 class="pro-user-username text-dark mt-2 mb-0"><%- listaPlataformasJuegos.plataforma.plataforma %></h5>
+                    <p class="user-info-rating mt-2">
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                      <a href="#"><i class="fa fa-star text-warning"> </i></a>
+                    </p>
+                  </div>
+                  <h4 class="text-center color-primary">
+                    <% const array = asignaciones.filter(function(element){ %>
+                    <% return element.plataformaIdPlataforma == listaPlataformasJuegos.plataforma.id_plataforma; %>
+                    <% }); %>
+
+                    <% const valor = array[0].valor; %>
+
+                    <% if(usuario.pais === 'Colombia') { %>
+                    <% var valorFormateado = new Intl.NumberFormat("es-CO", {style: "currency", currency: "COP", maximumSignificantDigits: 7}).format(valor); %>
+                    <% } else { %>
+                    <% var valorFormateado = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(valor); %>
+                    <% } %>
+                    <%- valorFormateado %>
+                  </h4>
+                  <div class="text-center">
+                    <button type="button" class="btn-informacion mt-2 mr-1" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalInformacion" onclick="modalInformacion(event, '<%= listaPlataformasJuegos.plataforma.plataforma %>', '<%= listaPlataformasJuegos.plataforma.logo %>', '<%= listaPlataformasJuegos.plataforma.descripcion %>')"><i class="fas fa-info"></i></button>
+
+                    <% const nomPlataforma = listaPlataformasJuegos.plataforma.plataforma.toLowerCase(); %>
+
+                    <% if(nomPlataforma.includes('free fire')) { %>
+
+                    <% if (Number(usuario.saldo) >= Number(valor)) { %>
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalCompraFreefire" onclick="modalCompraFreefire(event, '<%= listaPlataformasJuegos.plataforma.id_plataforma %>', '<%= listaPlataformasJuegos.plataforma.plataforma %>', '<%= listaPlataformasJuegos.plataforma.logo %>')"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+                    <% } else { %>
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalSinSaldo"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+                    <% } %>
+
+                    <% } else if(nomPlataforma.includes('call of duty')) { %>
+
+                    <% if (Number(usuario.saldo) >= Number(listaPlataformasJuegos.valor)) { %>
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalCompraCallofduty" onclick="modalCompraCallofduty(event, '<%= listaPlataformasJuegos.plataforma.id_plataforma %>', '<%= listaPlataformasJuegos.plataforma.plataforma %>', '<%= listaPlataformasJuegos.plataforma.logo %>')"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+                    <% } else { %>
+                    <button type="button" class="btn-comprar mt-2" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalSinSaldo"><i class="ti ti-shopping-cart-full"></i> Comprar</button>
+                    <% } %>
+
+                    <% } %>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+            <% } %>
+
+          </div>
+
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modales -->
+
+  <!-- Modal info -->
+  <div class="modal" id="modalInformacion">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">Descripción de la plataforma</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+
+          <h3 class="text-center text-uppercase" id="nombrePlataforma"></h3>
+
+          <center>
+            <div class="picture img-descripcion online text-center my-4">
+              <img alt="avatar" class="rounded-circle" id="logoInfo" src="">
+            </div>
+          </center>
+
+          <p class="text-left mb-3" id="descripcionPltaforma"></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal sin saldo -->
+  <div class="modal" id="modalSinSaldo">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">Saldo insuficiente</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+
+          <h3 class="text-center text-uppercase" id="nombrePlataforma"></h3>
+
+          <center>
+            <div class="picture img-descripcion online text-center my-4">
+              <img alt="avatar" src="/assetsDashboard/img/empty.svg">
+            </div>
+          </center>
+
+          <p class="text-center mb-3" style="color: #4a526f;">¡Lo sentimos!, no tienes saldo suficiente para comprar esta cuenta, te invitamos a recargar tu cuenta.</p>
+
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-primary" href="/dashboard/reportarConsignacion">Cargar mi cuenta</a>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal sin Cuentas -->
+  <div class="modal" id="modalSinCuentas">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">...Ups! Lo sentimos</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+
+          <h3 class="text-center text-uppercase" id="nombrePlataforma"></h3>
+
+          <center>
+            <div class="picture img-descripcion online text-center my-4">
+              <img alt="avatar" src="/assetsDashboard/img/inbox.svg">
+            </div>
+          </center>
+
+          <p class="text-center mb-3" style="color: #4a526f;">¡Error NHC0073!, no puedes solicitar cuentas de esta plataforma en este momento, estamos trabajando en ello, por favor vuelve a intentarlo en un rato.</p>
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Cuenta Normal -->
+  <div class="modal" id="modalCompraNormal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">Comprar cuenta - <span id="nombrePlatformaModal"></span></h6>
+        </div>
+
+        <div class="modal-body background-compra">
+          <section id="seccionCompraNormal">
+            <div>
+              <h4 class="text-center">Información cliente</h4>
+              <section class="mb-3">
+                <input type="hidden" id="idPlataformaCompraNormal" value="">
+                <p class="mb-2">Ingresa los siguientes datos sobre tu cliente:</p>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Nombre</label>
+                  <input class="form-control" required="" type="text" name="clienteCompra" id="clienteCompraNormal">
+                </div>
+                <div class="form-group text-left">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Celular</label>
+                  <div class="input-group telephone-input w-100">
+                    <input type="tel" id="mobile-number" name="telefono" placeholder="e.g. +1 702 123 4567">
+                  </div>
+                </div>
+                <label class="ckbox">
+                  <input type="checkbox" id="autorizacionNormal"><span class="tx-13">Mi cliente autoriza el envio de los datos anteriores.</span>
+                </label>
+              </section>
+              <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaComprarNormal">
+                Hola
+              </div>
+            </div>
+          </section>
+          <section id="seccionCompraNormalRealizado" class="display-none">
+            <div>
+              <center>
+                <div class="picture img-exito online text-center mb-4 mt-0">
+                  <img alt="avatar" class="rounded-circle" id="imgCompraNormal" src="">
+                </div>
+              </center>
+              <h3 class="text-center text-uppercase" style="color: #4a526f;">¡Compra Exitosa!</h3>
+              <section>
+                <h5 class="mb-3 mt-4 text-capitalize font-weight-bold" style="color: #4a526f;">Información de la cuenta:</h5>
+                <div class="mb-3">
+                  <p class="text-left" style="word-wrap: break-word; color: #4a526f;">
+                    <span class="text-uppercase font-weight-bold"><i class="fe fe-user"></i> Usuario:</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span id="usuarioCuentaNormal">esteban@gmail.com</span>
+                  </p>
+                  <p class="text-left" style="word-wrap: break-word; color: #4a526f;">
+                    <span class="text-uppercase font-weight-bold"><i class="fe fe-lock"></i> Password:</span>
+                    &nbsp;&nbsp;
+                    <span id="passwordCuentaNormal">2021</span>
+                  </p>
+                  <p class="text-left" style="word-wrap: break-word; color: #4a526f;">
+                    <span class="text-uppercase font-weight-bold"><i class="fe fe-cast"></i> Pantalla:</span>
+                    &nbsp;&nbsp;&nbsp;
+                    <span class="text-capitalize" id="pantallaCuentaNormal">Pantalla 2</span>
+                  </p>
+                  <p class="text-left" style="word-wrap: break-word; color: #4a526f;">
+                    <span class="text-uppercase font-weight-bold"><i class="fe fe-hash"></i> Pin:</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span id="pinCuentaNormal">2243</span>
+                  </p>
+                </div>
+                <p class="text-left" style="word-wrap: break-word; color: #4a526f;"><span class="text-uppercase font-weight-bold">NOTA: </span> Recuerda que podras enviar la información de la cuenta directamente al whatsapp de tu cliente haciendo click en el botón de abajo.</p>
+              </section>
+            </div>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <section id="footerCompraNormal">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button" onclick="limpiar()">Cerrar</button>
+            <button class="btn ripple btn-primary" id="btnSiguiente" type="button" onclick="comprarCuentaNormal(event)">Siguiente</button>
+          </section>
+          <section id="footerCompraNormalRealizado" class="display-none">
+            <a class="btn ripple btn-outline-success" id="btnWhatsappNormal" href="" target="_blank"><i class="fab fa-whatsapp"></i> Enviar whatsapp</a>
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button" onclick="reload()">Cerrar</button>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal cuenta bajo pedido -->
+  <div class="modal" id="modalCompraPedido">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">Comprar cuenta - <span id="nombrePlatformaModal2"></span></h6>
+        </div>
+
+        <div class="modal-body background-compra">
+          <section id="seccionCompraPedido">
+            <div>
+              <h4 class="text-center">Información cliente</h4>
+              <section class="mb-3">
+                <input type="hidden" id="idPlataformaCompraPedido" value="">
+                <p class="mb-2">Ingresa los siguientes datos sobre tu cliente:</p>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Nombre</label>
+                  <input class="form-control" required="" type="text" name="clienteCompra" id="clienteCompraPedido">
+                </div>
+                <div class="form-group text-left">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Celular</label>
+                  <div class="input-group telephone-input w-100">
+                    <input type="tel" id="mobile-number2" name="telefono" placeholder="e.g. +1 702 123 4567">
+                  </div>
+                </div>
+                <label class="ckbox">
+                  <input type="checkbox" id="autorizacionPedido"><span class="tx-13">Mi cliente autoriza el envio de los datos anteriores.</span>
+                </label>
+                <p class="text-left mt-3">Esta plataforma maneja cuentas bajo pedido, si desea solicitar la cuenta por favor haga click en el botton <strong>Solicitar</strong>.</p>
+              </section>
+              <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaComprarPedido">
+                Hola
+              </div>
+            </div>
+          </section>
+          <section id="seccionCompraPedidoRealizado" class="display-none">
+            <div>
+              <center>
+                <div class="picture img-exito online text-center mb-4 mt-2">
+                  <img alt="avatar" src="/assetsDashboard/img/message.svg">
+                </div>
+              </center>
+              <h3 class="text-center text-uppercase mb-3" style="color: #4a526f;">¡Espectacular!</h3>
+              <section>
+                <p class="text-center" style="word-wrap: break-word; color: #4a526f;">Hemos recibido con éxito tu solicitud, estamos procesando tu pedido. <br><br>En la parte superior derecha encontraras un icono palpitante, esa es la sección de notificaciones, allí te notificaremos cuando tu pedido este listo. Una la vez la cuenta sea generada te descontaremos el <strong>saldo</strong> correspondiente.</p>
+              </section>
+            </div>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <section id="footerCompraPedido">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button" onclick="limpiar2()">Cerrar</button>
+            <button class="btn ripple btn-primary" type="button" onclick="comprarCuentaPedido(event)">Solicitar</button>
+          </section>
+          <section id="footerCompraPedidoRealizado" class="display-none">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Finalzar</button>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal cuenta renovaciones -->
+  <div class="modal" id="modalCompraRenovacion">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">Comprar cuenta - <span id="nombrePlatformaModal3"></span></h6>
+        </div>
+
+        <div class="modal-body background-compra">
+          <section id="seccionCompraRenovacion">
+            <div>
+              <h4 class="text-center">Información cliente</h4>
+              <section class="mb-3">
+                <input type="hidden" id="idPlataformaCompraRenovacion" value="">
+                <p class="mb-2">Ingresa los siguientes datos sobre tu cliente:</p>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Nombre</label>
+                  <input class="form-control" required="" type="text" name="clienteCompra" id="clienteCompraRenovacion">
+                </div>
+                <div class="form-group text-left">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Celular</label>
+                  <div class="input-group telephone-input w-100">
+                    <input type="tel" id="mobile-number3" name="telefono" placeholder="e.g. +1 702 123 4567">
+                  </div>
+                </div>
+                <label class="ckbox">
+                  <input type="checkbox" id="autorizacionRenovacion"><span class="tx-13">Mi cliente autoriza el envio de los datos anteriores.</span>
+                </label>
+              </section>
+              <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaComprarRenovacion">
+                Hola
+              </div>
+            </div>
+          </section>
+          <section id="seccionCompraRenovacionRealizado" class="display-none">
+            <div>
+              <h4 class="text-center">Información de la cuenta</h4>
+              <section class="mb-3">
+                <p class="mb-2">Ingresa los siguientes datos sobre la cuenta que deseas renovar:</p>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Usuario</label>
+                  <input class="form-control" required="" type="text" name="usuarioCompra" id="usuarioCompraRenovacion">
+                </div>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Contraseña</label>
+                  <input class="form-control" required="" type="text" name="passwordCompra" id="passwordCompraRenovacion">
+                </div>
+                <label class="ckbox">
+                  <input type="checkbox" id="confirmacionRenovacion"><span class="tx-13">Confirmo que los datos anteriormente ingresados son correctos.</span>
+                </label>
+              </section>
+              <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaComprarRenovacion2">
+                Hola
+              </div>
+            </div>
+          </section>
+          <section id="seccionCompraRenovacionRealizado2" class="display-none">
+            <div>
+              <center>
+                <div class="picture img-exito online text-center mb-4 mt-2">
+                  <img alt="avatar" src="/assetsDashboard/img/laptop.svg">
+                </div>
+              </center>
+              <h3 class="text-center text-uppercase mb-3" style="color: #4a526f;">¡Espectacular!</h3>
+              <section>
+                <p class="text-center" style="word-wrap: break-word; color: #4a526f;">Hemos recibido con éxito tu solicitud de renovación, nos pondremos a trabajar en ello. <br><br>En la parte superior derecha encontraras un icono palpitante, esa es la sección de notificaciones, allí te notificaremos cuando tu renovación este lista. Una la vez la cuenta sea renovada te descontaremos el <strong>saldo</strong> correspondiente.</p>
+              </section>
+            </div>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <section id="footerCompraRenovacion">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button" onclick="limpiar3()">Cerrar</button>
+            <button class="btn ripple btn-primary" type="button" onclick="stepUnoRenovacion(event)">Siguiente</button>
+          </section>
+          <section id="footerCompraRenovacionRealizado" class="display-none">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button" onclick="limpiar3()">Cerrar</button>
+            <button class="btn ripple btn-primary" type="button" onclick="comprarCuentaRenovacion(event)">Siguiente</button>
+          </section>
+          <section id="footerCompraRenovacionRealizado2" class="display-none">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Finalzar</button>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal cuenta personalizada -->
+  <div class="modal" id="modalCompraPersonalizada">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">Comprar cuenta - <span id="nombrePlatformaModal4"></span></h6>
+        </div>
+
+        <div class="modal-body background-compra">
+          <section id="seccionCompraPersonalizada">
+            <div>
+              <h4 class="text-center">Información cliente</h4>
+              <section class="mb-3">
+                <input type="hidden" id="idPlataformaCompraPersonalizada" value="">
+                <p class="mb-2">Ingresa los siguientes datos sobre tu cliente:</p>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Nombre</label>
+                  <input class="form-control" required="" type="text" name="clienteCompra" id="clienteCompraPersonalizada">
+                </div>
+                <div class="form-group text-left">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Celular</label>
+                  <div class="input-group telephone-input w-100">
+                    <input type="tel" id="mobile-number4" name="telefono" placeholder="e.g. +1 702 123 4567">
+                  </div>
+                </div>
+                <label class="ckbox">
+                  <input type="checkbox" id="autorizacionPersonalizada"><span class="tx-13">Mi cliente autoriza el envio de los datos anteriores.</span>
+                </label>
+              </section>
+              <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaComprarPersonalizada">
+                Hola
+              </div>
+            </div>
+          </section>
+          <section id="seccionCompraPersonalizadaRealizado" class="display-none">
+            <div>
+              <h4 class="text-center">Información de la cuenta</h4>
+              <section class="mb-3">
+                <p class="mb-2">Ingresa los siguientes datos sobre la cuenta personalizada que deseas generar:
+                  <span>(Si es una cuenta nueva y no tiene contraseña, por favor marca la casilla <strong>La cuenta no tiene contraseña</strong>)</span>.
+                </p>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Usuario</label>
+                  <input class="form-control" required="" type="text" name="usuarioCompra" id="usuarioCompraPersonalizada">
+                </div>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Contraseña</label>
+                  <input class="form-control" required="" type="text" name="passwordCompra" id="passwordCompraPersonalizada">
+                </div>
+                <label class="ckbox">
+                  <input type="checkbox" id="sinPassword"><span class="tx-13">La cuenta no tiene contraseña.</span>
+                </label>
+              </section>
+              <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaComprarPersonalizada2">
+                Hola
+              </div>
+            </div>
+          </section>
+          <section id="seccionCompraPersonalizadaRealizado2" class="display-none">
+            <div>
+              <center>
+                <div class="picture img-exito online text-center mb-4 mt-2">
+                  <img alt="avatar" src="/assetsDashboard/img/purchasing.svg">
+                </div>
+              </center>
+              <h3 class="text-center text-uppercase mb-3" style="color: #4a526f;">¡Espectacular!</h3>
+              <section>
+                <p class="text-center" style="word-wrap: break-word; color: #4a526f;">Hemos recibido con éxito tu solicitud para generar una cuenta con usuario personalizado, nos pondremos a trabajar en ello justo ahora. <br><br>En la parte superior derecha encontraras un icono palpitante, esa es la sección de notificaciones, allí te notificaremos cuando tu cuenta personalizada este lista. Una la vez la cuenta sea generada te descontaremos el <strong>saldo</strong> correspondiente.</p>
+              </section>
+            </div>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <section id="footerCompraPersonalizada">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button" onclick="limpiar4()">Cerrar</button>
+            <button class="btn ripple btn-primary" type="button" onclick="stepUnoPersonalizada(event)">Siguiente</button>
+          </section>
+          <section id="footerCompraPersonalizadaRealizado" class="display-none">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button" onclick="limpiar4()">Cerrar</button>
+            <button class="btn ripple btn-primary" type="button" onclick="comprarCuentaPersonalizada(event)">Siguiente</button>
+          </section>
+          <section id="footerCompraPersonalizadaRealizado2" class="display-none">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Finalzar</button>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Freefire -->
+  <div class="modal" id="modalCompraFreefire">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">Comprar cuenta - <span id="nombrePlatformaModal5"></span></h6>
+        </div>
+
+        <div class="modal-body background-compra-free">
+          <section id="seccionCompraFreefire">
+            <div>
+              <h4 class="text-center">Información cliente</h4>
+              <section class="mb-3">
+                <input type="hidden" id="idPlataformaCompraFreefire" value="">
+                <p class="mb-2">Ingresa los siguientes datos sobre tu cliente:</p>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Nombre</label>
+                  <input class="form-control" required="" type="text" name="clienteCompra" id="clienteCompraFreefire">
+                </div>
+                <div class="form-group text-left">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Celular</label>
+                  <div class="input-group telephone-input w-100">
+                    <input type="tel" id="mobile-number5" name="telefono" placeholder="e.g. +1 702 123 4567">
+                  </div>
+                </div>
+                <label class="ckbox">
+                  <input type="checkbox" id="autorizacionFreefire"><span class="tx-13">Mi cliente autoriza el envio de los datos anteriores.</span>
+                </label>
+              </section>
+              <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaComprarFreefire">
+                Hola
+              </div>
+            </div>
+          </section>
+          <section id="seccionCompraFreefireRealizado" class="display-none">
+            <div>
+              <h4 class="text-center">Información de la cuenta</h4>
+              <section class="mb-3">
+                <p class="mb-2">Ingresa los siguientes datos sobre la cuenta de Freefire en la que deseas generar la compra:</p>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">ID Cuenta</label>
+                  <input class="form-control" required="" type="text" name="idCompra" id="idCompraFreefire">
+                </div>
+              </section>
+              <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaComprarFreefire2">
+                Hola
+              </div>
+            </div>
+          </section>
+          <section id="seccionCompraFreefireRealizado2" class="display-none">
+            <div>
+              <center>
+                <div class="picture img-exito online text-center mb-4 mt-2">
+                  <img alt="avatar" src="/assetsDashboard/img/diamond.svg">
+                </div>
+              </center>
+              <h3 class="text-center text-uppercase mb-3" style="color: #4a526f;">¡Espectacular!</h3>
+              <section>
+                <p class="text-center" style="word-wrap: break-word; color: #4a526f;">Hemos recibido con éxito tu solicitud de compra para el ID de Freefire ingresado, nos pondremos a trabajar en ello justo ahora. <br><br>En la parte superior derecha encontraras un icono palpitante, esa es la sección de notificaciones, allí te notificaremos cuando compra en Freefire este lista. Una la vez la compra sea procesada te descontaremos el <strong>saldo</strong> correspondiente.</p>
+              </section>
+            </div>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <section id="footerCompraFreefire">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button" onclick="limpiar4()">Cerrar</button>
+            <button class="btn ripple btn-primary" type="button" onclick="stepUnoFreefire(event)">Siguiente</button>
+          </section>
+          <section id="footerCompraFreefireRealizado" class="display-none">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button" onclick="limpiar4()">Cerrar</button>
+            <button class="btn ripple btn-primary" type="button" onclick="comprarCuentaFreefire(event)">Siguiente</button>
+          </section>
+          <section id="footerCompraFreefireRealizado2" class="display-none">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Finalzar</button>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Call of duty -->
+  <div class="modal" id="modalCompraCallofduty">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content modal-content-demo" style="border-radius: 10px;">
+        <div class="modal-header">
+          <h6 class="modal-title">Comprar cuenta - <span id="nombrePlatformaModal6"></span></h6>
+        </div>
+
+        <div class="modal-body background-compra-call">
+          <section id="seccionCompraCallofduty">
+            <div>
+              <h4 class="text-center">Información cliente</h4>
+              <section class="mb-3">
+                <input type="hidden" id="idPlataformaCompraCallofduty" value="">
+                <p class="mb-2">Ingresa los siguientes datos sobre tu cliente:</p>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Nombre</label>
+                  <input class="form-control" required="" type="text" name="clienteCompra" id="clienteCompraCallofduty">
+                </div>
+                <div class="form-group text-left">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Celular</label>
+                  <div class="input-group telephone-input w-100">
+                    <input type="tel" id="mobile-number6" name="telefono" placeholder="e.g. +1 702 123 4567">
+                  </div>
+                </div>
+                <label class="ckbox">
+                  <input type="checkbox" id="autorizacionCallofduty"><span class="tx-13">Mi cliente autoriza el envio de los datos anteriores.</span>
+                </label>
+              </section>
+              <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaComprarCallofduty">
+                Hola
+              </div>
+            </div>
+          </section>
+          <section id="seccionCompraCallofdutyRealizado" class="display-none">
+            <div>
+              <h4 class="text-center">Información de la cuenta</h4>
+              <section class="mb-3">
+                <p class="mb-2">Ingresa los siguientes datos de facebook asociados a tu cuenta de Call of duty en la que deseas generar la compra:</p>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Email Facebook</label>
+                  <input class="form-control" required="" type="text" name="fsCompra" id="fsCompraCallofduty">
+                </div>
+                <div class="form-group">
+                  <label class="main-content-label tx-11 tx-medium tx-gray-600">Contraseña</label>
+                  <input class="form-control" required="" type="text" name="psCompra" id="psCompraCallofduty">
+                </div>
+              </section>
+              <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaComprarCallofduty2">
+                Hola
+              </div>
+            </div>
+          </section>
+          <section id="seccionCompraCallofdutyRealizado2" class="display-none">
+            <div>
+              <center>
+                <div class="picture img-exito online text-center mb-4 mt-2">
+                  <img alt="avatar" src="/assetsDashboard/img/money.svg">
+                </div>
+              </center>
+              <h3 class="text-center text-uppercase mb-3" style="color: #4a526f;">¡Espectacular!</h3>
+              <section>
+                <p class="text-center" style="word-wrap: break-word; color: #4a526f;">Hemos recibido con éxito tu solicitud de compra para el usuario de Callofduty ingresado, nos pondremos a trabajar en ello justo ahora. <br><br>En la parte superior derecha encontraras un icono palpitante, esa es la sección de notificaciones, allí te notificaremos cuando compra en Call of duty este lista. Una la vez la compra sea procesada te descontaremos el <strong>saldo</strong> correspondiente.</p>
+              </section>
+            </div>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <section id="footerCompraCallofduty">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button" onclick="limpiar4()">Cerrar</button>
+            <button class="btn ripple btn-primary" type="button" onclick="stepUnoCallofduty(event)">Siguiente</button>
+          </section>
+          <section id="footerCompraCallofdutyRealizado" class="display-none">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button" onclick="limpiar4()">Cerrar</button>
+            <button class="btn ripple btn-primary" type="button" onclick="comprarCuentaCallofduty(event)">Siguiente</button>
+          </section>
+          <section id="footerCompraCallofdutyRealizado2" class="display-none">
+            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Finalzar</button>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+
+  <script>
+    function modalCompraCallofduty(e, id, nombre, logo) {
+
+      const idPlataformaCompraCallofduty = document.getElementById("idPlataformaCompraCallofduty");
+      idPlataformaCompraCallofduty.value = id;
+
+      const nombrePlataforma = document.getElementById("nombrePlatformaModal6");
+      nombrePlataforma.innerHTML = nombre;
+
+    }
+
+    function stepUnoCallofduty(e) {
+
+      const clienteCompraCallofduty = document.getElementById('clienteCompraCallofduty').value;
+      const telefonoCliente = document.getElementById('mobile-number6').value;
+      const autorizacionCallofduty = document.getElementById('autorizacionCallofduty').checked;
+      const id = document.getElementById("idPlataformaCompraCallofduty").value;
+
+      if (!(clienteCompraCallofduty == '' || telefonoCliente == '')) {
+
+        if (autorizacionCallofduty) {
+
+          const seccionUno = $("#seccionCompraCallofduty");
+          const footerUno = $("#footerCompraCallofduty");
+          seccionUno.fadeOut(300).delay(800);
+          footerUno.fadeOut(300).delay(800);
+
+          const seccionDos = $("#seccionCompraCallofdutyRealizado");
+          const footerDos = $("#footerCompraCallofdutyRealizado");
+          seccionDos.fadeIn(300).delay(800);
+          footerDos.fadeIn(300).delay(800);
+
+        } else {
+
+          $('#alertaComprarCallofduty').fadeIn();
+          const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor autorize el envio de datos.';
+          $('#alertaComprarCallofduty').html(error);
+          $('#alertaComprarCallofduty').delay(2000).fadeOut();
+        }
+
+      } else {
+
+        $('#alertaComprarCallofduty').fadeIn();
+        const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor llene todos los campos.';
+        $('#alertaComprarCallofduty').html(error);
+        $('#alertaComprarCallofduty').delay(2000).fadeOut();
+
+      }
+
+    }
+
+    function comprarCuentaCallofduty(e) {
+
+      const clienteCompraCallofduty = document.getElementById('clienteCompraCallofduty').value;
+      const telefonoCliente = document.getElementById('mobile-number6').value;
+      const autorizacionCallofduty = document.getElementById('autorizacionCallofduty').checked;
+      const id = document.getElementById("idPlataformaCompraCallofduty").value;
+
+      const fsCompraCallofduty = document.getElementById('fsCompraCallofduty').value;
+      const psCompraCallofduty = document.getElementById('psCompraCallofduty').value;
+
+      if (!(fsCompraCallofduty == '' || psCompraCallofduty == '')) {
+
+        $('#global-loader').addClass("d-block");
+        $('#global-loader').removeClass("d-none");
+        fetch('/plataformas/compraCuentaCallofduty', {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+              id: id,
+              cliente: clienteCompraCallofduty,
+              telefono: telefonoCliente,
+              usFacebook: fsCompraCallofduty,
+              psFacebook: psCompraCallofduty
+            })
+          })
+          .then(res => res.text())
+          .then(data => {
+            $('#global-loader').removeClass("d-block");
+            $('#global-loader').addClass("d-none");
+            const respuesta = JSON.parse(data);
+            if (respuesta.resp === 'success') {
+
+              const seccionUno = $("#seccionCompraCallofdutyRealizado");
+              const footerUno = $("#footerCompraCallofdutyRealizado");
+              seccionUno.fadeOut(300).delay(800);
+              footerUno.fadeOut(300).delay(800);
+
+              const seccionDos = $("#seccionCompraCallofdutyRealizado2");
+              const footerDos = $("#footerCompraCallofdutyRealizado2");
+              seccionDos.fadeIn(300).delay(800);
+              footerDos.fadeIn(300).delay(800);
+
+            } else {
+
+              $('#alertaComprarCallofduty2').fadeIn();
+              const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+              $('#alertaComprarCallofduty2').html(error);
+              $('#alertaComprarCallofduty2').delay(2000).fadeOut();
+            }
+          }).catch(() => {
+            $('#global-loader').removeClass("d-block");
+            $('#global-loader').addClass("d-none");
+            swal({
+              title: 'Request Error',
+              text: '500 - Plataformas',
+              type: 'error'
+            });
+          })
+
+      } else {
+
+        $('#alertaComprarCallofduty2').fadeIn();
+        const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor llene todos los campos.';
+        $('#alertaComprarCallofduty2').html(error);
+        $('#alertaComprarCallofduty2').delay(2000).fadeOut();
+
+      }
+
+    }
+
+
+    function modalCompraFreefire(e, id, nombre, logo) {
+
+      const idPlataformaCompraFreefire = document.getElementById("idPlataformaCompraFreefire");
+      idPlataformaCompraFreefire.value = id;
+
+      const nombrePlataforma = document.getElementById("nombrePlatformaModal5");
+      nombrePlataforma.innerHTML = nombre;
+
+    }
+
+    function stepUnoFreefire(e) {
+
+      const clienteCompraFreefire = document.getElementById('clienteCompraFreefire').value;
+      const telefonoCliente = document.getElementById('mobile-number5').value;
+      const autorizacionFreefire = document.getElementById('autorizacionFreefire').checked;
+      const id = document.getElementById("idPlataformaCompraFreefire").value;
+
+      if (!(clienteCompraFreefire == '' || telefonoCliente == '')) {
+
+        if (autorizacionFreefire) {
+
+          const seccionUno = $("#seccionCompraFreefire");
+          const footerUno = $("#footerCompraFreefire");
+          seccionUno.fadeOut(300).delay(800);
+          footerUno.fadeOut(300).delay(800);
+
+          const seccionDos = $("#seccionCompraFreefireRealizado");
+          const footerDos = $("#footerCompraFreefireRealizado");
+          seccionDos.fadeIn(300).delay(800);
+          footerDos.fadeIn(300).delay(800);
+
+        } else {
+
+          $('#alertaComprarFreefire').fadeIn();
+          const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor autorize el envio de datos.';
+          $('#alertaComprarFreefire').html(error);
+          $('#alertaComprarFreefire').delay(2000).fadeOut();
+        }
+
+      } else {
+
+        $('#alertaComprarFreefire').fadeIn();
+        const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor llene todos los campos.';
+        $('#alertaComprarFreefire').html(error);
+        $('#alertaComprarFreefire').delay(2000).fadeOut();
+
+      }
+
+    }
+
+    function comprarCuentaFreefire(e) {
+
+      const clienteCompraFreefire = document.getElementById('clienteCompraFreefire').value;
+      const telefonoCliente = document.getElementById('mobile-number5').value;
+      const autorizacionFreefire = document.getElementById('autorizacionFreefire').checked;
+      const id = document.getElementById("idPlataformaCompraFreefire").value;
+
+      const idCompraFreefire = document.getElementById('idCompraFreefire').value;
+
+      if (!(idCompraFreefire == '')) {
+
+        $('#global-loader').addClass("d-block");
+        $('#global-loader').removeClass("d-none");
+        fetch('/plataformas/compraCuentaFreefire', {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+              id: id,
+              cliente: clienteCompraFreefire,
+              telefono: telefonoCliente,
+              idFreefire: idCompraFreefire,
+            })
+          })
+          .then(res => res.text())
+          .then(data => {
+            $('#global-loader').removeClass("d-block");
+            $('#global-loader').addClass("d-none");
+            const respuesta = JSON.parse(data);
+            if (respuesta.resp === 'success') {
+
+              const seccionUno = $("#seccionCompraFreefireRealizado");
+              const footerUno = $("#footerCompraFreefireRealizado");
+              seccionUno.fadeOut(300).delay(800);
+              footerUno.fadeOut(300).delay(800);
+
+              const seccionDos = $("#seccionCompraFreefireRealizado2");
+              const footerDos = $("#footerCompraFreefireRealizado2");
+              seccionDos.fadeIn(300).delay(800);
+              footerDos.fadeIn(300).delay(800);
+
+            } else {
+
+              $('#alertaComprarFreefire2').fadeIn();
+              const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+              $('#alertaComprarFreefire2').html(error);
+              $('#alertaComprarFreefire2').delay(2000).fadeOut();
+            }
+          }).catch(() => {
+            $('#global-loader').removeClass("d-block");
+            $('#global-loader').addClass("d-none");
+            swal({
+              title: 'Request Error',
+              text: '500 - Plataformas',
+              type: 'error'
+            });
+          })
+
+      } else {
+
+        $('#alertaComprarFreefire2').fadeIn();
+        const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor llene todos los campos.';
+        $('#alertaComprarFreefire2').html(error);
+        $('#alertaComprarFreefire2').delay(2000).fadeOut();
+
+      }
+
+    }
+
+
+    function modalCompraPersonalizada(e, id, nombre, logo) {
+
+      const idPlataformaCompraPersonalizada = document.getElementById("idPlataformaCompraPersonalizada");
+      idPlataformaCompraPersonalizada.value = id;
+
+      const nombrePlataforma = document.getElementById("nombrePlatformaModal4");
+      nombrePlataforma.innerHTML = nombre;
+
+    }
+
+    function stepUnoPersonalizada(e) {
+
+      const clienteCompraPersonalizada = document.getElementById('clienteCompraPersonalizada').value;
+      const telefonoCliente = document.getElementById('mobile-number4').value;
+      const autorizacionPersonalizada = document.getElementById('autorizacionPersonalizada').checked;
+      const id = document.getElementById("idPlataformaCompraRenovacion").value;
+
+      if (!(clienteCompraPersonalizada == '' || telefonoCliente == '')) {
+
+        if (autorizacionPersonalizada) {
+
+          const seccionUno = $("#seccionCompraPersonalizada");
+          const footerUno = $("#footerCompraPersonalizada");
+          seccionUno.fadeOut(300).delay(800);
+          footerUno.fadeOut(300).delay(800);
+
+          const seccionDos = $("#seccionCompraPersonalizadaRealizado");
+          const footerDos = $("#footerCompraPersonalizadaRealizado");
+          seccionDos.fadeIn(300).delay(800);
+          footerDos.fadeIn(300).delay(800);
+
+        } else {
+
+          $('#alertaComprarPersonalizada').fadeIn();
+          const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor autorize el envio de datos.';
+          $('#alertaComprarPersonalizada').html(error);
+          $('#alertaComprarPersonalizada').delay(2000).fadeOut();
+        }
+
+      } else {
+
+        $('#alertaComprarPersonalizada').fadeIn();
+        const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor llene todos los campos.';
+        $('#alertaComprarPersonalizada').html(error);
+        $('#alertaComprarPersonalizada').delay(2000).fadeOut();
+
+      }
+
+    }
+
+    function comprarCuentaPersonalizada(e) {
+
+      const clienteCompraPersonalizada = document.getElementById('clienteCompraPersonalizada').value;
+      const telefonoCliente = document.getElementById('mobile-number4').value;
+      const autorizacionPersonalizada = document.getElementById('autorizacionPersonalizada').checked;
+      const id = document.getElementById("idPlataformaCompraPersonalizada").value;
+
+      const usuarioCompraPersonalizada = document.getElementById('usuarioCompraPersonalizada').value;
+      const password = document.getElementById('passwordCompraPersonalizada').value;
+      const sinPassword = document.getElementById('sinPassword').checked;
+
+      if (!(usuarioCompraPersonalizada == '')) {
+
+        if (!sinPassword && password === '') {
+
+          $('#alertaComprarPersonalizada2').fadeIn();
+          const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor escriba una contraseña o marque la casilla "No tiene contraseña".';
+          $('#alertaComprarPersonalizada2').html(error);
+          $('#alertaComprarPersonalizada2').delay(2000).fadeOut();
+
+        } else {
+
+          if (!sinPassword) {
+            var passwordCompraPersonalizada = password;
+          } else {
+            var passwordCompraPersonalizada = 'Sin contraseña';
+          }
+          $('#global-loader').addClass("d-block");
+          $('#global-loader').removeClass("d-none");
+
+          fetch('/plataformas/compraCuentaPersonalizada', {
+              method: 'POST',
+              headers: {
+                'Content-type': 'application/json'
+              },
+              body: JSON.stringify({
+                id: id,
+                cliente: clienteCompraPersonalizada,
+                telefono: telefonoCliente,
+                usuarioPersonalizada: usuarioCompraPersonalizada,
+                passwordPersonalizada: passwordCompraPersonalizada
+              })
+            })
+            .then(res => res.text())
+            .then(data => {
+              $('#global-loader').removeClass("d-block");
+              $('#global-loader').addClass("d-none");
+              const respuesta = JSON.parse(data);
+              if (respuesta.resp === 'success') {
+
+                const seccionUno = $("#seccionCompraPersonalizadaRealizado");
+                const footerUno = $("#footerCompraPersonalizadaRealizado");
+                seccionUno.fadeOut(300).delay(800);
+                footerUno.fadeOut(300).delay(800);
+
+                const seccionDos = $("#seccionCompraPersonalizadaRealizado2");
+                const footerDos = $("#footerCompraPersonalizadaRealizado2");
+                seccionDos.fadeIn(300).delay(800);
+                footerDos.fadeIn(300).delay(800);
+
+              } else {
+
+                $('#alertaComprarPersonalizada2').fadeIn();
+                const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+                $('#alertaComprarPersonalizada2').html(error);
+                $('#alertaComprarPersonalizada2').delay(2000).fadeOut();
+              }
+            }).catch(() => {
+              $('#global-loader').removeClass("d-block");
+              $('#global-loader').addClass("d-none");
+              swal({
+                title: 'Request Error',
+                text: '500 - Plataformas',
+                type: 'error'
+              });
+            })
+        }
+
+      } else {
+
+        $('#alertaComprarPersonalizada2').fadeIn();
+        const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor llene todos los campos.';
+        $('#alertaComprarPersonalizada2').html(error);
+        $('#alertaComprarPersonalizada2').delay(2000).fadeOut();
+
+      }
+
+    }
+
+
+    function modalCompraRenovacion(e, id, nombre, logo) {
+
+      const idPlataformaCompraRenovacion = document.getElementById("idPlataformaCompraRenovacion");
+      idPlataformaCompraRenovacion.value = id;
+
+      const nombrePlataforma = document.getElementById("nombrePlatformaModal3");
+      nombrePlataforma.innerHTML = nombre;
+
+    }
+
+    function stepUnoRenovacion(e) {
+
+      const clienteCompraRenovacion = document.getElementById('clienteCompraRenovacion').value;
+      const telefonoCliente = document.getElementById('mobile-number3').value;
+      const autorizacionRenovacion = document.getElementById('autorizacionRenovacion').checked;
+      const id = document.getElementById("idPlataformaCompraRenovacion").value;
+
+      if (!(clienteCompraRenovacion == '' || telefonoCliente == '')) {
+
+        if (autorizacionRenovacion) {
+
+          const seccionUno = $("#seccionCompraRenovacion");
+          const footerUno = $("#footerCompraRenovacion");
+          seccionUno.fadeOut(300).delay(800);
+          footerUno.fadeOut(300).delay(800);
+
+          const seccionDos = $("#seccionCompraRenovacionRealizado");
+          const footerDos = $("#footerCompraRenovacionRealizado");
+          seccionDos.fadeIn(300).delay(800);
+          footerDos.fadeIn(300).delay(800);
+
+        } else {
+
+          $('#alertaComprarRenovacion').fadeIn();
+          const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor autorize el envio de datos.';
+          $('#alertaComprarRenovacion').html(error);
+          $('#alertaComprarRenovacion').delay(2000).fadeOut();
+        }
+
+      } else {
+
+        $('#alertaComprarRenovacion').fadeIn();
+        const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor llene todos los campos.';
+        $('#alertaComprarRenovacion').html(error);
+        $('#alertaComprarRenovacion').delay(2000).fadeOut();
+
+      }
+
+    }
+
+    function comprarCuentaRenovacion(e) {
+
+      const clienteCompraRenovacion = document.getElementById('clienteCompraRenovacion').value;
+      const telefonoCliente = document.getElementById('mobile-number3').value;
+      const autorizacionRenovacion = document.getElementById('autorizacionRenovacion').checked;
+      const id = document.getElementById("idPlataformaCompraRenovacion").value;
+
+      const usuarioCompraRenovacion = document.getElementById('usuarioCompraRenovacion').value;
+      const passwordCompraRenovacion = document.getElementById('passwordCompraRenovacion').value;
+      const confirmacionRenovacion = document.getElementById('confirmacionRenovacion').checked;
+
+      if (!(usuarioCompraRenovacion == '' || passwordCompraRenovacion == '')) {
+
+        if (confirmacionRenovacion) {
+
+          $('#global-loader').addClass("d-block");
+          $('#global-loader').removeClass("d-none");
+          fetch('/plataformas/compraCuentaRenovacion', {
+              method: 'POST',
+              headers: {
+                'Content-type': 'application/json'
+              },
+              body: JSON.stringify({
+                id: id,
+                cliente: clienteCompraRenovacion,
+                telefono: telefonoCliente,
+                usuarioRenovacion: usuarioCompraRenovacion,
+                passwordRenovacion: passwordCompraRenovacion
+              })
+            })
+            .then(res => res.text())
+            .then(data => {
+              $('#global-loader').removeClass("d-block");
+              $('#global-loader').addClass("d-none");
+              const respuesta = JSON.parse(data);
+              if (respuesta.resp === 'success') {
+
+                const seccionUno = $("#seccionCompraRenovacionRealizado");
+                const footerUno = $("#footerCompraRenovacionRealizado");
+                seccionUno.fadeOut(300).delay(800);
+                footerUno.fadeOut(300).delay(800);
+
+                const seccionDos = $("#seccionCompraRenovacionRealizado2");
+                const footerDos = $("#footerCompraRenovacionRealizado2");
+                seccionDos.fadeIn(300).delay(800);
+                footerDos.fadeIn(300).delay(800);
+
+              } else {
+
+                $('#alertaComprarRenovacion2').fadeIn();
+                const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+                $('#alertaComprarRenovacion2').html(error);
+                $('#alertaComprarRenovacion2').delay(2000).fadeOut();
+              }
+            }).catch(() => {
+              $('#global-loader').removeClass("d-block");
+              $('#global-loader').addClass("d-none");
+              swal({
+                title: 'Request Error',
+                text: '500 - Plataformas',
+                type: 'error'
+              });
+            })
+
+        } else {
+
+          $('#alertaComprarRenovacion2').fadeIn();
+          const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor confirme que los datos son correctos.';
+          $('#alertaComprarRenovacion2').html(error);
+          $('#alertaComprarRenovacion2').delay(2000).fadeOut();
+        }
+
+      } else {
+
+        $('#alertaComprarRenovacion2').fadeIn();
+        const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor llene todos los campos.';
+        $('#alertaComprarRenovacion2').html(error);
+        $('#alertaComprarRenovacion2').delay(2000).fadeOut();
+
+      }
+
+    }
+
+    function modalCompraPedido(e, id, nombre, logo) {
+
+      const idPlataformaCompraNormal = document.getElementById("idPlataformaCompraPedido");
+      idPlataformaCompraNormal.value = id;
+
+      const nombrePlataforma = document.getElementById("nombrePlatformaModal2");
+      nombrePlataforma.innerHTML = nombre;
+
+    }
+
+    function comprarCuentaPedido(e) {
+
+      const clienteCompraPedido = document.getElementById('clienteCompraPedido').value;
+      const telefonoCliente = document.getElementById('mobile-number2').value;
+      const autorizacionPedido = document.getElementById('autorizacionPedido').checked;
+      const id = document.getElementById("idPlataformaCompraPedido").value;
+
+      if (!(clienteCompraPedido == '' || telefonoCliente == '')) {
+
+        if (autorizacionPedido) {
+
+          $('#global-loader').addClass("d-block");
+          $('#global-loader').removeClass("d-none");
+          fetch('/plataformas/compraCuentaPedido', {
+              method: 'POST',
+              headers: {
+                'Content-type': 'application/json'
+              },
+              body: JSON.stringify({
+                id: id,
+                cliente: clienteCompraPedido,
+                telefono: telefonoCliente
+              })
+            })
+            .then(res => res.text())
+            .then(data => {
+              $('#global-loader').removeClass("d-block");
+              $('#global-loader').addClass("d-none");
+              const respuesta = JSON.parse(data);
+              if (respuesta.resp === 'success') {
+
+                const seccionUno = $("#seccionCompraPedido");
+                const footerUno = $("#footerCompraPedido");
+                seccionUno.fadeOut(300).delay(800);
+                footerUno.fadeOut(300).delay(800);
+
+                const seccionDos = $("#seccionCompraPedidoRealizado");
+                const footerDos = $("#footerCompraPedidoRealizado");
+                seccionDos.fadeIn(300).delay(800);
+                footerDos.fadeIn(300).delay(800);
+
+              } else {
+
+                $('#alertaComprarPedido').fadeIn();
+                const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+                $('#alertaComprarPedido').html(error);
+                $('#alertaComprarPedido').delay(2000).fadeOut();
+              }
+            }).catch(() => {
+              $('#global-loader').removeClass("d-block");
+              $('#global-loader').addClass("d-none");
+              swal({
+                title: 'Request Error',
+                text: '500 - Plataformas',
+                type: 'error'
+              });
+            })
+
+        } else {
+
+          $('#alertaComprarPedido').fadeIn();
+          const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor autorize el envio de datos.';
+          $('#alertaComprarPedido').html(error);
+          $('#alertaComprarPedido').delay(2000).fadeOut();
+        }
+
+      } else {
+
+        $('#alertaComprarPedido').fadeIn();
+        const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor llene todos los campos.';
+        $('#alertaComprarPedido').html(error);
+        $('#alertaComprarPedido').delay(2000).fadeOut();
+
+      }
+
+    }
+
+    function modalCompraNormal(e, id, nombre, logo) {
+
+      const idPlataformaCompraNormal = document.getElementById("idPlataformaCompraNormal");
+      idPlataformaCompraNormal.value = id;
+
+      const nombrePlataforma = document.getElementById("nombrePlatformaModal");
+      nombrePlataforma.innerHTML = nombre;
+
+    }
+
+    function comprarCuentaNormal(e) {
+
+      const clienteCompraNormal = document.getElementById('clienteCompraNormal').value;
+      const telefonoCliente = document.getElementById('mobile-number').value;
+      const autorizacionNormal = document.getElementById('autorizacionNormal').checked;
+      const id = document.getElementById("idPlataformaCompraNormal").value;
+
+      if (!(clienteCompraNormal == '' || telefonoCliente == '')) {
+
+        if (autorizacionNormal) {
+
+          $('#global-loader').addClass("d-block");
+          $('#global-loader').removeClass("d-none");
+          fetch('/plataformas/compraCuentaNormal', {
+              method: 'POST',
+              headers: {
+                'Content-type': 'application/json'
+              },
+              body: JSON.stringify({
+                id: id,
+                cliente: clienteCompraNormal,
+                telefono: telefonoCliente
+              })
+            })
+            .then(res => res.text())
+            .then(data => {
+              $('#global-loader').removeClass("d-block");
+              $('#global-loader').addClass("d-none");
+              const respuesta = JSON.parse(data);
+              if (respuesta.resp === 'success') {
+
+                const seccionUno = $("#seccionCompraNormal");
+                const footerUno = $("#footerCompraNormal");
+                seccionUno.fadeOut(300).delay(800);
+                footerUno.fadeOut(300).delay(800);
+
+                const usuarioCuentaNormal = document.getElementById('usuarioCuentaNormal');
+                let respuestaUser = respuesta.user;
+                let pre_respuestaUser = respuestaUser;
+                respuestaUser = respuestaUser.replaceAll('+', '%2B');
+                respuestaUser = respuestaUser.replaceAll('&', '%26');
+                usuarioCuentaNormal.innerHTML = pre_respuestaUser;
+
+                const passwordCuentaNormal = document.getElementById('passwordCuentaNormal');
+                let respuestaPassword = respuesta.password;
+                let pre_respuestaPassword = respuestaPassword;
+                respuestaPassword = respuestaPassword.replaceAll('+', '%2B');
+                respuestaPassword = respuestaPassword.replaceAll('&', '%26');
+                passwordCuentaNormal.innerHTML = pre_respuestaPassword;
+
+                const pantallaCuentaNormal = document.getElementById('pantallaCuentaNormal');
+                pantallaCuentaNormal.innerHTML = respuesta.pantalla;
+
+                const pinCuentaNormal = document.getElementById('pinCuentaNormal');
+                pinCuentaNormal.innerHTML = respuesta.pin;
+
+                const imgCompraNormal = document.getElementById('imgCompraNormal');
+                imgCompraNormal.src = respuesta.logo;
+
+                const btnWhatsappNormal = document.getElementById('btnWhatsappNormal');
+
+                btnWhatsappNormal.href = 'https://api.whatsapp.com/send?phone=' + respuesta.telefono + '&text=Hola!%20%F0%9F%98%80%20%20*' + respuesta.cliente + '*%2C%20estos%20son%20los%20datos%20de%20tu%20cuenta.%20%0A%0A%F0%9F%93%B2%20%20*PLATAFORMA%3A*%20' + respuesta.plataforma + '%20%0A%F0%9F%99%8D%E2%80%8D%E2%99%82%EF%B8%8F%20%20*USUARIO%3A*%20' + respuestaUser + '%20%0A%F0%9F%94%91%20%20*CONTRASE%C3%91A%3A*%20' + respuestaPassword + '%20%0A%F0%9F%93%8C%20*Pantalla%3A*%20' + respuesta.pantalla + '%20%0A%F0%9F%93%8C%20*Pin%3A*%20' + respuesta.pin;
+
+                const seccionDos = $("#seccionCompraNormalRealizado");
+                const footerDos = $("#footerCompraNormalRealizado");
+                seccionDos.fadeIn(300).delay(800);
+                footerDos.fadeIn(300).delay(800);
+
+              } else {
+
+                $('#alertaComprarNormal').fadeIn();
+                const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+                $('#alertaComprarNormal').html(error);
+                $('#alertaComprarNormal').delay(2000).fadeOut();
+              }
+            }).catch((err) => {
+              console.log(err)
+              $('#global-loader').removeClass("d-block");
+              $('#global-loader').addClass("d-none");
+              swal({
+                title: 'Request Error',
+                text: '500 - Plataformas',
+                type: 'error'
+              });
+            })
+
+        } else {
+
+          $('#alertaComprarNormal').fadeIn();
+          const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor autorize el envio de datos.';
+          $('#alertaComprarNormal').html(error);
+          $('#alertaComprarNormal').delay(2000).fadeOut();
+        }
+
+      } else {
+
+        $('#alertaComprarNormal').fadeIn();
+        const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> Por favor llene todos los campos.';
+        $('#alertaComprarNormal').html(error);
+        $('#alertaComprarNormal').delay(2000).fadeOut();
+
+      }
+
+    }
+
+    function limpiar() {
+      const clienteCompraNormal = document.getElementById('clienteCompraNormal');
+      clienteCompraNormal.value = '';
+      const telefonoCliente = document.getElementById('mobile-number');
+      telefonoCliente.value = '+57 ';
+      const autorizacionNormal = document.getElementById('autorizacionNormal');
+      autorizacionNormal.checked = false;
+      const id = document.getElementById("idPlataformaCompraNormal");
+      id.value = '';
+    }
+
+    function limpiar2() {
+      const clienteCompraPedido = document.getElementById('clienteCompraPedido');
+      clienteCompraPedido.value = '';
+      const telefonoCliente = document.getElementById('mobile-number2');
+      telefonoCliente.value = '+57 ';
+      const autorizacionPedido = document.getElementById('autorizacionPedido');
+      autorizacionPedido.checked = false;
+      const id = document.getElementById("idPlataformaCompraPedido");
+      id.value = '';
+    }
+
+    function limpiar3() {
+      const clienteCompraRenovacion = document.getElementById('clienteCompraRenovacion');
+      clienteCompraRenovacion.value = '';
+      const telefonoCliente = document.getElementById('mobile-number3');
+      telefonoCliente.value = '+57 ';
+      const autorizacionRenovacion = document.getElementById('autorizacionRenovacion');
+      autorizacionRenovacion.checked = false;
+      const id = document.getElementById("idPlataformaCompraRenovacion");
+      id.value = '';
+      const usuarioCompraRenovacion = document.getElementById('usuarioCompraRenovacion');
+      usuarioCompraRenovacion.value = '';
+      const passwordCompraRenovacion = document.getElementById('passwordCompraRenovacion');
+      passwordCompraRenovacion.value = '+57 ';
+      const confirmacionRenovacion = document.getElementById('confirmacionRenovacion');
+      confirmacionRenovacion.checked = false;
+    }
+
+    function limpiar4() {
+      const clienteCompraPersonalizada = document.getElementById('clienteCompraPersonalizada');
+      clienteCompraPersonalizada.value = '';
+      const telefonoCliente = document.getElementById('mobile-number4');
+      telefonoCliente.value = '+57 ';
+      const autorizacionPersonalizada = document.getElementById('autorizacionPersonalizada');
+      autorizacionPersonalizada.checked = false;
+      const id = document.getElementById("idPlataformaCompraPersonalizada");
+      id.value = '';
+      const usuarioCompraPersonalizada = document.getElementById('usuarioCompraPersonalizada');
+      usuarioCompraPersonalizada.value = '';
+      const passwordCompraPersonalizada = document.getElementById('passwordCompraPersonalizada');
+      passwordCompraPersonalizada.value = '+57 ';
+      const confirmacionPersonalizada = document.getElementById('confirmacionPersonalizada');
+      confirmacionPersonalizada.checked = false;
+    }
+
+    function reload() {
+      document.location.reload();
+    }
+
+    function modalInformacion(e, nombre, logo, descripcion) {
+
+      const nombrePlataforma = document.getElementById("nombrePlataforma");
+      nombrePlataforma.innerHTML = nombre;
+
+      const logoInfo = document.getElementById("logoInfo");
+      logoInfo.src = logo;
+
+      const descripcionEdit = document.getElementById("descripcionPltaforma");
+      const formatDescripcion = descripcion.replaceAll('<br>', '\n');
+      descripcionEdit.innerHTML = formatDescripcion;
+
+    }
+  </script>

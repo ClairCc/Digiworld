@@ -1,0 +1,539 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-sm-6 col-md-6 col-xl-4">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-primary-transparent rounded-circle text-primary">
+                    <i class="fe fe-users"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Total superdistribuidores</p>
+                  <h3 class="mb-0"><%= countSuperdist %></h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-4">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-info-transparent rounded-circle text-info">
+                    <i class="fe fe-users"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Total distribuidores</p>
+                  <h3 class="mb-0"><%= countDist %></h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-4">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-success-transparent rounded-circle text-success">
+                    <i class="fe fe-users"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Total resellers</p>
+                  <h3 class="mb-0"><%= countRes %></h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-12">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Total Usuarios en Plataforma</h6>
+                    <p class="text-muted card-sub-title">A continuación encontrara un reporte detallado con la información de todos los usuarios registrados en la plataforma.</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap w-100" id="example2">
+                      <thead>
+                        <tr>
+                          <th>Foto</th>
+                          <th>Nombre</th>
+                          <th>Status</th>
+                          <th>Pais</th>
+                          <th>Email</th>
+                          <th>Teléfono</th>
+                          <th>Perfil</th>
+                          <th>Saldo actual</th>
+                          <th>Código afiliado</th>
+                          <th>Distribuidor</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(usuarios.length) { %>
+                        <% usuarios.forEach(listaUsuario => { %>
+                        <% console.log(listaUsuario) %>
+                        <% if(listaUsuario.pais === 'Colombia') { %>
+                        <% var valorFormateado = new Intl.NumberFormat("es-CO", {style: "currency", currency: "COP", maximumSignificantDigits: 7}).format(listaUsuario.saldo); %>
+                        <% } else { %>
+                        <% var valorFormateado = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD"}).format(listaUsuario.saldo); %>
+                        <% } %>
+                        <tr>
+                          <td class="text-center">
+                            <img src="<%= listaUsuario.foto === null ? '/assetsDashboard/img/users/default.jpg' : listaUsuario.foto %>" alt="" class="img-circle">
+                          </td>
+                          <td class="text-capitalize"><%= listaUsuario.nombre %></td>
+                          <td class="text-capitalize text-center">
+                            <span class="text-muted"><i class="far <%= listaUsuario.bloqueo === 0 ? 'fa-check-circle text-success' : 'fa-times-circle text-danger' %> mr-1"></i><%= listaUsuario.bloqueo === 0 ? 'Activo' : 'Bloqueado' %></span>
+                          </td>
+                          <td class="text-capitalize">
+                            <% paises.data.forEach(pais => { %>
+                            <% if(pais.name === listaUsuario.pais) { %>
+                            <img src="/assetsDashboard/img/flags/<%= pais.cca2 %>.svg" alt="" class="img-flags">
+                            <span class="ml-2"><%= listaUsuario.pais %></span>
+                            <% } %>
+                            <% }) %>
+                          </td>
+                          <td class="text-lowercase"><%= listaUsuario.email %></td>
+                          <td class="text-capitalize"><%= listaUsuario.telefono_movil %></td>
+                          <td class="text-capitalize">
+                            <select class="form-control select-sm select2-no-search" name="row-2-office" onchange="cambioPerfil(this, '<%= listaUsuario.id_usuario %>')" data-id="<%= listaUsuario.id_usuario %>">
+                              <option class="text-capitalize" value="<%= listaUsuario.perfil %>" selected><%= listaUsuario.perfil %></option>
+                              <option class="text-capitalize" value="distribuidor">Distribuidor</option>
+                              <option class="text-capitalize" value="reseller">Reseller</option>
+                            </select>
+                          </td>
+                          <td class="text-capitalize"><%= valorFormateado %></td>
+                          <td class="text-capitalize"><%= listaUsuario.enlace_afiliado %></td>
+
+                          <% usuarios.forEach(listaDistribuidor => { %>
+                          <% if(listaDistribuidor.enlace_afiliado === listaUsuario.patrocinador) { %>
+                          <% const nombreDistribuidor = listaDistribuidor.nombre %>
+                          <td class="text-capitalize"><%= nombreDistribuidor %></td>
+                          <% } %>
+                          <% }) %>
+
+                          <td class="text-capitalize">
+                            <div class="btn btn-list">
+                              <button class="btn ripple btn-light" title="Bloquear" onclick="bloqueoUsuario(event, '<%= listaUsuario.id_usuario %>')"><i class="ti-na"></i></button>
+                              <a class="btn ripple btn-warning modal-effect" title="Editar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEditar" onclick="modalEditar(event, '<%= listaUsuario.id_usuario %>', '<%= listaUsuario.nombre %>', '<%= listaUsuario.direccion %>', '<%= listaUsuario.telefono_movil %>', '<%= listaUsuario.pais %>', '<%= listaUsuario.email %>')"><i class="far fa-edit"></i></a>
+                              <a class="btn ripple btn-danger modal-effect" title="Eliminar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEliminar" onclick="modalEliminar(event, '<%= listaUsuario.id_usuario %>', '<%= listaUsuario.nombre %>')"><i class="far fa-trash-alt"></i></a>
+                            </div>
+                          </td>
+                        </tr>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Editar -->
+  <div class="modal" id="modalEditar">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Editar Usuario</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+
+          <input type="hidden" value="" id="idUser">
+
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control" name="nombre" placeholder="Nombre Completo" value="" id="nombreEdit">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Email</label>
+              <input type="text" class="form-control" name="email" placeholder="Correo electrónico" value="" id="emailEdit">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Direccón</label>
+              <input type="text" class="form-control" name="telefono" placeholder="Dirección Completa" value="" id="direccionEdit">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <div class="col-md-6">
+                <label class="form-label">Teléfono</label>
+                <div class="input-group telephone-input w-100 pl-0">
+                  <input type="tel" id="mobile-number" name="telefono" placeholder="e.g. +1 702 123 4567" value="">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Pais</label>
+                <select class="form-control select2" name="pais" id="paisEdit">
+
+                  <% paises.data.forEach(pais => { %>
+
+                  <option value="<%= pais.name %>">
+                    <%= pais.name %>
+                  </option>
+
+                  <% }) %>
+
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="editarUsuario(event)">Editar usuario</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Eliminar -->
+
+  <div class="modal" id="modalEliminar">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content tx-size-sm">
+        <div class="modal-body tx-center pd-y-20 pd-x-20">
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+          <i class="icon icon ion-ios-close-circle-outline tx-100 tx-danger lh-1 mg-t-20 d-inline-block"></i>
+          <h4 class="tx-danger mg-b-20">¡Hola!</h4>
+          <p class="mg-b-2 mg-x-20">¿Esta seguro de eliminar este usuario?.</p>
+          <p class="mg-b-30 mg-x-20 text-center text-capitalize" id="nombreUsuarioEliminar"></p>
+          <input type="hidden" value="" id="idEliminar">
+          <button aria-label="Close" class="btn ripple btn-danger pd-x-25" data-dismiss="modal" type="button" onclick="eliminarUsuario(event)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+  <script>
+    function cambioPerfil(seleccion, id) {
+      const perfil = seleccion.value;
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminUsuarios/cambioPefil', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id,
+            perfil: perfil
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          swal({
+            title: respuesta.titulo,
+            text: respuesta.descripcion,
+            type: respuesta.resp,
+            confirmButtonColor: respuesta.resp === 'error' ? '#fd6074' : '#57a94f'
+          })
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Usuarios',
+            type: 'error'
+          });
+        })
+    };
+
+    function bloqueoUsuario(e, id) {
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminUsuarios/bloqueoUsuario', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Usuarios',
+            type: 'error'
+          });
+        })
+    };
+
+    function modalEditar(e, id, nombre, direccion, telefono, pais, email) {
+
+      const idUser = document.getElementById("idUser");
+      idUser.value = id;
+
+      const nombreEdit = document.getElementById("nombreEdit");
+      nombreEdit.value = nombre;
+
+      const direccionEdit = document.getElementById("direccionEdit");
+      direccionEdit.value = direccion;
+
+      const emailEdit = document.getElementById("emailEdit");
+      emailEdit.value = email;
+
+      const telefonoEdit = document.getElementById("mobile-number");
+      telefonoEdit.value = telefono;
+
+      const paisEdit = document.getElementById("paisEdit");
+      const textPaisEdit = document.getElementById("select2-paisEdit-container");
+      paisEdit.value = pais;
+      textPaisEdit.innerHTML = pais;
+
+    }
+
+    function editarUsuario(e) {
+
+      const id = document.getElementById("idUser").value;
+      const nombre = document.getElementById("nombreEdit").value;
+      const direccion = document.getElementById("direccionEdit").value;
+      const email = document.getElementById("emailEdit").value;
+      const telefono = document.getElementById("mobile-number").value;
+      const pais = document.getElementById("paisEdit").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminUsuarios/editarUsuario', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id,
+            nombre: nombre,
+            direccion: direccion,
+            email: email,
+            telefono: telefono,
+            pais: pais,
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Usuarios',
+            type: 'error'
+          });
+        })
+    }
+
+    function modalEliminar(e, id, nombre) {
+
+      const idEliminar = document.getElementById("idEliminar");
+      idEliminar.value = id;
+
+      const nombreEliminar = document.getElementById("nombreUsuarioEliminar");
+      nombreEliminar.innerHTML = nombre;
+
+    }
+
+    function eliminarUsuario(e) {
+
+      const id = document.getElementById("idEliminar").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminUsuarios/eliminarUsuario', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Usuarios',
+            type: 'error'
+          });
+        })
+
+    }
+  </script>

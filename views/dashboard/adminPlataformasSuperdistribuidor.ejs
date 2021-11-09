@@ -1,0 +1,949 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5">
+                <%- titulo %>
+              </h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  <%- breadcrumb %>
+                </li>
+              </ol>
+            </div>
+            <div class="d-flex">
+              <div class="justify-content-center">
+                <a class="btn btn-primary my-2 btn-icon-text" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalCrearPlataforma">
+                  <i class="fe fe-upload mr-2"></i> Crear Plataforma
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-sm-6 col-md-6 col-xl-2">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-success-transparent rounded-circle text-success">
+                    <i class="fe fe-upload-cloud"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Total<br>Plataformas</p>
+                  <h3 class="mb-0">
+                    <%= countTotal %>
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-2">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-primary-transparent rounded-circle text-primary">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Plataformas<br>normales</p>
+                  <h3 class="mb-0">
+                    <%= countNormales %>
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-2">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-secondary-transparent rounded-circle text-secondary">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Plataformas<br>bajo pedido</p>
+                  <h3 class="mb-0">
+                    <%= countPedidos %>
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-2">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-danger-transparent rounded-circle text-danger">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Plataformas<br>personalizadas</p>
+                  <h3 class="mb-0">
+                    <%= countPersonalizadas %>
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-2">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-info-transparent rounded-circle text-info">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Plataformas<br>renovaciones</p>
+                  <h3 class="mb-0">
+                    <%= countRenovaciones %>
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-xl-2">
+              <div class="card custom-card">
+                <div class="card-body text-center">
+                  <div class="icon-service bg-warning-transparent rounded-circle text-warning">
+                    <i class="fe fe-airplay"></i>
+                  </div>
+                  <p class="mb-1 text-muted">Plataformas<br>juegos</p>
+                  <h3 class="mb-0">
+                    <%= countJuegos %>
+                  </h3>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- End Row -->
+
+          <!-- Row -->
+          <div class="row row-sm">
+            <div class="col-lg-12">
+              <div class="card custom-card">
+                <div class="card-body">
+                  <div>
+                    <h6 class="main-content-label mb-1">Total Plataformas</h6>
+                    <p class="text-muted card-sub-title">A continuación encontrara un reporte detallado de todas las plataformas en el sistema.</p>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap w-100 key-buttons" id="exportexample">
+                      <thead>
+                        <tr>
+                          <th>Logo</th>
+                          <th>Plataforma</th>
+                          <th>Activar</th>
+                          <th>Valor Base</th>
+                          <th>Tipo</th>
+                          <th>Estado</th>
+                          <th class="wd-0p">Descripción</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(plataformas.length) { %>
+                        <% plataformas.forEach(listaPlataformas => { %>
+                        <tr>
+                          <td class="text-center">
+                            <a class="circle-edit" title="Editar Logo" data-effect="effect-flip-horizontal" data-toggle="modal" href="#editarLogo" onclick="modalEditarLogo(event, '<%= listaPlataformas.id_plataforma %>')"><i class="fas fa-camera"></i></a>
+                            <img src="<%= listaPlataformas.logo === null ? '/assetsDashboard/img/users/default.jpg' : listaPlataformas.logo %>" alt="" class="img-circle">
+                          </td>
+                          <td class="text-capitalize">
+                            <%= listaPlataformas.plataforma %>
+                          </td>
+                          <td class="text-center">
+                            <div class="main-toggle main-toggle-secondary <%= listaPlataformas.estado === 1 ? 'on' : '' %>" onclick="cambioEstado(this, '<%= listaPlataformas.id_plataforma %>')">
+                              <span></span>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="display-flex">
+                              <% asignaciones.forEach(listaAsignaciones => { %>
+                              <% if(listaAsignaciones.plataformaIdPlataforma === listaPlataformas.id_plataforma) { %>
+                              <input class="form-control input-md inputValor text-right" type="text" name="valorPlataforma" id="valorPlataforma_<%= listaAsignaciones.id_asignacion %>" value="<%= listaAsignaciones.valor %>" placeholder="0.00">
+
+                              <a class="btn btn-secondary ml-1 text-white" title="Editar valor en red" data-effect="effect-flip-horizontal" data-toggle="modal" href="#editarValor" onclick="editarValor(event, '<%= listaPlataformas.id_plataforma %>', '<%= listaPlataformas.plataforma %>')"><i class="far fa-edit"></i> Cambiar valor</a>
+
+                              <a class="btn btn-primary ml-1 text-white" title="Desplegar plataforma en red" onclick="desplegar(event, '<%= listaAsignaciones.id_asignacion %>')"><i class="mdi mdi-account-network"></i> Desplegar</a>
+                              <% } %>
+                              <% }) %>
+                            </div>
+                          </td>
+                          <td class="text-capitalize text-center">
+                            <span class="badge <%= listaPlataformas.tipo_plataforma === 1 ? 'badge-primary' : listaPlataformas.tipo_plataforma === 2 ? 'badge-secondary' : listaPlataformas.tipo_plataforma === 3 ? 'badge-danger' : listaPlataformas.tipo_plataforma === 4 ? 'badge-info' : listaPlataformas.tipo_plataforma === 5 ? 'badge-warning' : 'badge-light' %>">
+                              <%= listaPlataformas.tipo_plataforma === 1 ? 'Normal' : listaPlataformas.tipo_plataforma === 2 ? 'Bajo Pedido' : listaPlataformas.tipo_plataforma === 3 ? 'Personalizada' : listaPlataformas.tipo_plataforma === 4 ? 'Renovaciones' : listaPlataformas.tipo_plataforma === 5 ? 'Juegos' : 'N/A' %>
+                            </span>
+                          </td>
+                          <td class="text-capitalize text-center">
+                            <span class="text-muted"><i class="far <%= listaPlataformas.estado === 1 ? 'fa-check-circle text-success' : 'fa-times-circle text-danger' %> mr-1"></i><%= listaPlataformas.estado === 1 ? 'Activa' : 'Inactiva' %></span>
+                          </td>
+                          <td class="text-left">
+                            <%= listaPlataformas.descripcion %>
+                          </td>
+                          <td class="text-capitalize">
+                            <div class="btn btn-list">
+                              <a class="btn ripple btn-warning modal-effect" title="Editar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEditar" onclick="modalEditar(event, '<%= listaPlataformas.id_plataforma %>', '<%= listaPlataformas.plataforma %>', '<%= listaPlataformas.tipo_plataforma %>', '<%= listaPlataformas.descripcion %>')"><i class="far fa-edit"></i></a>
+                              <a class="btn ripple btn-danger modal-effect" title="Eliminar" data-effect="effect-flip-horizontal" data-toggle="modal" href="#modalEliminar" onclick="modalEliminar(event, '<%= listaPlataformas.id_plataforma %>', '<%= listaPlataformas.plataforma %>')"><i class="far fa-trash-alt"></i></a>
+                            </div>
+                          </td>
+                        </tr>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+  <!-- Modal Editar Logo -->
+  <div class="modal" id="editarLogo">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Editar logo plataforma</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form action="POST" enctype="multipart/form-data" id="formCrearPlataforma">
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Logo</label>
+                <input type="hidden" value="" id="idPlataformaLogoEdit">
+                <div class="input-group file-browser px-0">
+                  <input type="text" class="form-control border-right-0 browse-file" placeholder="Subir logo" readonly>
+                  <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                      Seleccionar <input type="file" name="files" id="logoEdit" style="display: none;">
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaEditarLogo">
+            Hola
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="editarLogo(event)">Editar logo</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Crear -->
+  <div class="modal" id="modalCrearPlataforma">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Crear Plataforma</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form action="POST" enctype="multipart/form-data" id="formCrearPlataforma">
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Plataforma</label>
+                <input type="text" class="form-control" placeholder="Nombre Plataforma" value="" id="plataforma" name="plataforma" maxlength="30">
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Tipo Plataforma</label>
+                <select class="form-control" id="tipoPlataforma" name="tipoPlataforma">
+                  <option value="">Seleccion una opción</option>
+                  <option value="1">Normal</option>
+                  <option value="2">Bajo Pedido</option>
+                  <option value="3">Personalizada</option>
+                  <option value="4">Renovación</option>
+                  <option value="5">Juegos</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Valor</label>
+                <input type="text" class="form-control" placeholder="00.00" value="" id="valor" name="valor">
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Descripción</label>
+                <textarea type="text" class="form-control" placeholder="Descripción plataforma" value="" id="descripcion" name="descripcion" rows="6"></textarea>
+              </div>
+            </div>
+            <div class="form-group ">
+              <div class="row row-sm">
+                <label class="form-label">Logo</label>
+                <div class="input-group file-browser px-0">
+                  <input type="text" class="form-control border-right-0 browse-file" placeholder="Subir logo" readonly>
+                  <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                      Seleccionar <input type="file" name="files" id="logo" style="display: none;">
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaCrear">
+            Hola
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="crearPlataforma(event)">Crear plataforma</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Cambiar valor en red -->
+  <div class="modal" id="editarValor">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Cambiar valor en red a <span id="nombrePlataformaCambiar" class="text-capitalize"></span></h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+
+          <input type="hidden" value="" id="idPlataformaCambio">
+
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">
+                Ingrese el valor a incrementar o restar <br>
+                (
+                <%= usuario.pais === 'Colombia' ? 'Recuerde esta red esta en COP, no utilice ni puntos ni comas.' : 'Recuerde esta red esta en USD, para los decimales por favor utilice "."'; %>
+                )
+              </label>
+              <input type="text" class="form-control" placeholder="0" value="" id="valorCambioRed" name="valorCambioRed">
+            </div>
+          </div>
+
+          <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaModificarValor">
+            Hola
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="subirValor(event)"><i class="fe fe-plus-circle"></i> Aumentar Valor</button>
+          <button class="btn ripple btn-info" type="button" onclick="bajarValor(event)"><i class="fe fe-minus-circle"></i> Restar Valor</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar -->
+  <div class="modal" id="modalEditar">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content modal-content-demo">
+        <div class="modal-header">
+          <h6 class="modal-title">Editar Plataforma</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+
+          <input type="hidden" value="" id="idPlataforma">
+
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Plataforma</label>
+              <input type="text" class="form-control" placeholder="Nombre Plataforma" value="" id="plataformaEdit" maxlength="30">
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Tipo Plataforma</label>
+              <select class="form-control" id="tipoPlataformaEdit">
+                <option value="1">Normal</option>
+                <option value="2">Bajo Pedido</option>
+                <option value="3">Personalizada</option>
+                <option value="4">Renovación</option>
+                <option value="5">Juegos</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group ">
+            <div class="row row-sm">
+              <label class="form-label">Descripción</label>
+              <textarea type="text" class="form-control" placeholder="Descripción plataforma" value="" id="descripcionEdit" rows="6"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn ripple btn-primary" type="button" onclick="editarPlataforma(event)">Editar plataforma</button>
+          <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Eliminar -->
+
+  <div class="modal" id="modalEliminar">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content tx-size-sm">
+        <div class="modal-body tx-center pd-y-20 pd-x-20">
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+          <i class="icon icon ion-ios-close-circle-outline tx-100 tx-danger lh-1 mg-t-20 d-inline-block"></i>
+          <h4 class="tx-danger mg-b-20">¡Hola!</h4>
+          <p class="mg-b-2 mg-x-20">¿Esta seguro de eliminar esta plataforma?.</p>
+          <p class="mg-b-30 mg-x-20 text-center text-capitalize" id="nombrePlataformaEliminar"></p>
+          <input type="hidden" value="" id="idEliminar">
+          <button aria-label="Close" class="btn ripple btn-danger pd-x-25" data-dismiss="modal" type="button" onclick="eliminarPlataforma(event)">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+  <script>
+    function modalEditarLogo(e, id) {
+
+      const idPlataforma = document.getElementById("idPlataformaLogoEdit");
+      idPlataforma.value = id;
+
+    }
+
+    function editarLogo(e) {
+
+      const idPlataforma = document.getElementById("idPlataformaLogoEdit").value;
+      const logo = document.getElementById('logoEdit');
+
+      const data = new FormData();
+      data.append('files', logo.files[0]);
+      data.append('id', idPlataforma);
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminPlataformasSuperdistribuidor/editarLogo', {
+          method: 'POST',
+          body: data
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            $('#alertaEditarLogo').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaEditarLogo').html(error);
+            $('#alertaEditarLogo').delay(2000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Plataformar Super distribuidor',
+            type: 'error'
+          });
+        })
+
+    }
+
+    function desplegar(e, id) {
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminPlataformasSuperdistribuidor/desplegarPlataformas', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Plataformar Super distribuidor',
+            type: 'error'
+          });
+        })
+
+    }
+
+    function editarValor(e, id, nombre) {
+
+      const idPlataforma = document.getElementById("idPlataformaCambio");
+      idPlataforma.value = id;
+
+      const nombrePlataforma = document.getElementById("nombrePlataformaCambiar");
+      nombrePlataforma.innerHTML = nombre;
+
+    }
+
+    function subirValor(e) {
+      const idPlataforma = document.getElementById("idPlataformaCambio").value;
+      const valor = document.getElementById("valorCambioRed").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminPlataformasSuperdistribuidor/subirValor', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: idPlataforma,
+            valor: valor
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              }
+            );
+
+          } else {
+
+            $('#alertaModificarValor').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaModificarValor').html(error);
+            $('#alertaModificarValor').delay(2000).fadeOut();
+
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Plataformar Super distribuidor',
+            type: 'error'
+          });
+        })
+    }
+
+    function bajarValor(e) {
+      const idPlataforma = document.getElementById("idPlataformaCambio").value;
+      const valor = document.getElementById("valorCambioRed").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminPlataformasSuperdistribuidor/bajarValor', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: idPlataforma,
+            valor: valor
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              }
+            );
+
+          } else {
+
+            $('#alertaModificarValor').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaModificarValor').html(error);
+            $('#alertaModificarValor').delay(2000).fadeOut();
+
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Plataformar Super distribuidor',
+            type: 'error'
+          });
+        })
+    }
+
+    function cambioEstado(input, id) {
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminPlataformasSuperdistribuidor/cambioEstado', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: respuesta.resp === 'error' ? '#fd6074' : '#57a94f'
+            },
+            function(isConfirm) {
+              if (isConfirm) {
+                location.reload();
+              }
+            }
+          )
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Plataformar Super distribuidor',
+            type: 'error'
+          });
+        })
+    };
+
+    function crearPlataforma(e) {
+
+      const plataforma = document.getElementById("plataforma").value.trim();
+      const tipoPlataforma = document.getElementById("tipoPlataforma").value.trim();
+      const descripcion = document.getElementById("descripcion").value.trim();
+      const valor = document.getElementById("valor").value.trim();
+      const formatDescripcion = descripcion.replaceAll(/(\r\n|\n|\r)/gm, "<br>");
+      const logo = document.getElementById('logo');
+
+      const data = new FormData();
+      data.append('files', logo.files[0]);
+      data.append('plataforma', plataforma);
+      data.append('tipoPlataforma', tipoPlataforma);
+      data.append('descripcion', formatDescripcion);
+      data.append('valor', valor);
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminPlataformasSuperdistribuidor/crearPlataformaSuperdistribuidor', {
+          method: 'POST',
+          body: data
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            $('#alertaCrear').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaCrear').html(error);
+            $('#alertaCrear').delay(2000).fadeOut();
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Plataformar Super distribuidor',
+            type: 'error'
+          });
+        })
+    }
+
+    function modalEditar(e, id, plataforma, tipoPlataforma, descripcion) {
+
+      const idPlataforma = document.getElementById("idPlataforma");
+      idPlataforma.value = id;
+
+      const plataformaEdit = document.getElementById("plataformaEdit");
+      plataformaEdit.value = plataforma;
+
+      const tipoPlataformaEdit = document.getElementById("tipoPlataformaEdit");
+      tipoPlataformaEdit.value = tipoPlataforma;
+
+      const descripcionEdit = document.getElementById("descripcionEdit");
+      const formatDescripcion = descripcion.replaceAll('<br>', '\n');
+      descripcionEdit.value = formatDescripcion;
+
+    }
+
+    function editarPlataforma(e) {
+
+      const id = document.getElementById("idPlataforma").value;
+      const plataforma = document.getElementById("plataformaEdit").value;
+      const tipoPlataforma = document.getElementById("tipoPlataformaEdit").value;
+      const descripcion = document.getElementById("descripcionEdit").value;
+      const formatDescripcion = descripcion.replaceAll(/(\r\n|\n|\r)/gm, "<br>");
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminPlataformasSuperdistribuidor/editarPlataforma', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id,
+            plataforma: plataforma,
+            tipoPlataforma: tipoPlataforma,
+            descripcion: formatDescripcion
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Plataformar Super distribuidor',
+            type: 'error'
+          });
+        })
+    }
+
+    function modalEliminar(e, id, nombre) {
+
+      const idEliminar = document.getElementById("idEliminar");
+      idEliminar.value = id;
+
+      const nombreEliminar = document.getElementById("nombrePlataformaEliminar");
+      nombreEliminar.innerHTML = nombre;
+
+    }
+
+    function eliminarPlataforma(e) {
+
+      const id = document.getElementById("idEliminar").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminPlataformasSuperdistribuidor/eliminarPlataformaSuperdistribuidor', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            swal({
+              title: respuesta.titulo,
+              text: respuesta.descripcion,
+              type: respuesta.resp,
+              confirmButtonColor: '#fd6074'
+            })
+
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Plataformar Super distribuidor',
+            type: 'error'
+          });
+        })
+
+    }
+  </script>

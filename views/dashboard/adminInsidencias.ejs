@@ -1,0 +1,581 @@
+<!-- Header -->
+<%- include('layautsDashboard/header') %>
+
+<body class="main-body leftmenu body-ingreso">
+
+  <%- include('layautsDashboard/loader') %>
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Menu -->
+    <%- include('layautsDashboard/menu') %>
+
+    <!-- Cabecera -->
+    <%- include('layautsDashboard/head') %>
+
+    <!-- Main Content-->
+    <div class="main-content side-content pt-0">
+
+      <div class="container-fluid">
+        <div class="inner-body">
+
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h2 class="main-content-title tx-24 mg-b-5"><%- titulo %></h2>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/dashboard/inicio">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><%- breadcrumb %></li>
+              </ol>
+            </div>
+          </div>
+          <!-- End Page Header -->
+
+          <!-- =============================
+							Inicio Componentes Pagina
+						============================== -->
+
+          <!-- row -->
+          <div class="row row-sm">
+            <div class="col-xl-3 col-lg-4">
+              <div class="card custom-card mail-container task-container overflow-hidden">
+                <div class="">
+                  <div class="p-4 border-bottom">
+                    <h3 class="text-center">Insidencias</h3>
+                  </div>
+                  <div class="card-body tab-list-items">
+                    <div class="main-content-left main-content-left-mail">
+                      <div class="main-mail-menu">
+                        <nav class="nav main-nav-column mg-b-20">
+                          <a class="nav-link" href="#" onclick="insidencias(event)">
+                            <i class="fe fe-mail"></i> Insidencias reportadas <span class="badge badge-light"><%= insidencias.length %></span>
+                          </a>
+                          <a class="nav-link" href="#" onclick="sinResponder(event)">
+                            <i class="fe fe-star"></i> Insidencias sin responder <span class="badge badge-danger"><%= countInsidenciasNoRespondidas %></span>
+                          </a>
+                          <a class="nav-link" href="#" onclick="respondidas(event)">
+                            <i class="fe fe-bookmark"></i> Insidencias respondidas <span class="badge badge-success"><%= countInsidenciasRespondidas %></span>
+                          </a>
+                        </nav>
+                      </div><!-- main-mail-menu -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-9 col-lg-8  main-content-body-mail1">
+              <div class="card custom-card mail-container task-container overflow-hidden">
+                <div class="inbox-body p-4">
+                  <!-- Todas las insidencias -->
+                  <div class="table-responsive" id="todas">
+                    <table class="table table-inbox text-md-nowrap table-hover text-nowrap tabla-insidencias" id="example1">
+                      <thead>
+                        <tr>
+                          <th><i class="far fa-circle text-dark"></i></th>
+                          <th class="asunto_limitado">Asunto</th>
+                          <th>Plataforma</th>
+                          <th>Usuario</th>
+                          <th>Fecha</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% if(insidencias.length) { %>
+                        <% insidencias.forEach(listaInsidencias => { %>
+                        <% if(!(listaInsidencias.length < 1 || !listaInsidencias || !listaInsidencias.plataforma )) {%>
+                        <% moment.locale('es'); %>
+                        <% const fecha = moment(listaInsidencias.fecha).format('MMMM Do YYYY, h:mm:ss a'); %>
+                        <tr class="">
+                          <td class="inbox-small-cells <%= listaInsidencias.estado === 1 ? 'text-success' : 'text-danger' %>"><i class="fas fa-circle mr-2"></i><%= listaInsidencias.estado === 1 ? 'Respondida' : 'Sin responder' %></td>
+                          <td class="view-message dont-show font-weight-semibold asunto_limitado" style="cursor: pointer;" onclick="informaciónInsidencia(event, '<%- listaInsidencias.idInsidencia %>')"><%- listaInsidencias.asunto %></td>
+                          <td class="view-message text-left"><%- listaInsidencias.plataforma.plataforma %></td>
+                          <td class="view-message text-left"><%- listaInsidencias.usuario.nombre %></td>
+                          <td class="view-message text-right font-weight-semibold"><%= fecha %></td>
+                        </tr>
+                        <% } %>
+                        <% }) %>
+                        <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Informacion Insidencia -->
+                  <div id="informacionInsidencia" class="display-none">
+                    <div class="email-media">
+                      <div class="mb-2 d-lg-flex">
+                        <h3 id="asuntoInsidencia"></h3>
+                      </div>
+                      <div class="media mt-0 border-top pt-3 mt-0">
+                        <div class="main-img-user avatar-md mr-3 online">
+                          <img alt="" class="rounded-circle" src="" id="imgUserInsidencia">
+                        </div>
+                        <div class="media-body tx-inverse">
+                          <div class="float-right d-none d-md-flex fs-15">
+                            <small class="mr-2" id="fechaInsidencia"></small>
+                          </div>
+                          <div class="media-title font-weight-semiblod">
+                            <span class="tx-18 font-weight-bold" id="usuarioInsidencia"></span>
+                            <p class="mb-0 text-muted" id="perfilInsidencia"></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="eamil-body border-top pt-3 mt-3">
+                      <h6 id="plataformaInsidencia" class="mb-3 mt-2"></h6>
+                      <p id="descripcionInsidencia"></p>
+                      <p class="mb-0 mt-5">Gracias por la atención prestada.</p>
+                      <hr>
+                      <div class="email-attch">
+                        <p id="adjuntosInsidencia"></p>
+                        <div class="emai-img">
+                          <div class="row row-sm">
+                            <div class="col-sm-3 position-relative">
+                              <a href="#"><a href="#" id="btnDescargarInsidencia" class="btn btn-primary" download="" style="position: absolute; bottom: 3.7rem; right: 1.3rem;"><i class="fa fa-download mr-1" data-toggle="tooltip" title="" data-original-title="Download"></i> Descargar</a><img class="w-100" src="" alt="" id="imagenInsidencia"></a>
+                              <h6 class="mb-3 mt-3 mb-lg-0 pb-3" id="nombreImagenInsidencia"></h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="border-top" id="divRespuesta">
+                      <h4 class="mb-3 mt-4">Respuesta</h4>
+                      <div class="mb-3" id="contenidoRespuesta"></div>
+                    </div>
+                    <div class="border-top">
+                      <h4 class="mb-3 mt-4">Responder</h4>
+                      <div class="form-group">
+                        <label class="form-label">Escriba la respuesta a la insidencia</label>
+                        <input type="hidden" name="idInsidencia" id="idInsidencia">
+                        <input type="hidden" class="form-control" id="respuesta" name="respuesta">
+                        <trix-editor input="respuesta" class="form-control descripcion-insidencia"></trix-editor>
+                      </div>
+                      <div class="alert alert-danger mg-b-0 display-none" role="alert" id="alertaResponder">
+                        Hola
+                      </div>
+                    </div>
+                    <div class="modal-footer px-0">
+                      <button class="btn ripple btn-primary" onclick="responderInsidencia(event)">Responder insidencia</button>
+                      <button class="btn ripple btn-secondary" data-dismiss="modal" type="button" onclick="volver1(event)">volver</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- mail-content -->
+              </div>
+            </div>
+          </div>
+          <!-- /row -->
+
+          <!-- =============================
+							Fin Componentes Pagina
+						============================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Main Content-->
+
+    <!-- Foot -->
+    <%- include('layautsDashboard/foot') %>
+
+    <!-- Notificiaciones -->
+    
+
+  </div>
+  <!-- End Page -->
+
+
+  <!-- Footer -->
+  <%- include('layautsDashboard/footer') %>
+
+
+  <!-- Scripts Personalizados -->
+
+  <% if(locals.mensajes) { %>
+  <% const validacionErrores = Object.keys(locals.mensajes) %>
+  <% if(validacionErrores.length) { %>
+
+  <% locals.mensajes[validacionErrores].forEach(alerta => { %>
+
+  <% if(validacionErrores == 'error') { %>
+  <% title = 'Lo Sentimos!' %>
+  <% } else if (validacionErrores == 'success') { %>
+  <% title = 'Perfecto!' %>
+  <% } %>
+
+  <script>
+    swal({
+      title: "<%= title %>",
+      text: "<%= alerta %>",
+      type: "<%= validacionErrores %>",
+      confirmButtonColor: '#57a94f'
+    })
+  </script>
+
+  <% }); %>
+
+  <% } %>
+  <% } %>
+
+  <script>
+    moment.locale('es');
+
+    function sinResponder(e) {
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminInsidencias/sinResponderSuperdistribuidor', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            accion: 'ok'
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+
+          var datos = [];
+          for (var i = 0; i < respuesta.insidencias.length; i++) {
+
+            const estado = `<div class='view-message text-danger'><i class='fas fa-circle mr-2'></i>Sin responder</div>`;
+            const asunto = `<div class='view-message dont-show font-weight-semibold asunto_limitado' style='cursor: pointer;' onclick='informaciónInsidencia(event, "${respuesta.insidencias[i].idInsidencia}")'>${respuesta.insidencias[i].asunto}</div>`;
+
+            const plataforma = respuesta.plataformas.filter(function(element) {
+              return element.id_plataforma == respuesta.insidencias[i].plataformaIdPlataforma;
+            });
+
+            const plat = plataforma[0].plataforma;
+            const nombrePlataforma = `<div class='view-message text-left'>${plat}</div>`;
+            const nombre = `<div class='view-message text-left'>${respuesta.insidencias[i].usuario.nombre}</div>`;
+            const fecha = `<div class='view-message text-right font-weight-semibold'>${moment(respuesta.insidencias[i].fecha).format('MMMM Do YYYY, h:mm:ss a')}</div>`;
+
+            const lista = [estado, asunto, nombrePlataforma, nombre, fecha];
+
+            datos.push(lista);
+          }
+
+          $('#example1').DataTable().destroy();
+          $('#example1').dataTable({
+            language: {
+              searchPlaceholder: 'Buscar...',
+              sSearch: '',
+              lengthMenu: '_MENU_ filas/pagina',
+            },
+            data: datos
+          });
+
+          if (respuesta.insidencias.length > 0) {
+            ellipsis_box(30);
+          }
+
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Insidencias',
+            type: 'error'
+          });
+        })
+    }
+
+    function respondidas(e) {
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminInsidencias/respondidasSuperdistribuidor', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            accion: 'ok'
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+
+          console.log(respuesta.insidencias);
+
+          var datos = [];
+          for (var i = 0; i < respuesta.insidencias.length; i++) {
+            const estado = `<div class='view-message text-success'><i class='fas fa-circle mr-2'></i>Respondida</div>`;
+            const asunto = `<div class='view-message dont-show font-weight-semibold asunto_limitado' style='cursor: pointer;' onclick='informaciónInsidencia(event, "${respuesta.insidencias[i].idInsidencia}")'>${respuesta.insidencias[i].asunto}</div>`;
+
+            const plataforma = respuesta.plataformas.filter(function(element) {
+              return element.id_plataforma == respuesta.insidencias[i].plataformaIdPlataforma;
+            });
+
+            const plat = plataforma[0].plataforma;
+            const nombrePlataforma = `<div class='view-message text-left'>${plat}</div>`;
+            const nombre = `<div class='view-message text-left'>${respuesta.insidencias[i].usuario.nombre}</div>`;
+            const fecha = `<div class='view-message text-right font-weight-semibold'>${moment(respuesta.insidencias[i].fecha).format('MMMM Do YYYY, h:mm:ss a')}</div>`;
+
+            const lista = [estado, asunto, nombrePlataforma, nombre, fecha];
+
+            datos.push(lista);
+          }
+
+          $('#example1').DataTable().destroy();
+          $('#example1').dataTable({
+            language: {
+              searchPlaceholder: 'Buscar...',
+              sSearch: '',
+              lengthMenu: '_MENU_ filas/pagina',
+            },
+            data: datos
+          });
+
+          if (respuesta.insidencias.length > 0) {
+            ellipsis_box(30);
+          }
+
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Insidencias',
+            type: 'error'
+          });
+        })
+    }
+
+    function insidencias(e) {
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminInsidencias/insidenciasSuperdistribuidor', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            accion: 'ok'
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+
+          console.log(respuesta.insidencias);
+
+          var datos = [];
+          for (var i = 0; i < respuesta.insidencias.length; i++) {
+            const estado = `<div class='view-message ${respuesta.insidencias[i].estado === 1 ? 'text-success' : 'text-danger'}'><i class='fas fa-circle mr-2'></i>${respuesta.insidencias[i].estado === 1 ? 'Respondida' : 'Sin responder'}</div>`;
+            const asunto = `<div class='view-message dont-show font-weight-semibold asunto_limitado' style='cursor: pointer;' onclick='informaciónInsidencia(event, "${respuesta.insidencias[i].idInsidencia}")'>${respuesta.insidencias[i].asunto}</div>`;
+
+            const plataforma = respuesta.plataformas.filter(function(element) {
+              return element.id_plataforma == respuesta.insidencias[i].plataformaIdPlataforma;
+            });
+
+            const plat = plataforma[0].plataforma;
+            const nombrePlataforma = `<div class='view-message text-left'>${plat}</div>`;
+            const nombre = `<div class='view-message text-left'>${respuesta.insidencias[i].usuario.nombre}</div>`;
+            const fecha = `<div class='view-message text-right font-weight-semibold'>${moment(respuesta.insidencias[i].fecha).format('MMMM Do YYYY, h:mm:ss a')}</div>`;
+
+            const lista = [estado, asunto, nombrePlataforma, nombre, fecha];
+
+            datos.push(lista);
+          }
+
+          $('#example1').DataTable().destroy();
+          $('#example1').dataTable({
+            language: {
+              searchPlaceholder: 'Buscar...',
+              sSearch: '',
+              lengthMenu: '_MENU_ filas/pagina',
+            },
+            data: datos
+          });
+
+          if (respuesta.insidencias.length > 0) {
+            ellipsis_box(30);
+          }
+
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Insidencias',
+            type: 'error'
+          });
+        })
+    }
+
+    function informaciónInsidencia(e, i) {
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+
+      fetch('/adminInsidencias/infoInsidencia', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: i
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+
+          const asuntoInsidencia = document.getElementById('asuntoInsidencia');
+          const descripcionInsidencia = document.getElementById('descripcionInsidencia');
+          const imgUserInsidencia = document.getElementById('imgUserInsidencia');
+          const fechaInsidencia = document.getElementById('fechaInsidencia');
+          const usuarioInsidencia = document.getElementById('usuarioInsidencia');
+          const perfilInsidencia = document.getElementById('perfilInsidencia');
+          const plataformaInsidencia = document.getElementById('plataformaInsidencia');
+          const btnDescargarInsidencia = document.getElementById('btnDescargarInsidencia');
+          const adjuntosInsidencia = document.getElementById('adjuntosInsidencia');
+          const imagenInsidencia = document.getElementById('imagenInsidencia');
+          const nombreImagenInsidencia = document.getElementById('nombreImagenInsidencia');
+          const idInsidencia = document.getElementById('idInsidencia');
+          const divRespuesta = document.getElementById('divRespuesta');
+          const contenidoRespuesta = document.getElementById('contenidoRespuesta');
+
+          const divInformacion = document.getElementById('informacionInsidencia');
+          const divTodas = document.getElementById('todas');
+
+          divInformacion.classList.remove('display-none');
+          divTodas.classList.add('display-none');
+
+          if (respuesta.respuesta === null) {
+            divRespuesta.classList.add('display-none');
+            contenidoRespuesta.innerHTML = respuesta.respuesta;
+          } else {
+            divRespuesta.classList.remove('display-none');
+            contenidoRespuesta.innerHTML = respuesta.respuesta;
+          }
+
+          asuntoInsidencia.innerHTML = respuesta.asunto;
+          idInsidencia.value = respuesta.idInsidencia;
+          descripcionInsidencia.innerHTML = respuesta.descripcion;
+          imgUserInsidencia.src = respuesta.foto;
+          plataformaInsidencia.innerHTML = 'Plataforma: ' + respuesta.plataforma;
+          fechaInsidencia.innerHTML = moment(respuesta.fecha).format('MMMM Do YYYY, h:mm:ss a');
+          usuarioInsidencia.innerHTML = respuesta.usuario;
+          perfilInsidencia.innerHTML = respuesta.perfil;
+
+          if (respuesta.imagen === null) {
+            btnDescargarInsidencia.classList.add('display-none');
+            adjuntosInsidencia.innerHTML = 'Sin archivos adjuntos';
+            imagenInsidencia.src = '';
+            nombreImagenInsidencia.innerHTML = '';
+            btnDescargarInsidencia.href = '';
+            btnDescargarInsidencia.setAttribute("download", "");
+          } else {
+            btnDescargarInsidencia.classList.remove('display-none');
+            adjuntosInsidencia.innerHTML = '1 Archivo adjunto';
+            imagenInsidencia.src = respuesta.imagen;
+            btnDescargarInsidencia.href = respuesta.imagen;
+            btnDescargarInsidencia.setAttribute("download", respuesta.imagen);
+            nombreImagenInsidencia.innerHTML = respuesta.imagen;
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Insidencias',
+            type: 'error'
+          });
+        })
+
+    }
+
+    function volver1(e) {
+
+      const todas = document.getElementById('todas');
+      const informacion = document.getElementById('informacionInsidencia');
+
+      informacion.classList.add('display-none');
+      todas.classList.remove('display-none');
+
+    }
+
+    function ellipsis_box(max_chars) {
+
+      $('#example1 tr').each(function() {
+        var customerId = $(this).find(".asunto_limitado").html();
+        if (customerId.length > max_chars) {
+          const limite = customerId.substr(0, max_chars) + " ...";
+          $(this).find(".asunto_limitado").html(limite);
+        }
+      });
+
+    }
+
+    ellipsis_box(30);
+
+    function responderInsidencia(e) {
+
+      const idInsidencia = document.getElementById("idInsidencia").value;
+      const respuesta = document.getElementById("respuesta").value;
+
+      $('#global-loader').addClass("d-block");
+      $('#global-loader').removeClass("d-none");
+      fetch('/adminInsidencias/responderInsidencia', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: idInsidencia,
+            respuesta: respuesta
+          })
+        })
+        .then(res => res.text())
+        .then(data => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          const respuesta = JSON.parse(data);
+          if (respuesta.resp === 'success') {
+
+            swal({
+                title: respuesta.titulo,
+                text: respuesta.descripcion,
+                type: respuesta.resp,
+                confirmButtonColor: '#57a94f',
+                closeOnClickOutside: false
+              },
+              function(isConfirm) {
+                if (isConfirm) {
+                  location.reload();
+                }
+              });
+
+          } else {
+
+            $('#alertaResponder').fadeIn();
+            const error = '<button aria-label="Close" class="close" data-dismiss="alert" type="button"> <span aria-hidden="true" class="text-danger">×</span> </button> <strong>Oh no!</strong> ' + respuesta.descripcion + '.';
+            $('#alertaResponder').html(error);
+            $('#alertaResponder').delay(15000).fadeOut();
+
+          }
+        }).catch(() => {
+          $('#global-loader').removeClass("d-block");
+          $('#global-loader').addClass("d-none");
+          swal({
+            title: 'Request Error',
+            text: '500 - Admin Insidencias',
+            type: 'error'
+          });
+        })
+
+    }
+  </script>
