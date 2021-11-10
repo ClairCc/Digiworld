@@ -1,10 +1,16 @@
 body {
   background: #404040;
 }
+
+main {
+  background: url("../img/aloneCapza.svg") no-repeat;
+  background-position: 50% 400px;
+}
+
 .main_ingreso {
   background-color: #404040;
   width: 100vw;
-  height: calc(80vh + 100px);
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,7 +68,6 @@ body main .capza_button:hover {
   background: #545454;
   padding: 30px 60px;
   justify-content: flex-end;
-  margin-top: 40px;
 }
 .main_title {
   margin-top: 100px;
