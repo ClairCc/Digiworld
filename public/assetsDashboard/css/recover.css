@@ -1,0 +1,12 @@
+section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: cover;
+  margin: 40px 0;
+}
+
+form {
+  width: 60%;
+  box-shadow: 0px 8px 50px 9px rgba(0, 0, 0, 0.75);
+}
