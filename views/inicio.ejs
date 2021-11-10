@@ -59,11 +59,12 @@
 
 <section>
   
+
 </section>
 
 <section class='arrow'>
   <figure class='arrow_backgorund'>
-    <img src="assetsInicio/img/arrow.svg" alt="">
+    <img src="assetsInicio/img/arrow.svg" alt="" class='arrow_img-ikd'>
   </figure>
   <p class='arrow_p'>
     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet reiciendis fugiat earum modi ex! Aperiam culpa optio minus, veritatis a distinctio eaque illum maiores neque. Illo velit excepturi magni ipsum?
@@ -186,7 +187,19 @@
 <script src="assetsInicio/js/owl.carousel.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.1.9/dist/js/splide.js"></script>
 <script>
-  
+  var box=$(".arrow_img-ikd");
+var boxCenter=[box.offset().left+box.width(), box.offset().top+box.height()];
+
+$(document).mousemove(function(e){    
+    
+        
+	var angle = Math.atan2(e.pageX- boxCenter[0],- (e.pageY- boxCenter[1]) )*(360/Math.PI);	    
+    
+    box.css({ "-webkit-transform": 'rotate(' + angle + 'deg)'});    
+    box.css({ '-moz-transform': 'rotate(' + angle + 'deg)'});
+    box.css({ 'transform': 'rotate(' + angle + 'deg)'});
+    
+});
     smoothScroll.init({
       selector: '[data-scroll]', // Selector for links (must be a class, ID, data attribute, or element tag)
       selectorHeader: null, // Selector for fixed headers (must be a valid CSS selector) [optional]

@@ -6,6 +6,7 @@ body {
   font-size: 15px;
   background-color: #fff;
 }
+
 img {
   max-width: 100%;
 }
@@ -7052,6 +7053,15 @@ blockquote::before {
   bottom: 0;
   transform: rotate(-180deg);
 }
+.box {
+  background-color: black;
+  width: 100px;
+  height: 30px;
+
+  position: absolute;
+  left: 200px;
+  top: 200px;
+}
 
 footer {
   background-color: #ffc813;
@@ -7171,13 +7181,13 @@ footer ul a li {
     padding: 0;
   }
   body .arrow_backgorund {
-    width: 100px;
-    height: 100px;
-    left: calc(50% - 50px);
-    top: calc(100% - 50px);
+    width: 100px !important;
+    height: 100px !important;
+    left: calc(50% - 50px) !important;
+    top: calc(100% - 50px) !important;
   }
   .arrow_backgorund img {
-    width: 40px;
+    width: 40px !important;
   }
   .images {
     margin-top: 60px;
