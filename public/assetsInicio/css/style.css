@@ -6389,6 +6389,7 @@ blockquote::before {
   color: #fff;
   border-color: #ea4335;
 }
+
 .login-content .login-form form .connect-with-social button:hover {
   background-color: #032e4c;
   color: #fff;
@@ -6736,7 +6737,7 @@ blockquote::before {
 }
 .arrow {
   background-color: #4e4e4e;
-  padding: 0 120px;
+  padding: 40px 120px;
   display: flex;
   justify-content: space-around;
 }
@@ -6951,7 +6952,8 @@ blockquote::before {
 .arrow {
   position: relative;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  padding: 0 40px 80px;
 }
 .banner-home .splide .text_principal {
   font-weight: bold !important;
@@ -6971,23 +6973,25 @@ blockquote::before {
   align-items: center;
   border-radius: 1000px;
   position: absolute;
-  top: -70px;
+  bottom: -40px;
   left: 120px;
 }
 .arrow_backgorund img {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
 }
 .arrow_p {
   width: 500px;
   padding: 80px 0;
+  font-size: 16px;
+  margin-left: 300px;
 }
 .cards_container p {
   color: #000;
 }
 .cards_container {
   display: flex;
-  margin: 120px 80px 0 80px;
+  margin: 160px 80px 0 80px;
   justify-content: space-between;
   flex-wrap: wrap;
 }
@@ -7059,6 +7063,7 @@ footer {
 }
 footer article {
   padding: 20px 0;
+  margin-left: 10px;
 }
 footer p,
 footer ul a li {
@@ -7071,7 +7076,6 @@ footer ul a li {
 .footer_list-ul {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 .footer_icon {
   display: flex;
@@ -7097,7 +7101,7 @@ footer ul a li {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
   cursor: pointer;
-  margin-left: 15px;
+
   outline: none;
   border: none;
   border-radius: 4px;
@@ -7120,31 +7124,7 @@ footer ul a li {
   align-items: center;
   justify-content: center;
 }
-@media (max-width: 1023px) {
-  .flaticon {
-    max-width: 20% !important;
-  }
 
-  .servicios_margen {
-    margin-top: 10% !important;
-  }
-
-  .margen_col {
-    margin-left: 0% !important;
-  }
-  .margen_col1 {
-    margin-left: 26% !important;
-  }
-
-  .margen_row {
-    margin-left: 0% !important;
-  }
-
-  .margen_slider {
-    margin-left: 0% !important;
-    margin-right: 0% !important;
-  }
-}
 .images {
   display: flex;
   align-items: center;
@@ -7180,7 +7160,93 @@ footer ul a li {
   background: #4e4e4e;
   margin: 10px;
 }
+@media (max-width: 425px) {
+  .arrow {
+    padding: 0 18px;
+  }
+  .footer_icon {
+    width: 100%;
+  }
+  .footer_list-ul {
+    padding: 0;
+  }
+  body .arrow_backgorund {
+    width: 100px;
+    height: 100px;
+    left: calc(50% - 50px);
+    top: calc(100% - 50px);
+  }
+  .arrow_backgorund img {
+    width: 40px;
+  }
+  .images {
+    margin-top: 60px;
+  }
+  .images_article {
+    width: 90%;
+  }
+  .images_article-figure {
+    width: 100%;
+  }
+}
+@media (max-width: 1023px) {
+  .flaticon {
+    max-width: 20% !important;
+  }
 
+  .servicios_margen {
+    margin-top: 10% !important;
+  }
+
+  .margen_col {
+    margin-left: 0% !important;
+  }
+  .margen_col1 {
+    margin-left: 26% !important;
+  }
+
+  .margen_row {
+    margin-left: 0% !important;
+  }
+
+  .margen_slider {
+    margin-left: 0% !important;
+    margin-right: 0% !important;
+  }
+}
+@media (max-width: 1024px) {
+  body .arrow_backgorund {
+    left: calc(50% - 150px);
+    top: calc(100% - 150px);
+  }
+  .arrow_backgorund {
+    width: 300px;
+    height: 300px;
+    top: -19px;
+    left: 45px;
+  }
+  .arrow_backgorund img {
+    width: 150px;
+    height: 150px;
+  }
+  .arrow_p {
+    margin-left: 0;
+  }
+  .cards_container {
+    justify-content: center;
+  }
+  .card {
+    margin: 10px 24px;
+  }
+  .images_article-figure {
+    width: 80%;
+  }
+  .images .images_text,
+  .images_article-figure,
+  .images_article {
+    justify-content: center;
+  }
+}
 @media (max-width: 768px) {
   .flaticon {
     max-width: 20% !important;
@@ -7253,35 +7319,16 @@ footer ul a li {
     color: #404040 !important;
     font-size: 500% !important;
   }
-  .arrow_backgorund img {
+  .arrow {
+    padding-bottom: 40px;
+  }
+  body .arrow_backgorund img {
     width: 100px;
   }
-  body .arrow_backgorund {
+  body section .arrow_backgorund {
     width: 200px;
     height: 200px;
     left: calc(50% - 100px);
     top: calc(100% - 100px);
-  }
-}
-@media (max-width: 1024px) {
-  .arrow_backgorund {
-    width: 300px;
-    height: 300px;
-    top: -19px;
-    left: 45px;
-  }
-  .cards_container {
-    justify-content: center;
-  }
-  .card {
-    margin: 10px 24px;
-  }
-  .images_article-figure {
-    width: 80%;
-  }
-  .images .images_text,
-  .images_article-figure,
-  .images_article {
-    justify-content: center;
   }
 }

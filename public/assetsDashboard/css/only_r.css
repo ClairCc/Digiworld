@@ -17,7 +17,7 @@ main {
   flex-direction: column;
 }
 .main_ingreso .main_title h2 {
-  font-size: 50px;
+  font-size: 40px;
   color: #ffc813;
   font-weight: bold;
 }
@@ -26,7 +26,7 @@ main {
   font-size: 16px;
 }
 main .form-control {
-  width: 30vw;
+  width: 50vw;
   border: 2px solid #ffc813;
   background: transparent;
   border-radius: 14px;
