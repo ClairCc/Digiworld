@@ -122,3 +122,13 @@ footer figure {
     width: auto;
   }
 }
+#iconoOjo {
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fe-eye:before,
+.fe-eye-off:before {
+  color: #ffc813;
+}
