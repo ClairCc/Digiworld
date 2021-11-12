@@ -112,6 +112,7 @@
     </figure>
   </footer>
   <script>
+    const globalLoader = document.getElementById("global-loader")
     function verInput() {
       const password = document.getElementById("password");
       const tipo = password.type;
@@ -128,7 +129,8 @@
     }
     
 
-    function enviarRegisto() {
+    function enviarRegisto() {   
+      globalLoader.className = "d-block"
       const email = document.getElementById("emailRecuperar").value;
       const password = document.getElementById("enviarPassword").value;
       const user = document.getElementById("enviarUser").value;
@@ -156,11 +158,14 @@
             password,
             name: user
           }
+
         }).then((res)=>{
+          globalLoader.classList.remove("d-block")
           console.log(res.data)
           const respuesta = res.data
           
           if (respuesta.resp === "success") {
+            
             swal(
                   {
                     title: respuesta.titulo,
