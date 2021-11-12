@@ -32,8 +32,7 @@ module.exports = function () {
   router.get("/registro", generalController.formRegistro);
   router.get("");
   router.post(
-    "/registra-user",
-    generalController.uploadArchivo,
+    "/register-user",
     generalController.validarRegistro,
     generalController.crearRegistro
   );

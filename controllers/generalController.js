@@ -1,203 +1,223 @@
-const Usuarios = require('../models/usuariosModelo');
+const Usuarios = require("../models/usuariosModelo");
 const { Op } = require("sequelize");
-const {body, validationResult} = require('express-validator');
-const enviarEmails = require('../handlers/emails');
-const axios = require('axios');
-const generator = require('generate-password');
-const bcrypt = require('bcrypt-nodejs');
-const multer = require('multer');
-const shortid = require('shortid');
-const { v4: uuid_v4 } = require('uuid');
-const {s3, bucket} = require('../config/awsS3');
-const multerS3 = require('multer-s3');
+const { body, validationResult } = require("express-validator");
+const enviarEmails = require("../handlers/emails");
+const axios = require("axios");
+const generator = require("generate-password");
+const bcrypt = require("bcrypt-nodejs");
+const multer = require("multer");
+const shortid = require("shortid");
+const { v4: uuid_v4 } = require("uuid");
+const { s3, bucket } = require("../config/awsS3");
+const multerS3 = require("multer-s3");
 
 exports.inicio = (req, res) => {
-    res.render('inicio', {
-        nombrePagina : 'Inicio'
-     })
-}
+  res.render("inicio", {
+    nombrePagina: "Inicio",
+  });
+};
 
 exports.formRegistro = (req, res) => {
-    res.render('registro', {
-        nombrePagina : 'Registro'
-     })
-}
+  res.render("registro", {
+    nombrePagina: "Registro",
+  });
+};
 
-const configuracionMulter = ({
-    storage: multerS3({
-        s3,
-        bucket,
-        acl: 'public-read',
-        metadata: (req, file, next) => {
-            next(null, {
-                filename: file.fieldname
-            });
-        },
-        key: (req, file, next) => {
-            next(null, `il_salone/documentos_comercios/${file.originalname}`);
-        }
-    })
-});
+const configuracionMulter = {
+  storage: multerS3({
+    s3,
+    bucket,
+    acl: "public-read",
+    metadata: (req, file, next) => {
+      next(null, {
+        filename: file.fieldname,
+      });
+    },
+    key: (req, file, next) => {
+      next(null, `il_salone/documentos_comercios/${file.originalname}`);
+    },
+  }),
+};
 
-const upload = multer(configuracionMulter).any('camaraComercio', 'rut', 'documentoIdentidad');
+const upload = multer(configuracionMulter).any(
+  "camaraComercio",
+  "rut",
+  "documentoIdentidad"
+);
 
 exports.uploadArchivo = async (req, res, next) => {
-
-    upload(req, res, function(error) {
-        if(error){
-            res.json({ titulo: '¡Lo Sentimos!', resp: 'error', descripcion: error });
-            return;
-        } else {
-            next();
-        }
-    })
-}
+  upload(req, res, function (error) {
+    if (error) {
+      res.json({ titulo: "¡Lo Sentimos!", resp: "error", descripcion: error });
+      return;
+    } else {
+      next();
+    }
+  });
+};
 
 exports.validarRegistro = async (req, res, next) => {
-    // leer datos
-    const usuario = req.body;
-    
+  // leer datos
+  const usuario = req.body;
 
-    // Nueva validacion express validator
+  // Nueva validacion express validator
 
-    if(usuario.nombre.length < 10 ) {
-        res.json({ titulo: '¡Lo Sentimos!', resp: 'error', descripcion: 'El password debe tener al menos 10 carácteres' });
-        return;
-    }
-
-
-    if(usuario.nombre === '' || usuario.razonSocial === '' || usuario.nit === '' || usuario.telefono === '' || usuario.email === '' || usuario.direccion === '' || usuario.password === '') {
-        res.json({ titulo: '¡Lo Sentimos!', resp: 'error', descripcion: 'Todos los campos son obligatorios' });
-        return;
-    }
-
-    const email = req.body.email;
-    const userExist = await Usuarios.findOne({
-        where:{
-            email: email
-        }
+  if (usuario.password.length < 10) {
+    res.json({
+      titulo: "¡Lo Sentimos!",
+      resp: "error",
+      descripcion: "El password debe tener al menos 10 carácteres",
     });
+    return;
+  }
 
-    if(userExist){
-        res.json({ titulo: '¡Lo Sentimos!', resp: 'warning', descripcion: 'El usuario ya se encuentra registrado en nuestra plataforma' });
-        return;
-    }
-    //si toda la validacion es correcta
-    next();
-    
-}
+  if (usuario.password === "" || usuario.email === "" || usuario.name === "") {
+    return res.json({
+      titulo: "¡Lo Sentimos!",
+      resp: "error",
+      descripcion: "Todos los campos son obligatorios",
+    });
+  }
+
+  const email = usuario.email;
+  const userExist = await Usuarios.findOne({
+    where: {
+      email: email,
+    },
+  });
+
+  if (userExist) {
+    return res.json({
+      titulo: "¡Lo Sentimos!",
+      resp: "warning",
+      descripcion:
+        "El usuario ya se encuentra registrado en nuestra plataforma",
+    });
+  }
+  //si toda la validacion es correcta
+  next();
+};
 
 exports.crearRegistro = async (req, res) => {
+  const usuario = req.body;
+  const response = await axios.get("https://api.ipify.org?format=json");
+  const ip = response.data.ip;
 
-    const usuario = req.body;
-    const response = await axios.get('https://api.ipify.org?format=json');
-    const ip = response.data.ip;
-
-    const camaraComercio = req.files[0].location;
-    const rut = req.files[1].location;
-    const documentoIdentidad = req.files[2].location;
-
-    try {
-
-        await Usuarios.create({
-            nombre: usuario.nombre,
-            email: usuario.email,
-            password: usuario.password,
-            razonSocial: usuario.razonSocial,
-            nit: usuario.nit,
-            direccion: usuario.direccion,
-            telefono_movil: usuario.telefono,
-            ip: ip,
-            perfil: 'comercio',
-            camaraComercio: camaraComercio,
-            rut: rut,
-            documentoIdentidad: documentoIdentidad
-        });
-
-        // URL confirmacion
-        const url = `http://${req.headers.host}/confirmar-cuenta/${usuario.email}`;
-
-        // Enviar email
-        await enviarEmails.enviarEmail({
-            usuario,
-            url,
-            subject: 'Confirma tu cuenta de Il Salone',
-            archivo: 'confirmar-cuenta'
-        });
-
-        // Todo: flash message y redireccionar
-        res.json({ titulo: '¡Muy bien!', resp: 'success', descripcion: 'Te hemos enviado un E-mail para confirmar tu cuenta'});
-        return;
-        // console.log('creando usuario');
-
-    } catch (error) {
-        
-        console.log(error)
-        const erroresSequelize = error.errors.map(err => err.message);
-
-        res.json({ titulo: '¡Lo Sentimos!', resp: 'warning', descripcion: erroresSequelize});
-        return;
-    }
-
-}
-
-exports.recuperarPasswords = async (req, res) => {
-
-    const email = req.body.emailRecuperar.trim();
-
-    const usuario = await Usuarios.findOne({ where: { email: email }});
-
-    if(!usuario) {
-        res.json({ titulo: '¡Lo Sentimos!', resp: 'error', descripcion: 'El email ingresado no existe en nuestra base de datos.' });
-        return; 
-    }
-
-    // NewPassword
-    const newPassword = generator.generate({
-        length: 12,
-        numbers: true
+  try {
+    await Usuarios.create({
+      nombre: usuario.nombre,
+      email: usuario.email,
+      password: usuario.password,
+      ip: ip,
+      perfil: "comercio",
     });
 
-    const hashPassword = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10), null);
-
-    usuario.password = hashPassword;
-    await usuario.save();
+    // URL confirmacion
+    const url = `http://${req.headers.host}/confirmar-cuenta/${usuario.email}`;
 
     // Enviar email
-    await enviarEmails.enviarEmailPassword({
-        usuario: email,
-        newPassword,
-        subject: 'Recuperar contraseña Il Salone',
-        archivo: 'recuperar-password'
+    await enviarEmails.enviarEmail({
+      usuario,
+      url,
+      subject: "Confirma tu cuenta de Il Salone",
+      archivo: "confirmar-cuenta",
     });
 
-    res.json({ titulo: '¡Que bien!', resp: 'success', descripcion: 'Te hemos enviado un E-mail para restablecer tu contraseña.' });
+    // Todo: flash message y redireccionar
+    return res.json({
+      titulo: "¡Muy bien!",
+      resp: "success",
+      descripcion: "Te hemos enviado un E-mail para confirmar tu cuenta",
+    });
+    // console.log('creando usuario');
+  } catch (error) {
+    console.log(error);
+    const erroresSequelize = error.errors.map((err) => err.message);
+
+    return res.json({
+      titulo: "¡Lo Sentimos!",
+      resp: "warning",
+      descripcion: erroresSequelize,
+    });
+  }
+};
+
+exports.recuperarPasswords = async (req, res) => {
+  const email = req.body.emailRecuperar.trim();
+
+  const usuario = await Usuarios.findOne({ where: { email: email } });
+
+  if (!usuario) {
+    res.json({
+      titulo: "¡Lo Sentimos!",
+      resp: "error",
+      descripcion: "El email ingresado no existe en nuestra base de datos.",
+    });
     return;
-}
+  }
+
+  // NewPassword
+  const newPassword = generator.generate({
+    length: 12,
+    numbers: true,
+  });
+
+  const hashPassword = bcrypt.hashSync(
+    newPassword,
+    bcrypt.genSaltSync(10),
+    null
+  );
+
+  usuario.password = hashPassword;
+  await usuario.save();
+
+  // Enviar email
+  await enviarEmails.enviarEmailPassword({
+    usuario: email,
+    newPassword,
+    subject: "Recuperar contraseña Il Salone",
+    archivo: "recuperar-password",
+  });
+
+  res.json({
+    titulo: "¡Que bien!",
+    resp: "success",
+    descripcion: "Te hemos enviado un E-mail para restablecer tu contraseña.",
+  });
+  return;
+};
 
 // confirmar la cuenta del ususario
 
 exports.confirmarCuenta = async (req, res, next) => {
-    // verificar usuario existe
-    const usuario = await Usuarios.findOne({ where: { email: req.params.correo }});
+  // verificar usuario existe
+  const usuario = await Usuarios.findOne({
+    where: { email: req.params.correo },
+  });
 
-    // si no existe redireccionar
-    if(!usuario) {
-        req.flash('warning', 'El usuario '+req.params.correo+' no existe en nuestra plataforma');
-        res.redirect('/registro');
-        return next();
-    }
+  // si no existe redireccionar
+  if (!usuario) {
+    req.flash(
+      "warning",
+      "El usuario " + req.params.correo + " no existe en nuestra plataforma"
+    );
+    res.redirect("/registro");
+    return next();
+  }
 
-    // si existe confirmar cuenta y redireccionar
-    usuario.verificacion = 1;
-    await usuario.save();
+  // si existe confirmar cuenta y redireccionar
+  usuario.verificacion = 1;
+  await usuario.save();
 
-    req.flash('success', 'La cuenta se ha confirmado con éxito, ya puedes iniciar sesión');
-    res.redirect('/ingreso');
-}
+  req.flash(
+    "success",
+    "La cuenta se ha confirmado con éxito, ya puedes iniciar sesión"
+  );
+  res.redirect("/ingreso");
+};
 
 exports.formIngreso = (req, res) => {
-    res.render('ingreso', {
-        nombrePagina : 'Ingreso'
-     })
-}
+  res.render("ingreso", {
+    nombrePagina: "Ingreso",
+  });
+};

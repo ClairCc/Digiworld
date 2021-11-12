@@ -6,12 +6,6 @@ dotenv.config({
   path: path.resolve(__dirname, "../development.env"),
 });
 
-console.log(process.env.DB_HOST);
-console.log(process.env.DB_PORT);
-console.log(process.env.DB_USER);
-console.log(process.env.DB_PASS);
-console.log(process.env.DB_DATABASE);
-
 const db = new Sequelize({
   dialect: "mysql",
   host: process.env.DB_HOST,
@@ -21,7 +15,7 @@ const db = new Sequelize({
   database: process.env.DB_DATABASE,
   dialectOptions: {
     charset: "utf8_general_ci",
-    // ssl: { rejectUnauthorized: false },
+    ssl: { rejectUnauthorized: false },
   },
   define: {
     timestamps: false,
@@ -35,9 +29,23 @@ const db = new Sequelize({
   logging: false,
 });
 
+// var db = new Sequelize(
+//   process.env.DB_DATABASE,
+//   process.env.DB_USER,
+//   process.env.DB_USER,
+//   {
+//     host: "localhost",
+//     dialect: "mariadb",
+//     port: 3306,
+//     define: {
+//       paranoid: true,
+//     },
+//   }
+// );
+
 // db.authenticate().then(
-//     () => console.log('success'),
-//     (error) => console.error(error),
+//   () => console.log("success"),
+//   (error) => console.error("ERROR")
 // );
 
 module.exports = db;
