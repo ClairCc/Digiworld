@@ -119,7 +119,7 @@ exports.crearRegistro = async (req, res) => {
     await enviarEmails.enviarEmail({
       usuario,
       url,
-      subject: "Confirma tu cuenta de Il Salone",
+      subject: "Confirma tu cuenta de Capza",
       archivo: "confirmar-cuenta",
     });
 
@@ -175,7 +175,7 @@ exports.recuperarPasswords = async (req, res) => {
   await enviarEmails.enviarEmailPassword({
     usuario: email,
     newPassword,
-    subject: "Recuperar contraseña Il Salone",
+    subject: "Recuperar contraseña Capza",
     archivo: "recuperar-password",
   });
 

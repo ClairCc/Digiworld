@@ -92,7 +92,7 @@
         value="Registrarse"
         onclick='enviarRegisto()'
       />
-      <button  id='hola'>hola</button>
+      
     </form>
     <div class="text-left mt-5 ml-0" style="margin-bottom: 60px">
       <div class="mb-1">
@@ -142,7 +142,7 @@
         swal({
           title: "upsi",
           text: "El email no tiene un formato valido",
-          type: "warning",
+          type: warning,
         })
       }
 
@@ -180,6 +180,7 @@
                     }
                   }
                 );
+                
           }
           else{
             swal(

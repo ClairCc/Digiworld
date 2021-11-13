@@ -72,6 +72,7 @@ section {
   background-position: 50% 200px;
   height: 80vh;
 }
+
 @media (max-width: 1024px) {
   .form_recovery {
     width: 60vw;

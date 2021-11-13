@@ -8797,7 +8797,7 @@ div.dataTables_wrapper div.dataTables_length select {
   position: relative;
   width: 15px;
   height: 2px;
-  background-color: #2f395f;
+  background-color: #fff;
   border-radius: 3px;
   transition: all 0.2s ease-in-out;
 }
@@ -8809,7 +8809,7 @@ div.dataTables_wrapper div.dataTables_length select {
   left: 0;
   width: 20px;
   height: 2px;
-  background-color: #2f395f;
+  background-color: #fff;
   border-radius: 3px;
   transition: all 0.2s ease-in-out;
 }

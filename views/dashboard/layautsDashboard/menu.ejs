@@ -1,47 +1,73 @@
 <!-- Sidemenu -->
 <div class="main-sidebar main-sidebar-sticky side-menu">
-    <div class="sidemenu-logo">
-        <a class="main-logo text-center align-items-center align-content-center" href="/dashboard/inicio">
-            <center>
-                <img src="/assetsInicio/img/logo_white.svg" class="header-brand-img desktop-logo mx-0 w-50 pt-0" alt="logo">
-            </center>
-            <img src="/assetsInicio/img/icono_white.svg" class="header-brand-img icon-logo pt-1 pb-3 w-75 px-2" alt="logo">
-        </a>
-    </div>
-    <div class="main-sidebar-body">
-        <ul class="nav">
-            <li class="nav-header"><span class="nav-label">Inicio</span></li>
-            <!-- Inicio -->
-            <li class="nav-item <%= classActive === 'inicio' ? 'active' : '' %>">
-                <a class="nav-link" href="/dashboard/inicio"><span class="shape1"></span><span class="shape2"></span><i class="ti-home sidemenu-icon"></i><span class="sidemenu-label">Inicio</span></a>
-            </li>
+  <div class="sidemenu-logo">
+    <a
+      class="main-logo text-center align-items-center align-content-center"
+      href="/dashboard/inicio"
+    >
+      <center>
+        <img
+          src="/assetsInicio/img/logo.svg"
+          class="header-brand-img desktop-logo mx-0 w-50 pt-0"
+          alt="logo"
+          style="width: 100% !important"
+        />
+      </center>
+      <img
+        src="/assetsDashboard/img/iconBlack.svg"
+        class="header-brand-img icon-logo pt-1 pb-3 w-75 px-2"
+        alt="logo"
+      />
+    </a>
+  </div>
+  <div class="main-sidebar-body">
+    <ul class="nav">
+      <li class="nav-header"><span class="nav-label">Inicio</span></li>
+      <!-- Inicio -->
+      <li class="nav-item <%= classActive === 'inicio' ? 'active' : '' %>">
+        <a class="nav-link" href="/dashboard/inicio"
+          ><span class="shape1"></span><span class="shape2"></span
+          ><i class="ti-home sidemenu-icon"style="background-color: #ffc813;" ></i
+          ><span class="sidemenu-label">Inicio</span></a
+        >
+      </li>
 
-        <% if(usuario.perfil === 'admin') { %>
+      <% if(usuario.perfil === 'admin') { %>
 
-            <!-- Usuarios -->
-            <li class="nav-header"><span class="nav-label">Comercios</span></li>
-            <li class="nav-item <%= classActive === 'comercios' ? 'active' : '' %>">
-                <a class="nav-link" href="/dashboard/comercios"><span class="shape1"></span><span class="shape2"></span><i class="bi bi-shop-window sidemenu-icon"></i><span class="sidemenu-label">Comercios</span></a>
-            </li>
+      <!-- Usuarios -->
+      <li class="nav-header"><span class="nav-label">Comercios</span></li>
+      <li class="nav-item <%= classActive === 'comercios' ? 'active' : '' %>">
+        <a class="nav-link" href="/dashboard/comercios"
+          ><span class="shape1"></span><span class="shape2"></span
+          ><i class="bi bi-shop-window sidemenu-icon"></i
+          ><span class="sidemenu-label">Comercios</span></a
+        >
+      </li>
 
-        <% } else if(usuario.perfil === 'comercio') {  %>
+      <% } else if(usuario.perfil === 'comercio') { %> <% } %>
 
-        <% } %>
+      <!-- Mi Cuenta -->
+      <li class="nav-header"><span class="nav-label">Mi Cuenta</span></li>
 
-            <!-- Mi Cuenta -->
-            <li class="nav-header"><span class="nav-label">Mi Cuenta</span></li>
+      <!-- mi perfil -->
+      <li class="nav-item <%= classActive === 'mi-perfil' ? 'active' : '' %>">
+        <a class="nav-link" href="/dashboard/mi-perfil"
+          ><span class="shape1"></span><span class="shape2"></span
+          ><i class="ti-palette sidemenu-icon"></i
+          ><span class="sidemenu-label">Mi Perfil</span></a
+        >
+      </li>
 
-            <!-- mi perfil -->
-            <li class="nav-item <%= classActive === 'mi-perfil' ? 'active' : '' %>">
-                <a class="nav-link" href="/dashboard/mi-perfil"><span class="shape1"></span><span class="shape2"></span><i class="ti-palette sidemenu-icon"></i><span class="sidemenu-label ">Mi Perfil</span></a>
-            </li>
-            
-            <!-- Cerrar Sesión -->
-            <li class="nav-header"><span class="nav-label">Salir</span></li>
-            <li class="nav-item">
-                <a class="nav-link" href="/cerrar-sesion"><span class="shape1"></span><span class="shape2"></span><i class="ti-shift-left sidemenu-icon"></i><span class="sidemenu-label">Cerrar Sesión</span></a>
-            </li>
-        </ul>
-    </div>
+      <!-- Cerrar Sesión -->
+      <li class="nav-header"><span class="nav-label">Salir</span></li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cerrar-sesion"
+          ><span class="shape1"></span><span class="shape2"></span
+          ><i class="ti-shift-left sidemenu-icon"></i
+          ><span class="sidemenu-label">Cerrar Sesión</span></a
+        >
+      </li>
+    </ul>
+  </div>
 </div>
 <!-- End Sidemenu -->

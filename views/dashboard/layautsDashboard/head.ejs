@@ -1,43 +1,81 @@
-<body onbeforeunload="return Cerrar()">
-
-</body>
+<body onbeforeunload="return Cerrar()"></body>
 <!-- Main Header-->
 <div class="main-header side-header sticky">
   <div class="container-fluid">
-    <div class="main-header-left">
-      <a class="main-header-menu-icon" href="#" id="mainSidebarToggle"><span></span></a>
+    <div class="main-header-left" style="color: red">
+      <a class="main-header-menu-icon" href="#" id="mainSidebarToggle"
+        ><span class="iconito"></span
+      ></a>
     </div>
     <div class="main-header-center">
       <div class="responsive-logo">
-        <a href="index.html"><img src="/assetsInicio/img/icono.svg" class="mobile-logo icon-logo-head" alt="logo"></a>
-        <a href="index.html"><img src="/assetsInicio/img/icono.svg" class="mobile-logo-dark icon-logo-head" alt="logo"></a>
+        <a href="index.html"
+          ><img
+            src="/assetsInicio/img/icono.svg"
+            class="mobile-logo icon-logo-head"
+            alt="logo"
+        /></a>
+        <a href="index.html"
+          ><img
+            src="/assetsInicio/img/icono.svg"
+            class="mobile-logo-dark icon-logo-head"
+            alt="logo"
+        /></a>
       </div>
     </div>
     <div class="main-header-right">
-      <div class="dropdown main-header-notification flag-dropdown" title="<%- usuario.pais %>">
-        <% paises.data.forEach(pais => { %>
-        <% if(pais.name === usuario.pais) { %>
+      <div
+        class="dropdown main-header-notification flag-dropdown"
+        title="<%- usuario.pais %>"
+      >
+        <% paises.data.forEach(pais => { %> <% if(pais.name === usuario.pais) {
+        %>
         <a class="nav-link icon country-Flag">
-          <span class="avatar align-self-center bg-transparent" style="background-image: url('/assetsDashboard/img/flags/<%= pais.cca2 %>.svg'); background-size: 130%; background-position: center; width: 30px; height: 30px;"></span>
+          <span
+            class="avatar align-self-center bg-transparent"
+            style="
+              background-image: url('/assetsDashboard/img/flags/<%= pais.cca2 %>.svg');
+              background-size: 130%;
+              background-position: center;
+              width: 30px;
+              height: 30px;
+            "
+          ></span>
         </a>
-        <% } %>
-        <% }) %>
+        <% } %> <% }) %>
       </div>
       <div class="dropdown d-md-flex">
         <a class="nav-link icon full-screen-link" href="">
-          <i class="fe fe-maximize fullscreen-button fullscreen header-icons"></i>
-          <i class="fe fe-minimize fullscreen-button exit-fullscreen header-icons"></i>
+          <i
+            class="fe fe-maximize fullscreen-button fullscreen header-icons"
+          ></i>
+          <i
+            class="
+              fe fe-minimize
+              fullscreen-button
+              exit-fullscreen
+              header-icons
+            "
+          ></i>
         </a>
       </div>
-  
+
       <div class="dropdown main-profile-menu">
         <a class="d-flex" href="">
-          <span class="main-img-user"><img alt="avatar" src="<%= usuario.foto === null ? '/assetsDashboard/img/users/default.jpg' : usuario.foto %>"></span>
+          <span class="main-img-user"
+            ><img
+              alt="avatar"
+              src="<%= usuario.foto === null ? '/assetsDashboard/img/users/default.jpg' : usuario.foto %>"
+          /></span>
         </a>
         <div class="dropdown-menu">
           <div class="header-navheading">
-            <h6 class="main-notification-title text-capitalize"><%- usuario.nombre %></h6>
-            <p class="main-notification-text text-capitalize"><%- usuario.perfil %></p>
+            <h6 class="main-notification-title text-capitalize">
+              <%- usuario.nombre %>
+            </h6>
+            <p class="main-notification-text text-capitalize">
+              <%- usuario.perfil %>
+            </p>
           </div>
           <a class="dropdown-item border-top" href="/dashboard/mi-perfil">
             <i class="fe fe-user"></i> Mi Perfil
@@ -47,9 +85,25 @@
           </a>
         </div>
       </div>
-      <div class="dropdown d-md-flex header-settings" data-placement="bottom" data-toggle="tooltip" title="Notificaciones">
-        <a href="#" class="nav-link icon" data-toggle="sidebar-right" data-target=".sidebar-right" id="iconoTotalNotificaciones">
-          <i class="fe fe-bell header-icons"> <span class="badge badge-pill badge-secondary" id="countTotalNotificaciones"></span></i>
+      <div
+        class="dropdown d-md-flex header-settings"
+        data-placement="bottom"
+        data-toggle="tooltip"
+        title="Notificaciones"
+      >
+        <a
+          href="#"
+          class="nav-link icon"
+          data-toggle="sidebar-right"
+          data-target=".sidebar-right"
+          id="iconoTotalNotificaciones"
+        >
+          <i class="fe fe-bell header-icons">
+            <span
+              class="badge badge-pill badge-secondary"
+              id="countTotalNotificaciones"
+            ></span
+          ></i>
         </a>
       </div>
     </div>

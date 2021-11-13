@@ -8480,7 +8480,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   position: relative;
   width: 15px;
   height: 2px;
-  background-color: #2f395f;
+  background-color: #fff;
   border-radius: 3px;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -8492,7 +8492,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   left: 0;
   width: 20px;
   height: 2px;
-  background-color: #2f395f;
+  background-color: #fff;
   border-radius: 3px;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
