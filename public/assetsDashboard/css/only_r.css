@@ -132,3 +132,22 @@ footer figure {
 .fe-eye-off:before {
   color: #ffc813;
 }
+.botonesInferiores {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.botonesInferiores .botonesInferiores_partner {
+  outline: none;
+  width: 40%;
+  border: 2px solid #ffc813;
+  background: transparent;
+  border-radius: 14px;
+  color: #7d6b31;
+  height: 50px;
+  padding: 10px;
+  margin-top: 24px;
+}
+.botonesInferiores_partner::placeholder {
+  color: #7d6b31;
+}

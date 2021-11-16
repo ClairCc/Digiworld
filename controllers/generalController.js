@@ -39,12 +39,7 @@ const configuracionMulter = {
   }),
 };
 
-const upload = multer(configuracionMulter).any(
-  "camaraComercio",
-  "rut",
-  "documentoIdentidad"
-);
-
+// Subir un archivo
 exports.uploadArchivo = async (req, res, next) => {
   upload(req, res, function (error) {
     if (error) {
@@ -80,13 +75,33 @@ exports.validarRegistro = async (req, res, next) => {
   }
 
   const email = usuario.email;
+  const enlace_afiliado = usuario.enlace_afiliado;
+  const partner = usuario.partner;
+
   const userExist = await Usuarios.findOne({
     where: {
       email: email,
     },
   });
+  const partnerExist = await Usuarios.findOne({
+    where: {
+      enlace_afiliado: partner,
+    },
+  });
+
+  if (partner === "") {
+    usuario.partner = "codigoAdmin";
+  } else if (partnerExist) {
+  } else {
+    return res.json({
+      titulo: "¡Lo Sentimos!",
+      resp: "warning",
+      descripcion: "No se encuentra el codigo de afiliacion",
+    });
+  }
 
   if (userExist) {
+    console.log("hola" + userExist);
     return res.json({
       titulo: "¡Lo Sentimos!",
       resp: "warning",
@@ -94,8 +109,10 @@ exports.validarRegistro = async (req, res, next) => {
         "El usuario ya se encuentra registrado en nuestra plataforma",
     });
   }
-  //si toda la validacion es correcta
+
   next();
+
+  //si toda la validacion es correcta
 };
 
 exports.crearRegistro = async (req, res) => {
@@ -105,11 +122,13 @@ exports.crearRegistro = async (req, res) => {
 
   try {
     await Usuarios.create({
-      nombre: usuario.nombre,
+      usuarios: usuario.usuarios,
       email: usuario.email,
       password: usuario.password,
       ip: ip,
-      perfil: "comercio",
+      perfil: "users",
+      partner: usuario.partner,
+      enlace_afiliado: usuario.enlace_afiliado,
     });
 
     // URL confirmacion

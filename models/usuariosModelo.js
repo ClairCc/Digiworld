@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("../config/db");
 const bcrypt = require("bcrypt-nodejs");
 const { v4: uuid_v4 } = require("uuid");
-
+const superUser = "cristian-cavanzo-239";
 const Usuarios = db.define(
   "usuarios",
   {
@@ -14,14 +14,13 @@ const Usuarios = db.define(
     },
     perfil: {
       type: Sequelize.STRING(20),
-      defaultValue: null,
+      defaultValue: "user",
     },
-    nombre: {
+    usuarios: {
       type: Sequelize.STRING(80),
-      defaultValue: null,
       validate: {
         notEmpty: {
-          msg: "El nombre no puede ser vacio",
+          msg: "El nombre no puede estar vacio",
         },
       },
     },
@@ -49,6 +48,14 @@ const Usuarios = db.define(
       type: Sequelize.STRING(20),
       defaultValue: 0,
     },
+    partner: {
+      type: Sequelize.STRING(20),
+      defaultValue: superUser,
+    },
+    enlace_afiliado: {
+      type: Sequelize.STRING(80),
+      defaultValue: 0,
+    },
     telefono_movil: {
       type: Sequelize.STRING(20),
       defaultValue: null,
@@ -59,7 +66,7 @@ const Usuarios = db.define(
     },
     suscripcion: {
       type: Sequelize.INTEGER(1),
-      defaultValue: 1,
+      defaultValue: 0,
     },
     bloqueo: {
       type: Sequelize.INTEGER(1),
