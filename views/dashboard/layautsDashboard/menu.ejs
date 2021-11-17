@@ -27,24 +27,38 @@
       <li class="nav-item <%= classActive === 'inicio' ? 'active' : '' %>">
         <a class="nav-link" href="/dashboard/inicio"
           ><span class="shape1"></span><span class="shape2"></span
-          ><i class="ti-home sidemenu-icon"style="background-color: #ffc813;" ></i
+          ><i
+            class="ti-home sidemenu-icon"
+            style="background-color: #ffc813"
+          ></i
           ><span class="sidemenu-label">Inicio</span></a
         >
       </li>
-
+<!-- Estudiar aqui -->
       <% if(usuario.perfil === 'admin') { %>
-
       <!-- Usuarios -->
-      <li class="nav-header"><span class="nav-label">Comercios</span></li>
-      <li class="nav-item <%= classActive === 'comercios' ? 'active' : '' %>">
-        <a class="nav-link" href="/dashboard/comercios"
+      <li class="nav-header"><span class="nav-label">Usuarios</span></li>
+      <li class="nav-item <%= classActive === 'usuarios' ? 'active' : '' %>">
+        <a class="nav-link" href="/dashboard/usuarios"
           ><span class="shape1"></span><span class="shape2"></span
           ><i class="bi bi-shop-window sidemenu-icon"></i
-          ><span class="sidemenu-label">Comercios</span></a
+          ><span class="sidemenu-label">Usuarios</span></a
         >
       </li>
 
-      <% } else if(usuario.perfil === 'comercio') { %> <% } %>
+      <!-- Medios de pago -->
+      <li class="nav-header"><span class="nav-label">Administrador</span></li>
+      <li class="nav-item <%= classActive === 'adminMediosPago' ? 'active' : '' %>">
+        <a class="nav-link" href="/dashboard/adminMediosPago"
+          ><span class="shape1"></span><span class="shape2"></span
+          ><i class="bi bi-shop-window sidemenu-icon"></i
+          ><span class="sidemenu-label">Medios de pago</span></a
+        >
+      </li>
+
+      <% } else if(usuario.perfil === 'comercio') { %>
+        
+      <% } %>
 
       <!-- Mi Cuenta -->
       <li class="nav-header"><span class="nav-label">Mi Cuenta</span></li>

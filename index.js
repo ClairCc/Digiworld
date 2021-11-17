@@ -19,6 +19,7 @@ const db = require("./config/db");
 
 // Importar modelo
 require("./models/usuariosModelo");
+require("./models/mediosPagoModelo");
 // require('./models/plataformasModelo');
 // require('./models/marcasModelo');
 // require('./models/asignacionesModelo');
@@ -117,3 +118,6 @@ const server = app.listen(puerto, () => {
 // io.on('connection', () => {
 //     console.log('Nueva conexión');
 // });
+
+
+// Require the package

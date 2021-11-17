@@ -121,6 +121,7 @@ exports.crearRegistro = async (req, res) => {
   const ip = response.data.ip;
 
   try {
+//aprender: .cra
     await Usuarios.create({
       usuarios: usuario.usuarios,
       email: usuario.email,
@@ -232,6 +233,7 @@ exports.confirmarCuenta = async (req, res, next) => {
     "success",
     "La cuenta se ha confirmado con éxito, ya puedes iniciar sesión"
   );
+
   res.redirect("/ingreso");
 };
 

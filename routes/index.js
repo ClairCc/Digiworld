@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const QRCode = require('qrcode')
 
 // importar controladores
 const generalController = require("../controllers/generalController");
@@ -9,6 +10,8 @@ const rolController = require("../controllers/rolController");
 // Controladores Usuarios por Rol
 const dashboardController = require("../controllers/dashboardController");
 const usuariosController = require("../controllers/usuariosController");
+const mediosPagoController = require("../controllers/mediosPagoController");
+
 const plataformasController = require("../controllers/plataformasController");
 const marcasController = require("../controllers/marcasController");
 const comprarPlataformasController = require("../controllers/comprarPlataformasController");
@@ -22,6 +25,7 @@ const preguntasController = require("../controllers/preguntasController");
 const reportesController = require("../controllers/reportesController");
 const gananciasController = require("../controllers/gananciasController");
 const publicidadController = require("../controllers/publicidadController");
+
 
 module.exports = function () {
   // Inicio
@@ -40,6 +44,7 @@ module.exports = function () {
 
   // Ingreso
   router.get("/ingreso", generalController.formIngreso);
+
   router.post("/ingreso", authController.autenticarUsuario);
   router.post(
     "/ingreso/recuperarPassword",
@@ -108,13 +113,19 @@ module.exports = function () {
   // =====================
 
   // Administrador Usuarios (Admin)
+  //Cristian
   router.get(
-    "/dashboard/comercios",
+    "/dashboard/adminMediosPago",
     authController.usuarioAutenticado,
     authController.verifyToken,
     rolController.permisosPaginaAdmin,
-    usuariosController.comercios
+    usuariosController.adminMediosPago
+//
   );
+  router.post(
+    "/dashboard/adminMediosPago",
+    mediosPagoController.qrrender
+  )
 
   router.post(
     "/adminUsuarios/cambioPefil",

@@ -74055,3 +74055,49 @@ td {
     margin-top: 7rem;
   }
 }
+
+.hero_submit-wallet{
+  width: 100%;
+  background-color: #1e1e1e;
+  padding: 24px 8px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.hero_submit-wallet-input{
+  outline: none;
+  border: 3px solid #ffc107;
+  border-radius: 8px;
+  padding: 8px;
+  width: 40%;
+  background: #ffc107;
+  
+}
+.hero_submit-wallet-input2{
+  margin: 8px;
+}
+.hero_submit-wallet-input::placeholder, 
+.hero_submit-wallet-input {
+color: #303030;
+}
+.hero_submit-wallet button{
+  outline: none;
+  border-radius: 8px;
+  color: #262626;
+  background-color: #ffc813;
+  border: 1px solid #ffc813;
+  padding: 8px;
+  width: 10%;
+  font-weight: bold;
+}
+.hero_payments{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 30px 20px;
+  margin-top: 30px;
+}
+.hero_payments article{
+  height: 30px;
+  background-color: #28a745;
+}
