@@ -937,7 +937,7 @@ exports.adminMediosPago = async (req, res) => {
     titulo: "Administrador medios de pago",
     breadcrumb: "Administrador medios de pago",
     qrMediosPago,  
-    classActive: req.path.split("/")[2]
+    classActive: req.path.split("/")[2],
   });
 };
 //

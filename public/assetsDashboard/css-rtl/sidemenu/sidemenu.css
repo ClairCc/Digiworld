@@ -637,8 +637,7 @@
     width: 35px;
     height: 35px;
     line-height: 35px;
-    background: #401268;
-    text-align: center;
+    background: #ffc813;    text-align: center;
     border-radius: 50%;
     -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -660,8 +659,7 @@
     margin: 6px 0;
   }
   .main-sidebar-hide .main-sidebar-body li.active .sidemenu-icon {
-    background: #401268;
-    margin-right: 5px;
+    background: #ffc813;    margin-right: 5px;
   }
   .main-sidebar-hide .main-sidebar-body li.nav-item.active .nav-link {
     width: inherit;
@@ -1048,8 +1046,7 @@
     border-left: 1px solid #2b2b3e;
   }
   .color-leftmenu.main-body.leftmenu .sidemenu-logo {
-    background: #401268;
-  }
+    background: #ffc813;  }
   .dark-theme.light-leftmenu .sidemenu-logo {
     background: #fff;
   }
@@ -1057,8 +1054,7 @@
     background: #0e0e23;
   }
   .dark-theme.color-leftmenu.main-body.leftmenu .sidemenu-logo {
-    background: #401268;
-  }
+    background: #ffc813;  }
   .dark-theme.light-leftmenu.main-body.leftmenu .sidemenu-logo {
     background: #fff;
   }

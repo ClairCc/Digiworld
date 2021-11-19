@@ -125,8 +125,7 @@
 	color: #fff
 }
 .datetimepicker table span.active, .datetimepicker table td.active {
-	background: #401268;
-	color: #fff;
+	background: #ffc813;	color: #fff;
 }
 .datetimepicker table .new, .datetimepicker table .old {
 	color: #89d7ff

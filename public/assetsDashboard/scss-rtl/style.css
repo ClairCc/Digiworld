@@ -2809,8 +2809,7 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .btn-default.active {
-  background: #401268;
-  color: #ffffff;
+  background: #ffc813;  color: #ffffff;
   border-bottom: 2px solid #433c9a;
 }
 
@@ -17121,8 +17120,7 @@ ul.inbox-pagination {
 }
 
 .crypto-btc-usd .nav-link.active {
-  background: #401268;
-  border-radius: 3px;
+  background: #ffc813;  border-radius: 3px;
   color: #ffffff;
 }
 
@@ -17327,8 +17325,7 @@ form input:checked + label:before {
 }
 
 .crypto-buysell-card .nav.panel-tabs li a.active {
-  background: #401268;
-  color: #ffffff;
+  background: #ffc813;  color: #ffffff;
 }
 
 .crypto-buysell-card .select2-container--default .select2-selection--single {
@@ -17358,8 +17355,7 @@ form input:checked + label:before {
   top: 0;
   right: 0;
   font-size: 14px;
-  background: #401268;
-  border: 1px solid #401268;
+  background: #ffc813;  border: 1px solid #401268;
   cursor: pointer;
   padding: 0.375rem 0.75rem;
   font-size: 0.875rem;
@@ -17375,8 +17371,7 @@ form input:checked + label:before {
   top: 0;
   right: 0;
   font-size: 14px;
-  background: #401268;
-  border: 1px solid #401268;
+  background: #ffc813;  border: 1px solid #401268;
   cursor: pointer;
   padding: 0.375rem 0.75rem;
   font-size: 0.875rem;
@@ -17777,8 +17772,7 @@ table.dataTable thead .sorting_asc_disabled:after, .transcation-crypto table.dat
   line-height: 1.573;
   color: #ffffff;
   border-radius: 4px;
-  background: #401268;
-}
+  background: #ffc813;}
 
 #checkoutsteps > .actions .disabled a {
   opacity: 0.4;
@@ -17847,8 +17841,7 @@ table.dataTable thead .sorting_asc_disabled:after, .transcation-crypto table.dat
 }
 
 #checkoutsteps > .steps .current a .number {
-  background: #401268;
-  color: #ffffff;
+  background: #ffc813;  color: #ffffff;
 }
 
 #checkoutsteps ul[role="menu"] li {
@@ -17954,8 +17947,7 @@ table.dataTable thead .sorting_asc_disabled:after, .transcation-crypto table.dat
 }
 
 .card-pay .tabs-menu li a.active {
-  background: #401268;
-  color: #ffffff;
+  background: #ffc813;  color: #ffffff;
 }
 
 @media (min-width: 992px) {
@@ -18048,12 +18040,10 @@ table.dataTable thead .sorting_asc_disabled:after, .transcation-crypto table.dat
 }
 
 .track .step.active:before {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .track .step.active .icon {
-  background: #401268;
-  color: #ffffff;
+  background: #ffc813;  color: #ffffff;
 }
 
 .btn-apply.coupon {

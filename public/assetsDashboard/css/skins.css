@@ -10,8 +10,7 @@
 /*---- Header Style ----*/
 /*Color*/
 .color-header .main-header {
-  background: #401268;
-  border-bottom: 1px solid rgba(240, 240, 255, 0.15) !important;
+  background: #ffc813;  border-bottom: 1px solid rgba(240, 240, 255, 0.15) !important;
 }
 
 .color-header .hor-header .header-brand-img.desktop-logo {
@@ -63,8 +62,7 @@
 }
 
 .dark-theme.color-header .main-header {
-  background: #401268;
-  border-bottom: 1px solid transparent !important;
+  background: #ffc813;  border-bottom: 1px solid transparent !important;
 }
 
 .dark-theme.color-header .main-header-center .form-control {
@@ -194,8 +192,7 @@
 }
 
 .horizontalmenu.color-horizontal .main-navbar {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .color-horizontal .main-navbar .nav-link.with-sub::after {
   color: #ffffff;
@@ -217,8 +214,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
   .color-horizontal .main-navbar-search .form-control {
-    background: #401268;
-  }
+    background: #ffc813;  }
   .color-horizontal .main-navbar .nav-item {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
@@ -241,8 +237,7 @@
 }
 
 .dark-theme.color-horizontal .main-navbar {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .dark-theme.color-horizontal .main-navbar .nav-link.with-sub::after {
   color: #ffffff;
@@ -487,8 +482,7 @@
 
 /*Color left-menu*/
 .color-leftmenu .main-sidebar-sticky {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .color-leftmenu .side-menu .sidemenu-logo .header-brand-img.desktop-logo {
   display: block;
@@ -555,12 +549,10 @@
 }
 
 .app.sidebar-mini.color-leftmenu .first-sidemenu {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .app.sidebar-mini.color-leftmenu .resp-vtabs ul.resp-tabs-list {
-  background: #401268;
-  color: #ffffff;
+  background: #ffc813;  color: #ffffff;
 }
 
 .app.sidebar-mini.color-leftmenu
@@ -583,8 +575,7 @@
 }
 
 .dark-theme.color-leftmenu .main-sidebar-sticky {
-  background: #401268;
-  border-right: 1px solid #24243e !important;
+  background: #ffc813;  border-right: 1px solid #24243e !important;
 }
 
 .dark-theme.color-leftmenu .main-sidebar-body .nav-label,

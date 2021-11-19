@@ -78,8 +78,7 @@ body {
 }
 
 #back-to-top {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .ckbox span:after {
   background-color: #401268;
@@ -363,8 +362,7 @@ pre {
 }
 
 .flat a:hover, .flat a.active, .flat a:hover:after, .flat a.active:after {
-  background: #401268;
-  color: #fff;
+  background: #ffc813;  color: #fff;
 }
 
 .nav-pills .nav-link.active {
@@ -385,8 +383,7 @@ pre {
 }
 
 .timeline-wrapper-primary .timeline-panel:before, .timeline-wrapper-primary .timeline-badge {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .br-theme-bars-1to10 .br-widget a {
   background-color: #f0f2f8;
@@ -423,8 +420,7 @@ pre {
 }
 
 .custom-switch-input:checked ~ .custom-switch-indicator {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .rdiobox input[type='radio']:checked + span:before {
   border-color: transparent;
@@ -467,8 +463,7 @@ pre {
 
 .irs-from, .irs-to, .irs-single {
   color: #fff;
-  background: #401268;
-}
+  background: #ffc813;}
 
 .irs-line-mid, .irs-line-right {
   background-color: #f0f0ff;
@@ -591,16 +586,14 @@ pre {
 }
 
 .lds-heart div:after, .lds-heart div:before {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .lds-ripple div {
   border: 4px solid #401268;
 }
 
 .lds-spinner div:after {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
   background-color: #e0e2f7;
@@ -613,8 +606,7 @@ pre {
 }
 
 .lds-circle > div {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .lds-dual-ring:after {
   border: 5px solid #401268;
@@ -622,8 +614,7 @@ pre {
 }
 
 .lds-facebook div {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .main-navbar .nav-item.active .nav-link {
   color: #401268;
@@ -682,8 +673,7 @@ pre {
 }
 
 .lds-heart div {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .accordion .card-header a.collapsed:hover, .accordion .card-header a.collapsed:focus {
   background-color: #401268;
@@ -724,8 +714,7 @@ pre {
 }
 
 .main-sidebar-body li.active .sidemenu-icon {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .project .deadline {
   background: #eaedf7;
@@ -769,8 +758,7 @@ pre {
 }
 
 .color-leftmenu .main-sidebar-sticky {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .color-leftmenu .main-sidebar-body .sub-txt {
   color: #9d96ef;
@@ -785,8 +773,7 @@ pre {
 }
 
 .resp-tabs-list li.resp-tab-item.active .side-menu__icon, .resp-tabs-list li.resp-tab-active .side-menu__icon {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .crypto-btc-usd .nav-link.active {
   background-color: #401268 !important;

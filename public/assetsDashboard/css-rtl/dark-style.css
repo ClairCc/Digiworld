@@ -4805,8 +4805,7 @@
 }
 
 .dark-theme.color-horizontal .main-navbar-search {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .dark-theme.light-horizontal .main-navbar-search {
   background: #ffffff;
@@ -5226,8 +5225,7 @@
 }
 
 .dark-theme .file-browser .btn-default {
-  background: #401268;
-  border: 1px solid #401268;
+  background: #ffc813;  border: 1px solid #401268;
 }
 
 .dark-theme .note-editor.note-frame .note-status-output {
@@ -5331,13 +5329,11 @@
 }
 
 .dark-theme.flat a:hover {
-  background: #401268;
-  color: #ffffff;
+  background: #ffc813;  color: #ffffff;
 }
 
 .dark-theme .flat a.active, .dark-theme .flat a:hover:after, .dark-theme .flat a.active:after {
-  background: #401268;
-  color: #ffffff;
+  background: #ffc813;  color: #ffffff;
 }
 
 .dark-theme .pagination-circle {
@@ -5474,8 +5470,7 @@ body.dark-theme {
 
 .dark-theme #back-to-top {
   color: #ffffff;
-  background: #401268;
-}
+  background: #ffc813;}
 
 .dark-theme #back-to-top:hover {
   color: #401268 !important;
@@ -5595,8 +5590,7 @@ body.dark-theme {
 }
 
 .dark-theme .timeline-wrapper-dark .timeline-panel:before, .dark-theme .timeline-wrapper-dark .timeline-badge {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .dark-theme .example {
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -5768,8 +5762,7 @@ body.dark-theme {
 }
 
 .dark-theme .custom-switch-input:checked ~ .custom-switch-indicator {
-  background: #401268;
-}
+  background: #ffc813;}
 
 .dark-theme .custom-switch-input:focus ~ .custom-switch-indicator {
   border-color: #401268;
@@ -6257,8 +6250,7 @@ body.dark-theme {
 }
 
 .dark-theme .card-pay .tabs-menu li a.active {
-  background: #401268;
-  color: #ffffff;
+  background: #ffc813;  color: #ffffff;
 }
 
 .dark-theme .card-pay .tabs-menu.nav li {

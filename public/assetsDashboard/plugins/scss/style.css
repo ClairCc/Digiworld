@@ -3547,8 +3547,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 }
 
 .card-dashboard-twentysix.card-dark-two {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#0a47ff), to(#401268));
-  background-image: linear-gradient(to bottom, #0a47ff 0%, #401268 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#0a47ff), to(#ffc813));
+  background-image: linear-gradient(to bottom, #0a47ff 0%, #ffc813 100%);
   background-repeat: repeat-x;
 }
 
@@ -6317,7 +6317,7 @@ div.dtr-modal div.dtr-modal-content {
 }
 
 .main-nav-column .nav-link.active i:not([class*=' tx-']) {
-  color: #401268 !important;
+  color: #ffc813 !important;
 }
 
 .main-nav-column .nav-link.active::before {
@@ -7585,24 +7585,24 @@ div.dataTables_wrapper div.dataTables_length select {
 }
 
 .tooltip-primary .tooltip-inner {
-  background-color: #401268;
+  background-color: #ffc813;
   color: #ffffff;
 }
 
 .tooltip-primary.bs-tooltip-top .arrow::before, .tooltip-primary.bs-tooltip-auto[x-placement^="top"] .arrow::before {
-  border-top-color: #401268;
+  border-top-color: #ffc813;
 }
 
 .tooltip-primary.bs-tooltip-bottom .arrow::before, .tooltip-primary.bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
-  border-bottom-color: #401268;
+  border-bottom-color: #ffc813;
 }
 
 .tooltip-primary.bs-tooltip-left .arrow::before, .tooltip-primary.bs-tooltip-auto[x-placement^="left"] .arrow::before {
-  border-left-color: #401268;
+  border-left-color: #ffc813;
 }
 
 .tooltip-primary.bs-tooltip-right .arrow::before, .tooltip-primary.bs-tooltip-auto[x-placement^="right"] .arrow::before {
-  border-right-color: #401268;
+  border-right-color: #ffc813;
 }
 
 .tooltip-secondary .tooltip-inner {
@@ -16482,7 +16482,7 @@ ul.inbox-pagination {
 
 .mail-option .dropdown-menu > li > a:hover {
   background: #f1f2f9;
-  color: #401268;
+  color: #ffc813;
 }
 
 /* ###### Mail  ###### */
@@ -17033,7 +17033,7 @@ ul.inbox-pagination {
 }
 
 .btn-default.active {
-  background: #401268;
+  background: #ffc813;
   color: #ffffff;
   border-bottom: 2px solid #433c9a;
 }
@@ -17247,7 +17247,7 @@ ul.inbox-pagination {
 }
 
 .crypto-btc-usd .nav-link.active {
-  background: #401268;
+  background: #ffc813;
   border-radius: 3px;
   color: #ffffff;
 }
@@ -17360,11 +17360,11 @@ ul.inbox-pagination {
 }
 
 input:checked + label.payment-cards {
-  border-color: #401268 !important;
+  border-color: #ffc813 !important;
   position: relative !important;
   display: block !important;
   border-width: 1px;
-  color: #401268;
+  color: #ffc813;
 }
 
 .form input:checked + label:after, form input:checked + label:after {
@@ -17374,7 +17374,7 @@ input:checked + label.payment-cards {
   line-height: 17px;
   border-style: solid;
   border-width: 0 35px 35px 0px;
-  border-color: #401268 #401268 transparent;
+  border-color: #ffc813 #ffc813 transparent;
   display: block;
   position: absolute;
   top: 0;
@@ -17388,7 +17388,7 @@ input:checked + label.payment-cards {
   line-height: 17px;
   border-style: solid;
   border-width: 0 35px 35px 0px;
-  border-color: #401268 #401268 transparent;
+  border-color: #ffc813 #ffc813 transparent;
   display: block;
   position: absolute;
   top: 0;
@@ -17438,7 +17438,7 @@ form input:checked + label:before, .form input:checked + label:before {
   height: 0;
   border: solid transparent;
   border-width: 10px;
-  border-top-color: #401268;
+  border-top-color: #ffc813;
   content: '';
   pointer-events: none;
 }
@@ -17453,7 +17453,7 @@ form input:checked + label:before, .form input:checked + label:before {
 }
 
 .crypto-buysell-card .nav.panel-tabs li a.active {
-  background: #401268;
+  background: #ffc813;
   color: #ffffff;
 }
 
@@ -17478,14 +17478,14 @@ form input:checked + label:before, .form input:checked + label:before {
 }
 
 .crypto-wallet .clipboard-icon {
-  background-color: #401268 !important;
-  border-color: #401268 !important;
+  background-color: #ffc813 !important;
+  border-color: #ffc813 !important;
   border-radius: 0 4px 4px 0 !important;
   top: 0;
   right: 0;
   font-size: 14px;
-  background: #401268;
-  border: 1px solid #401268;
+  background: #ffc813;
+  border: 1px solid #ffc813;
   cursor: pointer;
   padding: 0.375rem 0.75rem;
   font-size: 0.875rem;
@@ -17495,14 +17495,14 @@ form input:checked + label:before, .form input:checked + label:before {
 }
 
 .crypto-wallet .clipboard-icon:hover, .crypto-wallet .clipboard-icon:focus {
-  background-color: #401268 !important;
-  border-color: #401268 !important;
+  background-color: #ffc813 !important;
+  border-color: #ffc813 !important;
   border-radius: 0 4px 4px 0 !important;
   top: 0;
   right: 0;
   font-size: 14px;
-  background: #401268;
-  border: 1px solid #401268;
+  background: #ffc813;
+  border: 1px solid #ffc813;
   cursor: pointer;
   padding: 0.375rem 0.75rem;
   font-size: 0.875rem;
@@ -17645,7 +17645,7 @@ table.dataTable thead .sorting_asc_disabled:after, .transcation-crypto table.dat
   font-size: 20px;
   line-height: 37px;
   font-size: 17px;
-  color: #401268;
+  color: #ffc813;
 }
 
 .product-timeline ul.timeline-1:before {
@@ -17894,7 +17894,7 @@ table.dataTable thead .sorting_asc_disabled:after, .transcation-crypto table.dat
   line-height: 1.573;
   color: #ffffff;
   border-radius: 4px;
-  background: #401268;
+  background: #ffc813;
 }
 
 #checkoutsteps > .actions .disabled a {
@@ -17964,7 +17964,7 @@ table.dataTable thead .sorting_asc_disabled:after, .transcation-crypto table.dat
 }
 
 #checkoutsteps > .steps .current a .number {
-  background: #401268;
+  background: #ffc813;
   color: #ffffff;
 }
 
@@ -18071,7 +18071,7 @@ table.dataTable thead .sorting_asc_disabled:after, .transcation-crypto table.dat
 }
 
 .card-pay .tabs-menu li a.active {
-  background: #401268;
+  background: #ffc813;
   color: #ffffff;
 }
 
@@ -18103,13 +18103,13 @@ table.dataTable thead .sorting_asc_disabled:after, .transcation-crypto table.dat
 }
 
 .item1-links .nav-item a.active {
-  background-color: #401268;
+  background-color: #ffc813;
   color: #ffffff;
   border-radius: 0;
 }
 
 .item1-links .nav-link:hover, .item1-links .nav-link:focus {
-  background-color: #401268;
+  background-color: #ffc813;
   color: #ffffff;
   border-radius: 0;
 }
@@ -18165,11 +18165,11 @@ table.dataTable thead .sorting_asc_disabled:after, .transcation-crypto table.dat
 }
 
 .track .step.active:before {
-  background: #401268;
+  background: #ffc813;
 }
 
 .track .step.active .icon {
-  background: #401268;
+  background: #ffc813;
   color: #ffffff;
 }
 
@@ -58088,7 +58088,7 @@ a.tag-addon:hover {
 }
 
 .tag-indigo {
-  background-color: #401268;
+  background-color: #ffc813;
   color: #ffffff;
 }
 
@@ -59444,7 +59444,7 @@ a.tag-addon:hover {
   line-height: 1.573;
   color: #ffffff;
   border-radius: 4px;
-  background: #401268;
+  background: #ffc813;
 }
 
 .wizard > .actions a:hover, .wizard > .actions a:active {
@@ -61459,8 +61459,8 @@ a.tag-addon:hover {
 
 .list-group-item.active {
   color: #ffffff;
-  background-color: #401268;
-  border-color: #401268;
+  background-color: #ffc813;
+  border-color: #ffc813;
 }
 
 /* ###### List-group ###### */
