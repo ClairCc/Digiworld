@@ -10,6 +10,7 @@ const shortid = require("shortid");
 const { v4: uuid_v4 } = require("uuid");
 const { s3, bucket } = require("../config/awsS3");
 const multerS3 = require("multer-s3");
+const Servicios = require("../models/suscripcionesModelo")
 
 exports.inicio = (req, res) => {
   res.render("inicio", {
@@ -121,7 +122,6 @@ exports.crearRegistro = async (req, res) => {
   const ip = response.data.ip;
 
   try {
-//aprender: .cra
     await Usuarios.create({
       usuarios: usuario.usuarios,
       email: usuario.email,
@@ -163,7 +163,7 @@ exports.crearRegistro = async (req, res) => {
 };
 
 exports.suscripcion = async(req,res)=>{
-  
+
 }
 
 exports.recuperarPasswords = async (req, res) => {
@@ -246,3 +246,24 @@ exports.formIngreso = (req, res) => {
     nombrePagina: "Ingreso",
   });
 };
+
+
+exports.enviarComprobante = async(req, res)=>{
+  const datos = req.body
+  const response = await axios.get("https://api.ipify.org?format=json");
+  const ip = response.data.ip;
+  
+  try{
+    await Servicios.create({
+      nombreWallet: datos.seleccion,
+      ip: ip,
+      usuarioIdUsuario: req.user.id_usuario
+    }); 
+    
+  }catch(err){
+    console.log(err)
+  }
+  
+}
+
+// por que se le agrega un req y un res 

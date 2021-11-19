@@ -9,10 +9,14 @@ const Suscripciones = db.define("suscripciones",{
         type: Sequelize.UUID,
         primaryKey: true,
         allowNull: false,
-        defaultValue: uuid_v4()
+        defaultValue: Sequelize.UUIDV4
     },
     fechaSuscripcion:{
         type: Sequelize.DATE,
+        defaultValue: null,
+    },
+    nombreWallet:{
+        type: Sequelize.STRING(100),
         defaultValue: null,
     },
     comprobante:{
@@ -24,15 +28,17 @@ const Suscripciones = db.define("suscripciones",{
       defaultValue: null,
     },
     estado:{
-        type:Sequelize.BOOLEAN
+        type:Sequelize.BOOLEAN,
+        defaultValue: 0,
     }
     
 })
 
+
 Usuarios.hasOne(Suscripciones, {
-    foreignKey: {
+     foreignKey: {
       name: 'usuarioIdUsuario'
-    }
+     }
 });
 Suscripciones.belongsTo(Usuarios);
 

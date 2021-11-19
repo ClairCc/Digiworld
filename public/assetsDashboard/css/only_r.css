@@ -135,6 +135,8 @@ footer figure {
 .body main .capza_button::after{
 background-color: #7d6b31;
 }
+
+
 @media (max-width: 1024px) {
   .botonesInferiores{
     flex-flow: column;

@@ -8,6 +8,7 @@ const { body, validationResult } = require("express-validator");
 const multer = require("multer");
 const shortid = require("shortid");
 const { v4: uuid_v4 } = require("uuid");
+const Suscripciones = require("../models/suscripcionesModelo");
 
 // Comercios
 exports.comercios = async (req, res) => {
@@ -935,24 +936,26 @@ exports.adminMediosPago = async (req, res) => {
     nombrePagina: "Administrador medios de pago",
     titulo: "Administrador medios de pago",
     breadcrumb: "Administrador medios de pago",
-    classActive: req.path.split("/")[2],
-    qrMediosPago  
+    qrMediosPago,  
+    classActive: req.path.split("/")[2]
   });
 };
 //
 exports.adminSuscripciones = async (req, res) => {
-  const qrMediosPago = await Usuarios.findAll();
+  const traerDatos = await Suscripciones.findAll();
   res.render("dashboard/adminSuscripciones", {    
     nombrePagina: "Administrador Suscripciones",
     titulo: "Administrador Suscripciones",
     breadcrumb: "Administrador Suscripciones",
     classActive: req.path.split("/")[2],
-    qrMediosPago
+    traerDatos
   });
 };  
-exports.suscripciones = async (req, res) => {
-  const qrMediosPago = await MediosPago.findAll();
+exports.traerDatos = async(req, res)=>{
   
+}
+exports.suscripciones = async (req, res) => { 
+  const qrMediosPago = await MediosPago.findAll(); 
   res.render("dashboard/suscripciones", {
     nombrePagina: "Suscripciones",
     titulo: "Suscripciones",
@@ -960,7 +963,9 @@ exports.suscripciones = async (req, res) => {
     classActive: req.path.split("/")[2],
     qrMediosPago
   });
+  console.log(qrMediosPago)
 };  
 //
+
 
 

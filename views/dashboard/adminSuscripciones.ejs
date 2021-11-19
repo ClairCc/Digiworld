@@ -36,20 +36,28 @@
                   <table class="table table-bordered text-nowrap w-100 key-buttons" id="exportexample_date">
                     <thead>
                       <tr>
-                          <th>Id</th>
-                          <th>Id usuario</th>
+                          <th>Id Suscripcion</th>
                           <th>Fecha Suscripcion</th>
+                          <th>Nombre Wallet</th>
                           <th>Comprobante</th>
-                          <th>Estado</th>
                           <th>ip</th>
+                          <th>Estado</th>
+                          <th>Id usuario</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <%= console.log(qrMediosPago)%>
-
-                      <>
-                        
-                        
+                      <%for (let i = 0; i < traerDatos.length; i++) {%>
+                      <tr>
+                        <td><%=traerDatos[i].dataValues.idSuscripcion%></td>
+                        <td><%=traerDatos[i].dataValues.fechaSuscripcion%></td>
+                        <td><%=traerDatos[i].dataValues.nombreWallet%></td>
+                        <td><%=traerDatos[i].dataValues.comprobante%></td>
+                        <td><%=traerDatos[i].dataValues.ip%></td>
+                        <td><%=traerDatos[i].dataValues.estado%></td>
+                        <td><%=traerDatos[i].dataValues.usuarioIdUsuario%></td>
+                      </tr>
+                      <%}%>
+                     
                     </tbody>
                   </table>
         
@@ -78,7 +86,7 @@
   <%- include('layautsDashboard/footer') %>
 
   <script>
-    
+
 
 
 

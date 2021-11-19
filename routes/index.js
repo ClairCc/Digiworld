@@ -105,7 +105,9 @@ module.exports = function () {
     "/dashboard/suscripciones",
     authController.usuarioAutenticado,
     authController.verifyToken,
-    usuariosController.suscripciones
+    usuariosController.suscripciones,
+    
+
 );
 
   // Cerrar Sesion
@@ -194,6 +196,7 @@ module.exports = function () {
   );
   router.post(
     "/comprobante",
+    generalController.enviarComprobante
     
   );
 
