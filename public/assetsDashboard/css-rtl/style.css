@@ -4567,7 +4567,7 @@ textarea.form-control {
 .form-label {
     display: block;
     margin-bottom: 5px;
-    color: #8f9cc0;
+    color: #000;
 }
 
 .file-browser .btn-default {

@@ -20,6 +20,7 @@ const db = require("./config/db");
 // Importar modelo
 require("./models/usuariosModelo");
 require("./models/mediosPagoModelo");
+require("./models/suscripcionesModelo");
 // require('./models/plataformasModelo');
 // require('./models/marcasModelo');
 // require('./models/asignacionesModelo');

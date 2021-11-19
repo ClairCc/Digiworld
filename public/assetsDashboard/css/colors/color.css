@@ -87,7 +87,8 @@ body {
 }
 
 #back-to-top {
-  background: #401268;
+  background: #ffc813;
+  color: #000;
 }
 
 .ckbox span:after {

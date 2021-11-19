@@ -162,6 +162,10 @@ exports.crearRegistro = async (req, res) => {
   }
 };
 
+exports.suscripcion = async(req,res)=>{
+  
+}
+
 exports.recuperarPasswords = async (req, res) => {
   const email = req.body.emailRecuperar.trim();
 

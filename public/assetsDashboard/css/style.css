@@ -74064,6 +74064,7 @@ td {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  margin-bottom: 16px;
 }
 .hero_submit-wallet-input{
   outline: none;
@@ -74093,9 +74094,9 @@ color: #303030;
 }
 .hero_payments{
   display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 30px 20px;
-  margin-top: 30px;
+  grid-template-columns: repeat(3,1fr);
+  gap: 30px 46px;
+  margin: 30px 50px;
 }
 .hero_payments article{
   height: 30px;

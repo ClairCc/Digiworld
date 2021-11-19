@@ -1,0 +1,53 @@
+.btn_payments{
+    border: none;
+    background-color: #ffc813;
+    color: #303030;
+    font-weight: 600;
+}
+.btn_payments:focus,
+.btn_payments:hover,
+.btn_payments:active{
+    background-color:#303030 ;
+    color: #ffc813;
+
+}
+.form-label{
+    color: #000;
+}
+.btn-primary{
+    background-color: #ffc813;
+    border:none;
+    color: black!important;
+
+}
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:hover{
+    color: #ffc813!important;
+    background-color: #252525!important;
+    border:none;
+}
+.btn-secondary{
+    border: none;
+    background: #262626;
+    border:none
+}
+.btn-secondary:active,
+.btn-secondary:focus,
+.btn-secondary:hover{
+    border: none!important;
+    background: #262626!important;
+    border:none
+}
+.form-control,
+.form-control:focus{
+    color: #000;
+    border: 1px solid #000;
+    margin: 10px 0;
+}
+.row-sm{
+    justify-content: center;
+}
+.tab-content{
+    background-color: #252525;
+}

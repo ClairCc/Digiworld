@@ -101,27 +101,8 @@ footer figure {
     margin-top: 50px;
   }
 }
-@media (max-width: 425px) {
-  main form {
-    width: 100%;
-  }
 
-  h2 {
-    font-size: 32px;
-  }
-  .logo {
-    margin-left: 16px;
-  }
-  .main_ingreso .main_title h2 {
-    font-size: 30px;
-  }
-  .main_title {
-    margin-top: 60px;
-  }
-  footer figure {
-    width: auto;
-  }
-}
+
 #iconoOjo {
   height: 40%;
   display: flex;
@@ -148,6 +129,44 @@ footer figure {
   padding: 10px;
   margin-top: 24px;
 }
-.botonesInferiores_partner::placeholder {
-  color: #7d6b31;
+.btn-main-primary:not(:disabled):not(.disabled):active, .btn-main-primary:not(:disabled):not(.disabled).active {
+  background-color: #7d6b31!important;
+}
+.body main .capza_button::after{
+background-color: #7d6b31;
+}
+@media (max-width: 1024px) {
+  .botonesInferiores{
+    flex-flow: column;
+  }
+  .botonesInferiores_partner{
+    width: 100%!important;
+  }
+  .contianer_form{
+    width: 60%;
+  }
+}
+@media (max-width: 425px) {
+  main form {
+    width: 100%;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+  .logo {
+    margin-left: 16px;
+  }
+  .main_ingreso .main_title h2 {
+    font-size: 30px;
+  }
+  .main_title {
+    margin-top: 60px;
+  }
+  footer figure {
+    width: auto;
+  }
+  .contianer_form{
+    width: 90%;
+  }
 }

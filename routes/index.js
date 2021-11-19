@@ -101,6 +101,12 @@ module.exports = function () {
     dashboardController.uploadFoto,
     dashboardController.subirFoto
   );
+  router.get(
+    "/dashboard/suscripciones",
+    authController.usuarioAutenticado,
+    authController.verifyToken,
+    usuariosController.suscripciones
+);
 
   // Cerrar Sesion
   router.get("/cerrar-sesion", (req, res) => {
@@ -120,11 +126,23 @@ module.exports = function () {
     authController.verifyToken,
     rolController.permisosPaginaAdmin,
     usuariosController.adminMediosPago
-//
+    //
+    );
+    router.get(
+      "/dashboard/adminSuscripciones",
+      authController.usuarioAutenticado,
+      authController.verifyToken,
+      rolController.permisosPaginaAdmin,
+      usuariosController.adminSuscripciones
   );
+   
+
   router.post(
     "/dashboard/adminMediosPago",
-    mediosPagoController.qrrender
+    authController.usuarioAutenticado,
+    authController.verifyToken,
+    rolController.permisosPaginaAdmin,
+    mediosPagoController.qrrender,
   )
 
   router.post(
@@ -173,6 +191,10 @@ module.exports = function () {
     authController.verifyToken,
     rolController.permisosPaginaAdmin,
     usuariosController.asignarPlataformaSuperdistribuidor
+  );
+  router.post(
+    "/comprobante",
+    
   );
 
   // Administrador Plataformas (Admin)

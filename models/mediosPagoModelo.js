@@ -3,7 +3,7 @@ const db = require('../config/db');
 const { v4: uuid_v4 } = require('uuid');
 const Usuarios = require('./usuariosModelo')
 
-const mediosPago = db.define("mediosPago",{
+const MediosPago = db.define("mediosPago",{
     id: {
         type: Sequelize.UUID,
         primaryKey: true,
@@ -27,11 +27,11 @@ const mediosPago = db.define("mediosPago",{
 //has one relacion entre tablas
 //estudiar
 
-Usuarios.hasOne(mediosPago, {
+Usuarios.hasOne(MediosPago, {
     foreignKey: {
       name: 'usuarioIdUsuario'
     }
 });
-mediosPago.belongsTo(Usuarios);
+MediosPago.belongsTo(Usuarios);
 
-exports.mediosPago = mediosPago
+module.exports = MediosPago

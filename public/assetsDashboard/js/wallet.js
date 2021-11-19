@@ -1,4 +1,5 @@
 const boton = document.getElementById("submitWallet")
+ 
 
 const sendQrRender = ()=>{
     const inputNombre = document.getElementById("nombreWallet").value;
@@ -12,6 +13,14 @@ const sendQrRender = ()=>{
             type: "warning",
           })
     }else{
+        swal({
+            title: "Proceso Realizado con Exito",
+            text: "Billetera agregada correctamente",
+            type: "success",
+            confirmButtonText:
+            'Continuar',
+//Recargar la pagina
+          })
         axios({
             url: '/dashboard/adminMediosPago',
             method: 'POST',
@@ -22,32 +31,10 @@ const sendQrRender = ()=>{
         }).then((res)=>{
             const response = res.data;
             const valor = response.qrData 
-            
             console.log(valor)
+        }).cath((err)=>{
+            console.log(err)
         })
     }
-
-   
-
-   
+    
 }
-
-class wallet{
-    constructor({
-        url, nombre
-    }){
-        this.nombre = nombre
-        this.url = url
-    }
-}
-
-
-const wallet1 = new wallet({
-    url:"oisdnaosidnaiosd",
-    nombre:"oisdnaosidnaiosd"
-})
-
-
-
-console.log(QRCode)
- 

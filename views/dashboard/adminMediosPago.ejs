@@ -13,7 +13,8 @@
 
     <!-- Cabecera -->
     <%- include('layautsDashboard/head') %>
-
+    
+    
     <!-- Main Content-->
     <div class="main-content side-content pt-0">
 
@@ -35,28 +36,23 @@
           <main class='hero'>
            
             <section class='hero_submit-wallet'>
-              <input type="text" class='hero_submit-wallet-input' placeholder='Title' id='nombreWallet'>
-              <input type="text" class='hero_submit-wallet-input' placeholder='Wallet' id='idWallet'>
+              <input type="text" class='hero_submit-wallet-input' placeholder='Titulo Wallet' id='nombreWallet'>
+              <input type="text" class='hero_submit-wallet-input' placeholder='direccion Wallet' id='idWallet'>
               <button id='submitWallet' onclick="sendQrRender()">Enviar</button>
             </section>
             
-            <section class='hero_payments'>
-              <article>
-                kasdoasoiasndo
-              </article>
-              <article>
-                kasdoasoiasndo
-              </article>
-              <article>
-                kasdoasoiasndo
-              </article>
-              <article>
-                kasdoasoiasndo
-              </article>
-              <article>
-                kasdoasoiasndo
-              </article>
-            </section>
+            <div class="row row-sm">
+              <div class="col-lg-12 col-md-12">
+                <div class="card custom-card main-content-body-profile">
+                  <div class="tab-content">
+                   
+                    <section class='hero_payments'>
+                      <%- include('layautsDashboard/cards') %>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
                 
           </main>
 
@@ -126,7 +122,7 @@
                 <div class="card-body">
                   <div class="row row-sm">
                     <div class="col-6">
-                      <div class="card-item-title">
+                      <div class="card-item-title">         
                         <label class="main-content-label tx-13 font-weight-bold mb-2">Saldo Actual</label>
                         <span class="d-block tx-12 mb-0 text-muted">Observe su saldo en tiempo real</span>
                       </div>

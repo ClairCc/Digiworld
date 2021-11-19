@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("../config/db");
 const bcrypt = require("bcrypt-nodejs");
 const { v4: uuid_v4 } = require("uuid");
+
 const superUser = "cristian-cavanzo-239";
 const Usuarios = db.define(
   "usuarios",

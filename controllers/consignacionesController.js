@@ -14,7 +14,7 @@ exports.reportarConsignacion = async (req, res) => {
 
     const consignaciones = await Consignaciones.findAll({
         where: {
-            [Op.and]: [{ usuarioIdUsuario: req.user.id_usuario }]
+            [Op.and]: [{ usuarioIdUsuario: req.user.id_usuario }] 
         },
         order: [['fecha', 'DESC']]
     });

@@ -1,4 +1,5 @@
 const Usuarios = require("../models/usuariosModelo");
+const MediosPago = require("../models/mediosPagoModelo");
 const Plataformas = require("../models/plataformasModelo");
 const Asignaciones = require("../models/asignacionesModelo");
 const Cargas = require("../models/cargasModelo");
@@ -10,6 +11,7 @@ const { v4: uuid_v4 } = require("uuid");
 
 // Comercios
 exports.comercios = async (req, res) => {
+
   const usuarios = await Usuarios.findAll({
     where: { perfil: "comercio" },
   });
@@ -920,13 +922,45 @@ exports.asignacionesUsuario = async (req, res) => {
   });
 };
 
-exports.adminMediosPago = (req, res) => {
+exports.adminMediosPago = async (req, res) => {
+
+  // Traer todo los QR  del usuario
+  const qrMediosPago = await MediosPago.findAll({
+      where: {
+          usuarioIdUsuario: req.user.id_usuario
+      },
+  });
+
   res.render("dashboard/adminMediosPago", {
     nombrePagina: "Administrador medios de pago",
     titulo: "Administrador medios de pago",
     breadcrumb: "Administrador medios de pago",
     classActive: req.path.split("/")[2],
-    
+    qrMediosPago  
   });
 };
 //
+exports.adminSuscripciones = async (req, res) => {
+  const qrMediosPago = await Usuarios.findAll();
+  res.render("dashboard/adminSuscripciones", {    
+    nombrePagina: "Administrador Suscripciones",
+    titulo: "Administrador Suscripciones",
+    breadcrumb: "Administrador Suscripciones",
+    classActive: req.path.split("/")[2],
+    qrMediosPago
+  });
+};  
+exports.suscripciones = async (req, res) => {
+  const qrMediosPago = await MediosPago.findAll();
+  
+  res.render("dashboard/suscripciones", {
+    nombrePagina: "Suscripciones",
+    titulo: "Suscripciones",
+    breadcrumb: "Suscripciones",
+    classActive: req.path.split("/")[2],
+    qrMediosPago
+  });
+};  
+//
+
+
