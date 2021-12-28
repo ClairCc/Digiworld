@@ -1,0 +1,203 @@
+:root {
+  --orange: #ec6608;
+  --blue: #071329;
+  --blue_soft: #0a2351;
+  --blue_dark: #0a1d40;
+  --white: #ffffff;
+  --yellow: #ff9900;
+  --blue_soft-secundary: #132951;
+  --brown: #802e00;
+  --secundary_orange: #ff7800;
+  --sm: 1.6rem;
+  --md: 2rem;
+  --md-l: 2.4rem;
+  --bg: 4.4rem;
+  --bg-l: 12rem;
+}
+html {
+  font-size: 62.5%;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  font-size: var(--sm);
+}
+body {
+  margin: 0 0 0 9vw;
+  background-color: var(--blue) !important;
+}
+.aside {
+  width: 8vw;
+  display: inline-block;
+  background-color: var(--blue);
+  position: fixed;
+  height: 100%;
+  box-shadow: 0px 3px 6px #00000029;
+  top: 0;
+  left: 0;
+}
+main {
+  width: 86vw;
+  display: inline-block;
+  height: 97vh;
+  background: url("../img/background-img.svg") center;
+  background-position: 50% -40%;
+  background-repeat: no-repeat;
+  background-size: 80%;
+}
+.aside_ul {
+  height: 100vh;
+  display: grid;
+  grid-auto-flow: row;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 2fr;
+}
+
+.aside_ul-a {
+  text-decoration: none;
+}
+.aside_ul-a li,
+.aside_ul {
+  list-style: none;
+}
+
+.aside_ul-a,
+.aside_a-button {
+  transform: rotate(270deg);
+}
+.aside_ul li {
+  color: var(--orange);
+  font-weight: bold;
+}
+
+.aside_li-a button li {
+  color: var(--blue);
+}
+.main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main_content {
+  display: flex;
+  height: 90vh;
+  align-items: center;
+}
+.main_content article {
+  width: 50%;
+}
+.main_article-l {
+  padding: 0 12% 0 2%;
+}
+.main_article-r {
+  padding: 0 7% 0 0%;
+}
+.article-l_title {
+  color: var(--white);
+  font-size: var(--bg);
+  text-align: end;
+  margin-bottom: 8px;
+}
+.article-l_description {
+  color: var(--orange);
+  text-align: end;
+}
+
+.generalButton {
+  background-color: var(--orange);
+  color: var(--blue);
+  outline: none;
+  border: none;
+  padding: 12px 24px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.article-l_buton .generalButton {
+  margin-top: 24px;
+}
+.article_width {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+.main_article-r {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "Backend Backend "
+    "Blockchain Frontend"
+    "Diseno Desarrollo";
+  gap: 20px;
+}
+.article-r_cards {
+  background-color: var(--orange);
+  padding: 18px;
+}
+.article-r_cards_backend {
+  grid-area: Backend;
+}
+.article-r_cards_blockchain {
+  grid-area: Blockchain;
+}
+.article-r_cards_frontend {
+  grid-area: Frontend;
+}
+.article-r_cards_backend_design {
+  grid-area: Diseno;
+}
+.article-r_cards_backend_mobile {
+  grid-area: Desarrollo;
+}
+article .article-r_cards {
+  width: 100%;
+  height: 140px;
+  border-radius: 12px;
+}
+.cards-backend-container {
+  display: flex;
+  align-items: center;
+}
+.cards-backend_figure {
+  background-color: var(--secundary_orange);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+}
+.cards-backend_line {
+  width: 90%;
+  background-color: var(--secundary_orange);
+  height: 20px;
+  border-radius: 0 12px 12px 0;
+}
+.article-r_cards {
+  display: grid;
+}
+.article-r_cards h4 {
+  align-self: center;
+  justify-self: end;
+  font-size: var(--md);
+  color: var(--white);
+}
+.line_back {
+  background-color: var(--secundary_orange);
+  width: 100%;
+  height: 4px;
+  align-self: end;
+  border-radius: 202%;
+}
+.cards-backend_line2 {
+  width: 78%;
+}
+.main_article-logo {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0 7%;
+  margin-top: 24px;
+}

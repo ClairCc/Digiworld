@@ -1,328 +1,100 @@
-<!doctype html>
-<html lang=zxx>
-<head>
-  <meta charset=utf-8>
-  <meta name=viewport content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel=stylesheet href="assetsInicio/css/bootstrap.min.css">
-  <link rel=stylesheet href="assetsInicio/css/animate.min.css">
-  <link rel=stylesheet href="assetsInicio/css/fontawesome.min.css">
-  <link rel=stylesheet href="assetsInicio/css/flaticon.css">
-  <link rel=stylesheet href="assetsInicio/css/magnific-popup.min.css">
-  <link rel=stylesheet href="assetsInicio/css/nice-select.css">
-  <link rel=stylesheet href="assetsInicio/css/slick.min.css">
-  <link rel=stylesheet href="assetsInicio/css/meanmenu.css">
-  <link rel=stylesheet href="assetsInicio/css/odometer.min.css">
-  <link rel=stylesheet href="assetsInicio/css/style.css">
-  <link rel=stylesheet href="assetsInicio/css/responsive.css">
-  <link rel=stylesheet href="assetsInicio/css/owl.carousel.css">
-  <link rel=stylesheet href="assetsInicio/css/owl.carousel.min.css">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.1.9/dist/css/splide.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assetsInicio/css/index.css" />
 
-  <title>Capza | <%- nombrePagina  %></title>
-  <link
+    <title>Digiworld | <%- nombrePagina %></title>
+    <link
       rel="icon"
       type="image/png"
       href="assetsDashboard/img/aloneCapzaWhite.svg"
     />
-
-</head>
-
-<div class=preloader>
-  <div class=loader>
-    <div class=shadow></div>
-    <div class=box></div>
-  </div>
-</div>
-
-<%- include('layauts/head') %>
-
-<section class="banner-home" id="inicio">
-  <div class="splide" id="splide">
-    <div class="splide__track">
-      <ul class="splide__list">
-        <li class="splide__slide">
-          <div class="position-relative">
-            <center>
-              <h1 class="font-jura text-white position-absolute font-weight-light text-center text_principal" >¡Capza es la solución!</h1>
-            </center>
-            <div class="position-absolute w-100 h-100" style="background-color: #262626; opacity: .9;"></div>
-            <img src="assetsInicio/img/banner1.png" alt="Banner Inicio">
+  </head>
+  <body>
+    <%- include('layauts/head') %>
+    <section class="main_article-logo">
+      <figure><img src="./assetsInicio/img/iconL.svg" alt="" /></figure>
+    </section>
+    <main class="main">
+      <section class="main_content">
+        <article class="main_article-l main_article">
+          <h3 class="article-l_title">¿Qué necesitas?</h3>
+          <p class="article-l_description">
+            Sabemos lo valioso que es cada minuto, por eso en Digiworld, lo que
+            necesitas está a tan solo un par de clics, aquí encontrarás desde
+            servicios de outsourcing hasta soluciones de diseño, todo en un
+            mismo lugar.
+          </p>
+          <div class="article_width">
+            <a href="" class="article-l_buton">
+              <button class="generalButton">Ir al inicio</button>
+            </a>
           </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section>
-  
-
-</section>
-
-<section class='arrow'>
-  <figure class='arrow_backgorund'>
-    <img src="assetsInicio/img/arrow.svg" alt="" class='arrow_img-ikd'>
-  </figure>
-  <p class='arrow_p'>
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet reiciendis fugiat earum modi ex! Aperiam culpa optio minus, veritatis a distinctio eaque illum maiores neque. Illo velit excepturi magni ipsum?
-  </p>
-</section>
-
-<section class='cards_container'>
-  <article class='card card1'>
-    <div class='card_center'>
-      <figure>
-        <img src="assetsInicio/img/alcancia.svg" alt="">
-      </figure>
-    </div>
-    <p class='card_text'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam sit optio molestias dolor debitis doloremque inventore explicabo labore, et deleniti quo qui, laborum voluptatibus eligendi ut odit eum cumque voluptate!</p>
-    
-    <figure class='card_arrow card_arrow1'>
-      <img src="assetsInicio/img/arrow.svg" alt="" srcset="">
-    </figure>
-    <figure class='card_arrow card_arrow2'>
-      <img src="assetsInicio/img/arrow.svg" alt="" srcset="">
-    </figure>
-    <figure class='card_arrow card_arrow3'>
-      <img src="assetsInicio/img/arrow.svg" alt="" srcset="">
-    </figure>
-    <figure class='card_arrow card_arrow4'>
-      <img src="assetsInicio/img/arrow.svg" alt="" srcset="">
-    </figure>
-    
-  </article>
-  <article class='card card1'>
-    <div class='card_center'>
-      <figure>
-        <img src="assetsInicio/img/tarjeta.svg" alt="">
-      </figure>
-    </div>
-    <p class='card_text'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam sit optio molestias dolor debitis doloremque inventore explicabo labore, et deleniti quo qui, laborum voluptatibus eligendi ut odit eum cumque voluptate!</p>
-    
-    <figure class='card_arrow card_arrow1'>
-      <img src="assetsInicio/img/arrow.svg" alt="" srcset="">
-    </figure>
-    <figure class='card_arrow card_arrow2'>
-      <img src="assetsInicio/img/arrow.svg" alt="" srcset="">
-    </figure>
-    <figure class='card_arrow card_arrow3'>
-      <img src="assetsInicio/img/arrow.svg" alt="" srcset="">
-    </figure>
-    <figure class='card_arrow card_arrow4'>
-      <img src="assetsInicio/img/arrow.svg" alt="" srcset="">
-    </figure>
-    
-  </article>
-  <article class='card card1'>
-    <div class='card_center'>
-      <figure>
-        <img src="assetsInicio/img/moneda.svg" alt="">
-      </figure>
-    </div>
-    <p class='card_text'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam sit optio molestias dolor debitis doloremque inventore explicabo labore, et deleniti quo qui, laborum voluptatibus eligendi ut odit eum cumque voluptate!</p>
-    
-    <figure class='card_arrow card_arrow1'>
-      <img src="assetsInicio/img/arrow.svg" alt="" srcset="">
-    </figure>
-    <figure class='card_arrow card_arrow2'>
-      <img src="assetsInicio/img/arrow.svg" alt="" srcset="">
-    </figure>
-    <figure class='card_arrow card_arrow3'>
-      <img src="assetsInicio/img/arrow.svg" alt="" srcset="">
-    </figure>
-    <figure class='card_arrow card_arrow4'>
-      <img src="assetsInicio/img/arrow.svg" alt="" srcset="">
-    </figure>
-    
-  </article>
-  <!-- <article class='card card2'>
-    <div></div>
-    <p>Sed aperiam eius hic alias, debitis quas facere expedita rem est nostrum ullam numquam possimus! Cum, pariatur doloremque! Sequi explicabo cum ad alias culpa enim a, laudantium debitis odit delectus.</p>
-  </article>
-  <article class='card card3'>
-    <div></div>
-    <p>Odit fuga aliquam pariatur laboriosam voluptates veniam dicta minima! Vero animi qui doloribus id dicta obcaecati eius, nisi dignissimos ad delectus ipsum dolores voluptatibus officiis. Voluptas officia ad tempora asperiores.</p>
-  </article> -->
-</section>
-
-<section class="images">
-  <article class="images_p">
-    <p class='images_text'>
-      
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea ut impedit ullam optio distinctio sed omnis. Amet dicta corporis nobis error cupiditate eos aliquam esse ab delectus! Incidunt, deserunt praesentium?</p>
-    
-  </article>
-  <article class='images_article'>
-    <figure class='images_article-figure'><img src="" alt=""></figure>
-    <figure class='images_article-figure'><img src="" alt=""></figure>
-    <figure class='images_article-figure'><img src="" alt=""></figure>
-    <figure class='images_article-figure'><img src="" alt=""></figure>
-  </article>
-</section>
-
-
-
-
-<%- include('./layauts/foot') %>
-
-<div class=go-top><i class="fas fa-arrow-up"></i></div>
-<script src="assetsInicio/js/jquery.min.js"></script>
-<script src="assetsInicio/js/popper.min.js"></script>
-<script src="assetsInicio/js/bootstrap.min.js"></script>
-<script src="assetsInicio/js/jquery.meanmenu.js"></script>
-<script src="assetsInicio/js/jquery.nice-select.min.js"></script>
-<script src="assetsInicio/js/slick.min.js"></script>
-<script src="assetsInicio/js/jquery.magnific-popup.min.js"></script>
-<script src="assetsInicio/js/jquery.appear.min.js"></script>
-<script src="assetsInicio/js/odometer.min.js"></script>
-<script src="assetsInicio/js/parallax.min.js"></script>
-<script src="assetsInicio/js/wow.min.js"></script>
-<script src="assetsInicio/js/smooth-scroll.min.js"></script>
-<script src="assetsInicio/js/form-validator.min.js"></script>
-<script src="assetsInicio/js/contact-form-script.js"></script>
-<script src="assetsInicio/js/main.js"></script>
-<script src="assetsInicio/js/owl.carousel.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.1.9/dist/js/splide.js"></script>
-<script>
-  var box=$(".arrow_img-ikd");
-var boxCenter=[box.offset().left+box.width(), box.offset().top+box.height()];
-
-$(document).mousemove(function(e){    
-    
-        
-	var angle = Math.atan2(e.pageX- boxCenter[0],- (e.pageY- boxCenter[1]) )*(360/Math.PI);	    
-    
-    box.css({ "-webkit-transform": 'rotate(' + angle + 'deg)'});    
-    box.css({ '-moz-transform': 'rotate(' + angle + 'deg)'});
-    box.css({ 'transform': 'rotate(' + angle + 'deg)'});
-    
-});
-    smoothScroll.init({
-      selector: '[data-scroll]', // Selector for links (must be a class, ID, data attribute, or element tag)
-      selectorHeader: null, // Selector for fixed headers (must be a valid CSS selector) [optional]
-      speed: 2000, // Integer. How fast to complete the scroll in milliseconds
-      easing: 'easeInOutCubic', // Easing pattern to use
-      offset: 100, // Integer. How far to offset the scrolling anchor location in pixels
-      callback: function ( anchor, toggle ) {} // Function to run after scrolling
-      });
-
-      new Splide( '#splide', {
-        type:'loop',
-        perPage:1,
-        perMove: 1
-      }).mount();
-
-      new Splide( '#splide2', {
-        type:'loop',
-        gap: '1rem',
-        arrows: false,
-        pagination: false,
-        autoplay: true,
-        interval: 3000,
-        padding: 10,
-        perPage: 4,
-        perMove: 1,
-        breakpoints: {
-          640: {
-            perPage: 2
-          },
-          480: {
-            perPage: 1
-          },
-        },
-      }).mount();
-
-      new Splide( '#splide3', {
-        type:'loop',
-        gap: '1rem',
-        arrows: false,
-        pagination: false,
-        autoplay: true,
-        interval: 5000,
-        focus: 'center',
-        // autoWidth: true,
-        autoHeight: true,
-        // padding: 10,
-        perPage: 3,
-        perMove: 1,
-        breakpoints: {
-          640: {
-            perPage: 1
-          },
-          480: {
-            perPage: 1
-          },
-        },
-      }).mount();
-
-      new Splide( '#splide4', {
-        type:'loop',
-        gap: '1rem',
-        arrows: false,
-        pagination: false,
-        autoplay: true,
-        interval: 5000,
-        focus: 'center',
-        autoWidth: true,
-        autoHeight: true,
-        // padding: 10,
-        perPage: 4,
-        perMove: 1,
-        breakpoints: {
-          640: {
-            perPage: 1
-          },
-          480: {
-            perPage: 1
-          },
-        },
-      }).mount();
-
-      new Splide( '#splide5', {
-        type:'loop',
-        perPage:1,
-        perMove: 1,
-        arrows: false,
-        autoplay: true,
-      }).mount();
-
-      const colors = [
-        '#ffffff30',
-        '#ffffff0f',
-        '#ffffff5e',
-        '#ffffff80'
-      ]
-
-      function createCircle () {
-        const section = document.querySelector('.seccion-animada');
-        const square = document.createElement('span-circle');
-        
-        var size = Math.random() * 100;
-
-        square.style.width = 250 + size +'px';
-        square.style.height = 250 + size +'px';
-
-        square.style.top = Math.random() * innerHeight + 'px';
-        square.style.left = Math.random() * innerWidth + 'px';
-
-        const bg = colors[Math.floor(Math.random() * colors.length)];
-
-        square.style.background = bg;
-
-        section.appendChild(square);
-
-        setTimeout(() => {
-          square.remove()
-        }, 5000);
-
-      }
-
-      setInterval(createCircle, 500)
-
-</script>
-
-</body>
+        </article>
+        <article class="main_article main_article-r">
+          <article class="article-r_cards article-r_cards_backend">
+            <div class="cards-backend-container">
+              <figure class="cards-backend_figure">
+                <img src="" alt="" />
+              </figure>
+              <div class="cards-backend_line"></div>
+            </div>
+            <h4>Backend</h4>
+            <div class="line_back"></div>
+          </article>
+          <article class="article-r_cards article-r_cards_blockchain">
+            <div class="cards-backend-container">
+              <figure class="cards-backend_figure">
+                <img src="" alt="" />
+              </figure>
+              <div class="cards-backend_line cards-backend_line2"></div>
+            </div>
+            <h4>Blockchain</h4>
+            <div class="line_back"></div>
+          </article>
+          <article class="article-r_cards article-r_cards_frontend">
+            <div class="cards-backend-container">
+              <figure class="cards-backend_figure">
+                <img src="" alt="" />
+              </figure>
+              <div class="cards-backend_line cards-backend_line2"></div>
+            </div>
+            <h4>Frontend</h4>
+            <div class="line_back"></div>
+          </article>
+          <article class="article-r_cards article-r_cards_backend_design">
+            <div class="cards-backend-container">
+              <figure class="cards-backend_figure">
+                <img src="" alt="" />
+              </figure>
+              <div class="cards-backend_line cards-backend_line2"></div>
+            </div>
+            <h4>Diseño</h4>
+            <div class="line_back"></div>
+          </article>
+          <article class="article-r_cards article-r_cards_backend_mobile">
+            <div class="cards-backend-container">
+              <figure class="cards-backend_figure">
+                <img src="" alt="" />
+              </figure>
+              <div class="cards-backend_line cards-backend_line2"></div>
+            </div>
+            <h4>Desarrollo móvil</h4>
+            <div class="line_back"></div>
+          </article>
+        </article>
+      </section>
+    </main>
+  </body>
 </html>
