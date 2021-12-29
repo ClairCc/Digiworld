@@ -18,6 +18,12 @@ exports.inicio = (req, res) => {
   });
 };
 
+exports.nosotros = (req, res) => {
+  res.render("nosotros", {
+    nombrePagina: "nosotros"
+  })
+}
+
 exports.formRegistro = (req, res) => {
   res.render("registro", {
     nombrePagina: "Registro",
@@ -162,7 +168,7 @@ exports.crearRegistro = async (req, res) => {
   }
 };
 
-exports.suscripcion = async(req,res)=>{
+exports.suscripcion = async (req, res) => {
 
 }
 
@@ -248,22 +254,22 @@ exports.formIngreso = (req, res) => {
 };
 
 
-exports.enviarComprobante = async(req, res)=>{
+exports.enviarComprobante = async (req, res) => {
   const datos = req.body
   const response = await axios.get("https://api.ipify.org?format=json");
   const ip = response.data.ip;
-  
-  try{
+
+  try {
     await Servicios.create({
       nombreWallet: datos.seleccion,
       ip: ip,
       usuarioIdUsuario: req.user.id_usuario
-    }); 
-    
-  }catch(err){
+    });
+
+  } catch (err) {
     console.log(err)
   }
-  
+
 }
 
 // por que se le agrega un req y un res 
