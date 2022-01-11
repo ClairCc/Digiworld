@@ -30,7 +30,7 @@ html {
 }
 body {
   margin: 0 0 0 9vw;
-  background-color: var(--blue) !important;
+  background-color: var(--blue);
 }
 .aside_figure-img2 {
   display: none;
