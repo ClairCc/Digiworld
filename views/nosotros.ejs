@@ -1,146 +1,222 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="assetsInicio/css/general.css" />
-    <link rel="stylesheet" href="assetsInicio/css/nosotros.css" />
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="assetsInicio/css/general.css" />
+        <link rel="stylesheet" href="assetsInicio/css/nosotros.css" />
 
-    <title>Digiworld | <%- nombrePagina %></title>
-    <link
-      rel="icon"
-      type="image/png"
-      href="assetsDashboard/img/aloneCapzaWhite.svg"
-    />
-  </head>
-  <body>
-    <%- include('layauts/head') %>
-    <section class="slider">
-      <section class="slider_circle"></section>
-    </section>
-    <section class="nosotros">
-      <article class="nosotros_l nosotros_cards">
-        <p class="nosotros_l-p">
-          Nos apasiona la tecnología, por esto nos apoyamos en ella para
-          brindarte soluciones efectivas. Nos comprometemos con cada proyecto
-          para ofrecerte la más alta calidad en nuestros productos y servicios.
-        </p>
-      </article>
-      <article class="nosotros_r nosotros_cards">
-        <img src="assetsInicio/img/digichikito.png" alt="" />
-      </article>
-    </section>
-    <section class="services">
-      <div class="services_l">
-        <article class="services_l-cards services_l-cards--Backend">
-          <div class="l_cards"></div>
-          <h4 class="l_cards-title">Backend</h4>
-          <figure class="l_cards-figure">
-            <img src="" alt="icon Backend" />
-          </figure>
-        </article>
-        <article class="services_l-cards services_l-cards--Front-end">
-          <div class="l_cards"></div>
-          <h4 class="l_cards-title">Front-end</h4>
-          <figure class="l_cards-figure">
-            <img src="" alt="icon Front-end" />
-          </figure>
-        </article>
-        <article class="services_l-cards services_l-cards--Diseño">
-          <div class="l_cards"></div>
-          <h4 class="l_cards-title">Diseño</h4>
-          <figure class="l_cards-figure">
-            <img src="" alt="icon Diseño" />
-          </figure>
-        </article>
-      </div>
-      <div class="services_r">
-        <h3 class="services_r-title">
-          Nuestros
-          <br />
-          <span>Sercivios</span>
-        </h3>
-        <button class="generalButton">Contactanos</button>
-      </div>
-    </section>
-    <section class="world">
-      <article class="world_article world_article-line world_article-line2">
-        <div class="world_article-square"></div>
-      </article>
-      <article class="world_article world_article2">
-        <h4 class="world_article2_title">
-          Digiworld<span> <br />en el mundo</span>
-        </h4>
-        <div class="world_code-container">
-          <div class="world_code-first">
-            <div class="world_code-first--itm"></div>
-            <div class="world_code-first--itm"></div>
-            <div class="world_code-first--itm"></div>
-            <div class="world_code-first--itm"></div>
-            <div class="world_code-first--itm"></div>
-            <div class="world_code-first--itm"></div>
-            <div class="world_code-first--itm"></div>
-          </div>
-          <div class="world_code-second">
-            <div class="code_second-container">
-              <div class="second_container-square"></div>
-              <div class="second_container-circle"></div>
+        <title>Digiworld | <%- nombrePagina %></title>
+        <link
+            rel="icon"
+            type="image/png"
+            href="assetsDashboard/img/aloneCapzaWhite.svg"
+        />
+    </head>
+    <body>
+        <%- include('layauts/head') %>
+        <section class="slider">
+            <section class="slider_circle"></section>
+        </section>
+        <section class="nosotros">
+            <article class="nosotros_l nosotros_cards">
+                <p class="nosotros_l-p">
+                    Nos apasiona la tecnología, por esto nos apoyamos en ella
+                    para brindarte soluciones efectivas. Nos comprometemos con
+                    cada proyecto para ofrecerte la más alta calidad en nuestros
+                    productos y servicios.
+                </p>
+            </article>
+            <article class="nosotros_r nosotros_cards">
+                <img src="assetsInicio/img/digichikito.png" alt="" />
+            </article>
+        </section>
+        <section class="services">
+            <div class="services_l">
+                <article class="services_l-cards services_l-cards--Backend">
+                    <div class="l_cards"></div>
+                    <h4 class="l_cards-title">Backend</h4>
+                    <figure class="l_cards-figure">
+                        <img src="" alt="icon Backend" />
+                    </figure>
+                </article>
+                <article class="services_l-cards services_l-cards--Front-end">
+                    <div class="l_cards"></div>
+                    <h4 class="l_cards-title">Front-end</h4>
+                    <figure class="l_cards-figure">
+                        <img src="" alt="icon Front-end" />
+                    </figure>
+                </article>
+                <article class="services_l-cards services_l-cards--Diseño">
+                    <div class="l_cards"></div>
+                    <h4 class="l_cards-title">Diseño</h4>
+                    <figure class="l_cards-figure">
+                        <img src="" alt="icon Diseño" />
+                    </figure>
+                </article>
             </div>
-            <div class="code_third-container">
-              <div class="subcode_third-container">
-                <div class="third_container-itm"></div>
-                <div
-                  class="second_container-circle second_container-circle2"
-                ></div>
-              </div>
-              <div class="subcode_third-container">
-                <div class="third_container-itm"></div>
-                <div
-                  class="second_container-circle second_container-circle2"
-                ></div>
-              </div>
-              <div class="subcode_third-container">
-                <div class="third_container-itm"></div>
-                <div
-                  class="second_container-circle second_container-circle2"
-                ></div>
-              </div>
+            <div class="services_r">
+                <h3 class="services_r-title">
+                    Nuestros
+                    <br />
+                    <span>Sercivios</span>
+                </h3>
+                <button class="generalButton">Contactanos</button>
             </div>
-            <div class="code_second-container code_second-container2">
-              <div class="second_container-square"></div>
-              <div class="second_container-circle"></div>
+        </section>
+        <section class="world">
+            <article
+                class="world_article world_article-line world_article-line2"
+            >
+                <div class="world_article-square"></div>
+            </article>
+            <article class="world_article world_article2">
+                <h4 class="world_article2_title">
+                    Digiworld<span> <br />en el mundo</span>
+                </h4>
+                <div class="world_code-container">
+                    <div class="world_code-first">
+                        <div class="world_code-first--itm"></div>
+                        <div class="world_code-first--itm"></div>
+                        <div class="world_code-first--itm"></div>
+                        <div class="world_code-first--itm"></div>
+                        <div class="world_code-first--itm"></div>
+                        <div class="world_code-first--itm"></div>
+                        <div class="world_code-first--itm"></div>
+                    </div>
+                    <div class="world_code-second">
+                        <div class="code_second-container">
+                            <div class="second_container-square"></div>
+                            <div class="second_container-circle"></div>
+                        </div>
+                        <div class="code_third-container">
+                            <div class="subcode_third-container">
+                                <div class="third_container-itm"></div>
+                                <div
+                                    class="second_container-circle second_container-circle2"
+                                ></div>
+                            </div>
+                            <div class="subcode_third-container">
+                                <div class="third_container-itm"></div>
+                                <div
+                                    class="second_container-circle second_container-circle2"
+                                ></div>
+                            </div>
+                            <div class="subcode_third-container">
+                                <div class="third_container-itm"></div>
+                                <div
+                                    class="second_container-circle second_container-circle2"
+                                ></div>
+                            </div>
+                        </div>
+                        <div
+                            class="code_second-container code_second-container2"
+                        >
+                            <div class="second_container-square"></div>
+                            <div class="second_container-circle"></div>
+                        </div>
+                        <div class="code_third-container">
+                            <div class="subcode_third-container">
+                                <div class="third_container-itm"></div>
+                                <div
+                                    class="second_container-circle second_container-circle2"
+                                ></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="world_code-third">
+                        <p>
+                            La eficiencia, el ingenio y la creatividad son los
+                            pilares de nuestra identidad, trabajamos en pro de
+                            la evolución, por esto, nos proyectamos a nivel
+                            internacional para brindar soluciones de desarrollo
+                            en diversos lenguajes.
+                        </p>
+                    </div>
+                </div>
+            </article>
+            <article class="world_article world_article-line">
+                <div class="world_article-square"></div>
+            </article>
+        </section>
+        <section class="newsletter">
+            <article class="newsletter_l">
+                <div class="newsletter_l-title">
+                    <h4>Noticias</h4>
+                    <p>Digiworld</p>
+                </div>
+                <p class="newsletter_l-word">
+                    Another UX design project completed with Angle2 - great
+                    working relationship, excellent designs which look great.
+                    Always on time and communication great. We've had many
+                    successful projects with Angle2 in 2019 and this was our
+                    first for 2020 with many more to come.
+                </p>
+                <div class="newsletter_l-iconst">
+                    <figure>
+                        <img src="assetsInicio/img/digiIconShort.svg" alt="" />
+                    </figure>
+                    <figure>
+                        <img
+                            src="assetsInicio/img/digiIconShort.svg"
+                            class="newsletter_icons-none"
+                            alt=""
+                        />
+                    </figure>
+                    <figure>
+                        <img
+                            src="assetsInicio/img/digiIconShort.svg"
+                            class="newsletter_icons-none"
+                            alt=""
+                        />
+                    </figure>
+                </div>
+            </article>
+            <article class="newsletter_r">
+                <div class="newsletter_r-line newsletter_r-line1"></div>
+                <figure class="newsletter_r-figure">
+                    <img
+                        src="assetsInicio/img/newslatter.png"
+                        alt=""
+                        class="newsletter_r-img"
+                    />
+                    <img
+                        src="assetsInicio/img/iconNext.svg"
+                        alt=""
+                        class="newsletter_r-img-2"
+                    />
+                </figure>
+                <div class="newsletter_r-line newsletter_r-lineback"></div>
+            </article>
+        </section>
+        <section class="gallery">
+            <figure><img src="" alt="" /></figure>
+            <figure><img src="" alt="" /></figure>
+            <figure><img src="" alt="" /></figure>
+            <figure><img src="" alt="" /></figure>
+            <figure><img src="" alt="" /></figure>
+        </section>
+        <section class="more">
+            <div>
+                <h5></h5>
+                <p></p>
+                <button>Mas información</button>
             </div>
-            <div class="code_third-container">
-              <div class="subcode_third-container">
-                <div class="third_container-itm"></div>
-                <div
-                  class="second_container-circle second_container-circle2"
-                ></div>
-              </div>
+            <div>
+                <h5></h5>
+                <p></p>
+                <button>Mas información</button>
             </div>
-          </div>
-          <div class="world_code-third">
-            <p>
-              La eficiencia, el ingenio y la creatividad son los pilares de
-              nuestra identidad, trabajamos en pro de la evolución, por esto,
-              nos proyectamos a nivel internacional para brindar soluciones de
-              desarrollo en diversos lenguajes.
-            </p>
-          </div>
-        </div>
-      </article>
-      <article class="world_article world_article-line">
-        <div class="world_article-square"></div>
-      </article>
-    </section>
-  </body>
+        </section>
+        <%- include('layauts/foot') %>
+    </body>
 </html>
