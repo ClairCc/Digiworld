@@ -1,60 +1,60 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const QRCode = require('qrcode')
+const QRCode = require('qrcode');
 
 // importar controladores
-const generalController = require("../controllers/generalController");
-const authController = require("../controllers/authController");
-const rolController = require("../controllers/rolController");
+const generalController = require('../controllers/generalController');
+const authController = require('../controllers/authController');
+const rolController = require('../controllers/rolController');
 
 // Controladores Usuarios por Rol
-const dashboardController = require("../controllers/dashboardController");
-const usuariosController = require("../controllers/usuariosController");
-const mediosPagoController = require("../controllers/mediosPagoController");
+const dashboardController = require('../controllers/dashboardController');
+const usuariosController = require('../controllers/usuariosController');
+const mediosPagoController = require('../controllers/mediosPagoController');
 
-const plataformasController = require("../controllers/plataformasController");
-const marcasController = require("../controllers/marcasController");
-const comprarPlataformasController = require("../controllers/comprarPlataformasController");
-const cuentasController = require("../controllers/cuentasController");
-const notificacionesController = require("../controllers/notificacionesController");
-const consignacionesController = require("../controllers/consignacionesController");
-const mediosController = require("../controllers/mediosController");
-const linkPseController = require("../controllers/linkPseController");
-const insidenciasController = require("../controllers/insidenciasController");
-const preguntasController = require("../controllers/preguntasController");
-const reportesController = require("../controllers/reportesController");
-const gananciasController = require("../controllers/gananciasController");
-const publicidadController = require("../controllers/publicidadController");
-
+const plataformasController = require('../controllers/plataformasController');
+const marcasController = require('../controllers/marcasController');
+const comprarPlataformasController = require('../controllers/comprarPlataformasController');
+const cuentasController = require('../controllers/cuentasController');
+const notificacionesController = require('../controllers/notificacionesController');
+const consignacionesController = require('../controllers/consignacionesController');
+const mediosController = require('../controllers/mediosController');
+const linkPseController = require('../controllers/linkPseController');
+const insidenciasController = require('../controllers/insidenciasController');
+const preguntasController = require('../controllers/preguntasController');
+const reportesController = require('../controllers/reportesController');
+const gananciasController = require('../controllers/gananciasController');
+const publicidadController = require('../controllers/publicidadController');
 
 module.exports = function () {
     // Inicio
-    router.get("/", generalController.inicio);
-    router.get("/inicio", generalController.inicio);
+    router.get('/', generalController.inicio);
+    router.get('/inicio', generalController.inicio);
+    router.get('/pruebas', generalController.pruebas);
     // Nosotros
-    router.get("/nosotros", generalController.nosotros);
+    router.get('/nosotros', generalController.nosotros);
     // Crear y confirmar cuenta usuario
-    router.get("/registro", generalController.formRegistro);
-    router.get("");
+    router.get('/registro', generalController.formRegistro);
+    router.get('');
     router.post(
-        "/register-user",
+        '/register-user',
         generalController.validarRegistro,
         generalController.crearRegistro
     );
-    router.get("/confirmar-cuenta/:correo", generalController.confirmarCuenta);
+    router.get('/confirmar-cuenta/:correo', generalController.confirmarCuenta);
 
     // Ingreso
-    router.get("/ingreso", generalController.formIngreso);
+    router.get('/ingreso', generalController.formIngreso);
 
-    router.post("/ingreso", authController.autenticarUsuario);
+    router.post('/ingreso', authController.autenticarUsuario);
     router.post(
-        "/ingreso/recuperarPassword",
+        '/ingreso/recuperarPassword',
         generalController.recuperarPasswords
     );
 
     //recover password
-    router.get("/recuperar", (req, res) => {
-        res.render("recoverPassword.ejs");
+    router.get('/recuperar', (req, res) => {
+        res.render('recoverPassword.ejs');
     });
 
     // =====================
@@ -63,7 +63,7 @@ module.exports = function () {
 
     // Inicio
     router.get(
-        "/dashboard/inicio",
+        '/dashboard/inicio',
         authController.usuarioAutenticado,
         authController.verifyToken,
         dashboardController.inicio
@@ -71,50 +71,48 @@ module.exports = function () {
 
     // Perfil
     router.get(
-        "/dashboard/mi-perfil",
+        '/dashboard/mi-perfil',
         authController.usuarioAutenticado,
         authController.verifyToken,
         dashboardController.perfil
     );
     router.post(
-        "/dashboard/mi-perfil/cambiarPassword",
+        '/dashboard/mi-perfil/cambiarPassword',
         authController.usuarioAutenticado,
         authController.verifyToken,
         dashboardController.cambiarPassword
     );
     router.post(
-        "/dashboard/mi-perfil/editar/:correo",
+        '/dashboard/mi-perfil/editar/:correo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         dashboardController.validarEditarPerfil,
         dashboardController.editarPerfil
     );
     router.post(
-        "/dashboard/mi-perfil/editar-redes/:correo",
+        '/dashboard/mi-perfil/editar-redes/:correo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         dashboardController.editarRedesSociales
     );
     router.post(
-        "/dashboard/mi-perfil/subir-foto/:correo",
+        '/dashboard/mi-perfil/subir-foto/:correo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         dashboardController.uploadFoto,
         dashboardController.subirFoto
     );
     router.get(
-        "/dashboard/suscripciones",
+        '/dashboard/suscripciones',
         authController.usuarioAutenticado,
         authController.verifyToken,
-        usuariosController.suscripciones,
-
-
+        usuariosController.suscripciones
     );
 
     // Cerrar Sesion
-    router.get("/cerrar-sesion", (req, res) => {
+    router.get('/cerrar-sesion', (req, res) => {
         req.logout();
-        res.redirect("/ingreso");
+        res.redirect('/ingreso');
     });
 
     // =====================
@@ -124,7 +122,7 @@ module.exports = function () {
     // Administrador Usuarios (Admin)
     //Cristian
     router.get(
-        "/dashboard/adminMediosPago",
+        '/dashboard/adminMediosPago',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -132,24 +130,23 @@ module.exports = function () {
         //
     );
     router.get(
-        "/dashboard/adminSuscripciones",
+        '/dashboard/adminSuscripciones',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
         usuariosController.adminSuscripciones
     );
 
-
     router.post(
-        "/dashboard/adminMediosPago",
+        '/dashboard/adminMediosPago',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
-        mediosPagoController.qrrender,
-    )
+        mediosPagoController.qrrender
+    );
 
     router.post(
-        "/adminUsuarios/cambioPefil",
+        '/adminUsuarios/cambioPefil',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -157,7 +154,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuarios/bloqueoUsuario",
+        '/adminUsuarios/bloqueoUsuario',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -165,7 +162,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuarios/editarUsuario",
+        '/adminUsuarios/editarUsuario',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -173,7 +170,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuarios/eliminarUsuario",
+        '/adminUsuarios/eliminarUsuario',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -181,7 +178,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuarios/tablaAsignarPlataformas",
+        '/adminUsuarios/tablaAsignarPlataformas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -189,21 +186,17 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuarios/asignarPlataformas",
+        '/adminUsuarios/asignarPlataformas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
         usuariosController.asignarPlataformaSuperdistribuidor
     );
-    router.post(
-        "/comprobante",
-        generalController.enviarComprobante
-
-    );
+    router.post('/comprobante', generalController.enviarComprobante);
 
     // Administrador Plataformas (Admin)
     router.get(
-        "/dashboard/adminPlataformas",
+        '/dashboard/adminPlataformas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -211,7 +204,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPlataformas/crearPlataforma",
+        '/adminPlataformas/crearPlataforma',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -220,7 +213,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPlataformas/editarPlataforma",
+        '/adminPlataformas/editarPlataforma',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -228,7 +221,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPlataformas/eliminarPlataforma",
+        '/adminPlataformas/eliminarPlataforma',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -236,7 +229,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPlataformas/cambioEstado",
+        '/adminPlataformas/cambioEstado',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -245,7 +238,7 @@ module.exports = function () {
 
     // Administrador Marcas Blancas (Admin)
     router.get(
-        "/dashboard/adminMarcasBlancas",
+        '/dashboard/adminMarcasBlancas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -253,7 +246,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminMarcasBlancas/crearMarca",
+        '/adminMarcasBlancas/crearMarca',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -262,7 +255,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminMarcasBlancas/editarMarca",
+        '/adminMarcasBlancas/editarMarca',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -270,7 +263,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminMarcasBlancas/eliminarMarca",
+        '/adminMarcasBlancas/eliminarMarca',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -278,7 +271,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminMarcasBlancas/cambioEstado",
+        '/adminMarcasBlancas/cambioEstado',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaAdmin,
@@ -291,7 +284,7 @@ module.exports = function () {
 
     // Administrador Usuarios (Admin)
     router.get(
-        "/dashboard/adminUsuariosSuperdistribuidor",
+        '/dashboard/adminUsuariosSuperdistribuidor',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -299,7 +292,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuariosSuperdistribuidor/cambioPefil",
+        '/adminUsuariosSuperdistribuidor/cambioPefil',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -307,7 +300,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuariosSuperdistribuidor/bloqueoUsuario",
+        '/adminUsuariosSuperdistribuidor/bloqueoUsuario',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -315,7 +308,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuariosSuperdistribuidor/editarUsuario",
+        '/adminUsuariosSuperdistribuidor/editarUsuario',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -323,7 +316,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuariosSuperdistribuidor/eliminarUsuario",
+        '/adminUsuariosSuperdistribuidor/eliminarUsuario',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -331,7 +324,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuariosSuperdistribuidor/cargarSaldo",
+        '/adminUsuariosSuperdistribuidor/cargarSaldo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -339,7 +332,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuariosSuperdistribuidor/restarSaldo",
+        '/adminUsuariosSuperdistribuidor/restarSaldo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -347,7 +340,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuariosSuperdistribuidor/tablaAsignarPlataformas",
+        '/adminUsuariosSuperdistribuidor/tablaAsignarPlataformas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -355,7 +348,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminUsuariosSuperdistribuidor/asignarPlataformas",
+        '/adminUsuariosSuperdistribuidor/asignarPlataformas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -364,7 +357,7 @@ module.exports = function () {
 
     // Administrador Plataformas (Superdistribuidor)
     router.get(
-        "/dashboard/adminPlataformasSuperdistribuidor",
+        '/dashboard/adminPlataformasSuperdistribuidor',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -372,7 +365,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPlataformasSuperdistribuidor/editarLogo",
+        '/adminPlataformasSuperdistribuidor/editarLogo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -381,7 +374,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPlataformasSuperdistribuidor/crearPlataformaSuperdistribuidor",
+        '/adminPlataformasSuperdistribuidor/crearPlataformaSuperdistribuidor',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -390,7 +383,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPlataformasSuperdistribuidor/editarPlataforma",
+        '/adminPlataformasSuperdistribuidor/editarPlataforma',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -398,7 +391,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPlataformasSuperdistribuidor/eliminarPlataformaSuperdistribuidor",
+        '/adminPlataformasSuperdistribuidor/eliminarPlataformaSuperdistribuidor',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -406,7 +399,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPlataformasSuperdistribuidor/cambioEstado",
+        '/adminPlataformasSuperdistribuidor/cambioEstado',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -414,7 +407,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPlataformasSuperdistribuidor/desplegarPlataformas",
+        '/adminPlataformasSuperdistribuidor/desplegarPlataformas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -422,7 +415,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPlataformasSuperdistribuidor/subirValor",
+        '/adminPlataformasSuperdistribuidor/subirValor',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -430,7 +423,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPlataformasSuperdistribuidor/bajarValor",
+        '/adminPlataformasSuperdistribuidor/bajarValor',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -439,7 +432,7 @@ module.exports = function () {
 
     // Subir Cuentas (Superdistribuidor)
     router.get(
-        "/dashboard/subirCuentas",
+        '/dashboard/subirCuentas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -447,7 +440,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/subirCuentas/subirCuentasExcel",
+        '/subirCuentas/subirCuentasExcel',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -456,7 +449,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/subirCuentas/editarCuenta",
+        '/subirCuentas/editarCuenta',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -464,7 +457,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/subirCuentas/eliminarCuenta",
+        '/subirCuentas/eliminarCuenta',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -473,7 +466,7 @@ module.exports = function () {
 
     // Subir Cuentas (Superdistribuidor)
     router.get(
-        "/dashboard/cuentasSinTomar",
+        '/dashboard/cuentasSinTomar',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -482,7 +475,7 @@ module.exports = function () {
 
     // Medios de consignacion (Superdistribuidor)
     router.get(
-        "/dashboard/mediosConsignacion",
+        '/dashboard/mediosConsignacion',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -490,7 +483,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/mediosConsignacion/subirMedio",
+        '/mediosConsignacion/subirMedio',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -499,7 +492,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/mediosConsignacion/infoMedio",
+        '/mediosConsignacion/infoMedio',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -507,7 +500,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/mediosConsignacion/editarMedio",
+        '/mediosConsignacion/editarMedio',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -515,7 +508,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/mediosConsignacion/bloquearMedio",
+        '/mediosConsignacion/bloquearMedio',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -523,7 +516,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/mediosConsignacion/eliminarMedio",
+        '/mediosConsignacion/eliminarMedio',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -533,7 +526,7 @@ module.exports = function () {
     // Administración de cuentas
 
     router.get(
-        "/dashboard/adminCuentasVendidas",
+        '/dashboard/adminCuentasVendidas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -543,7 +536,7 @@ module.exports = function () {
     // Administracion cuentas bajo pedido
 
     router.get(
-        "/dashboard/adminCuentasBajoPedido",
+        '/dashboard/adminCuentasBajoPedido',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -551,7 +544,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasBajoPedido/infoCuenta",
+        '/adminCuentasBajoPedido/infoCuenta',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -559,7 +552,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasBajoPedido/subirDatosBajoPedido",
+        '/adminCuentasBajoPedido/subirDatosBajoPedido',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -567,7 +560,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasBajoPedido/editarDatosBajoPedido",
+        '/adminCuentasBajoPedido/editarDatosBajoPedido',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -575,7 +568,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasBajoPedido/eliminarCuentaBajoPedido",
+        '/adminCuentasBajoPedido/eliminarCuentaBajoPedido',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -585,7 +578,7 @@ module.exports = function () {
     // Administracion renovaciones
 
     router.get(
-        "/dashboard/adminCuentasRenovaciones",
+        '/dashboard/adminCuentasRenovaciones',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -593,7 +586,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasRenovaciones/infoCuenta",
+        '/adminCuentasRenovaciones/infoCuenta',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -601,7 +594,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasRenovaciones/subirDatosRenovacion",
+        '/adminCuentasRenovaciones/subirDatosRenovacion',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -609,7 +602,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasRenovaciones/editarDatosRenovacion",
+        '/adminCuentasRenovaciones/editarDatosRenovacion',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -617,7 +610,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasRenovaciones/eliminarCuentaRenovacion",
+        '/adminCuentasRenovaciones/eliminarCuentaRenovacion',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -627,7 +620,7 @@ module.exports = function () {
     // Administracion personalizadas
 
     router.get(
-        "/dashboard/adminCuentasPersonalizadas",
+        '/dashboard/adminCuentasPersonalizadas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -635,7 +628,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasPersonalizadas/infoCuenta",
+        '/adminCuentasPersonalizadas/infoCuenta',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -643,7 +636,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasPersonalizadas/subirDatosPersonalizada",
+        '/adminCuentasPersonalizadas/subirDatosPersonalizada',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -651,7 +644,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasPersonalizadas/editarDatosPersonalizada",
+        '/adminCuentasPersonalizadas/editarDatosPersonalizada',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -659,7 +652,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasPersonalizadas/eliminarCuentaPersonalizada",
+        '/adminCuentasPersonalizadas/eliminarCuentaPersonalizada',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -669,7 +662,7 @@ module.exports = function () {
     // Administracion Juegos
 
     router.get(
-        "/dashboard/adminCuentasJuegos",
+        '/dashboard/adminCuentasJuegos',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -677,7 +670,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasJuegos/infoCuenta",
+        '/adminCuentasJuegos/infoCuenta',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -685,7 +678,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasJuegos/subirDatosJuego",
+        '/adminCuentasJuegos/subirDatosJuego',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -694,7 +687,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasJuegos/eliminarCuentaJuego",
+        '/adminCuentasJuegos/eliminarCuentaJuego',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -704,7 +697,7 @@ module.exports = function () {
     // Tabla ganancias
 
     router.get(
-        "/dashboard/ganancias",
+        '/dashboard/ganancias',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -714,7 +707,7 @@ module.exports = function () {
     // Reportes
 
     router.get(
-        "/dashboard/adminReporteCargas",
+        '/dashboard/adminReporteCargas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -722,7 +715,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminReporteCargas/reporteCargasSuperdistribuidor",
+        '/adminReporteCargas/reporteCargasSuperdistribuidor',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -730,7 +723,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminReporteCargas/eliminarArchivo",
+        '/adminReporteCargas/eliminarArchivo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -738,7 +731,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminConsignaciones/reporteConsignaciones",
+        '/adminConsignaciones/reporteConsignaciones',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -746,7 +739,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminConsignaciones/eliminarArchivo",
+        '/adminConsignaciones/eliminarArchivo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -754,7 +747,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasVendidas/reporteCuentasSuperdistribuidor",
+        '/adminCuentasVendidas/reporteCuentasSuperdistribuidor',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -762,7 +755,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminCuentasVendidas/eliminarArchivo",
+        '/adminCuentasVendidas/eliminarArchivo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -770,7 +763,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/ganancias/reporteGanancias",
+        '/ganancias/reporteGanancias',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -778,7 +771,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/ganancias/eliminarArchivo",
+        '/ganancias/eliminarArchivo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -788,7 +781,7 @@ module.exports = function () {
     // Administrar Links PSE
 
     router.get(
-        "/dashboard/adminLinksPse",
+        '/dashboard/adminLinksPse',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -796,7 +789,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminLinksPse/asignarLink",
+        '/adminLinksPse/asignarLink',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -804,7 +797,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminLinksPse/editarLink",
+        '/adminLinksPse/editarLink',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -812,7 +805,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminLinksPse/eliminarLink",
+        '/adminLinksPse/eliminarLink',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -822,7 +815,7 @@ module.exports = function () {
     // Administrar consignaciones
 
     router.get(
-        "/dashboard/adminConsignaciones",
+        '/dashboard/adminConsignaciones',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -830,7 +823,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminConsignaciones/aprobarConsignacion",
+        '/adminConsignaciones/aprobarConsignacion',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -838,7 +831,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminConsignaciones/rechazarConsignacion",
+        '/adminConsignaciones/rechazarConsignacion',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -848,7 +841,7 @@ module.exports = function () {
     // Admin insidencias
 
     router.get(
-        "/dashboard/adminInsidencias",
+        '/dashboard/adminInsidencias',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -856,7 +849,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminInsidencias/infoInsidencia",
+        '/adminInsidencias/infoInsidencia',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -864,7 +857,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminInsidencias/insidenciasSuperdistribuidor",
+        '/adminInsidencias/insidenciasSuperdistribuidor',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -872,7 +865,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminInsidencias/sinResponderSuperdistribuidor",
+        '/adminInsidencias/sinResponderSuperdistribuidor',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -880,7 +873,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminInsidencias/respondidasSuperdistribuidor",
+        '/adminInsidencias/respondidasSuperdistribuidor',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -888,7 +881,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminInsidencias/responderInsidencia",
+        '/adminInsidencias/responderInsidencia',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -898,7 +891,7 @@ module.exports = function () {
     // Admin Preguntas Frecuentes
 
     router.get(
-        "/dashboard/adminFaq",
+        '/dashboard/adminFaq',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -906,7 +899,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminFaq/subirPregunta",
+        '/adminFaq/subirPregunta',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -914,7 +907,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminFaq/editarPregunta",
+        '/adminFaq/editarPregunta',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -922,7 +915,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminFaq/eliminarPregunta",
+        '/adminFaq/eliminarPregunta',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -932,7 +925,7 @@ module.exports = function () {
     // Subir pautas
 
     router.get(
-        "/dashboard/adminPublicidad",
+        '/dashboard/adminPublicidad',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -940,7 +933,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPublicidad/subirPauta",
+        '/adminPublicidad/subirPauta',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -949,7 +942,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/adminPublicidad/eliminarPauta",
+        '/adminPublicidad/eliminarPauta',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaSuperdistribuidor,
@@ -962,7 +955,7 @@ module.exports = function () {
 
     // Administrador Usuarios (Admin)
     router.get(
-        "/dashboard/usuarios",
+        '/dashboard/usuarios',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaDistribuidor,
@@ -970,12 +963,12 @@ module.exports = function () {
     );
 
     router.post(
-        "/usuarios/informacionPlataformasUsuario",
+        '/usuarios/informacionPlataformasUsuario',
         usuariosController.usuariosInformacionPlataformasUsuario
     );
 
     router.post(
-        "/usuarios/cambioPefil",
+        '/usuarios/cambioPefil',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaDistribuidor,
@@ -983,7 +976,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/usuarios/bloqueoUsuario",
+        '/usuarios/bloqueoUsuario',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaDistribuidor,
@@ -991,7 +984,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/usuarios/editarUsuario",
+        '/usuarios/editarUsuario',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaDistribuidor,
@@ -999,7 +992,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/usuarios/eliminarUsuario",
+        '/usuarios/eliminarUsuario',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaDistribuidor,
@@ -1007,7 +1000,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/usuarios/cargarSaldo",
+        '/usuarios/cargarSaldo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaDistribuidor,
@@ -1015,7 +1008,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/usuarios/restarSaldo",
+        '/usuarios/restarSaldo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaDistribuidor,
@@ -1023,7 +1016,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/usuarios/tablaAsignarPlataformas",
+        '/usuarios/tablaAsignarPlataformas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaDistribuidor,
@@ -1031,7 +1024,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/usuarios/asignarPlataformas",
+        '/usuarios/asignarPlataformas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaDistribuidor,
@@ -1039,7 +1032,7 @@ module.exports = function () {
     );
 
     router.get(
-        "/dashboard/gananciasRed",
+        '/dashboard/gananciasRed',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaDistribuidor,
@@ -1047,7 +1040,7 @@ module.exports = function () {
     );
 
     router.get(
-        "/dashboard/asignacionPlataformas/:id",
+        '/dashboard/asignacionPlataformas/:id',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaDistribuidor,
@@ -1056,7 +1049,7 @@ module.exports = function () {
 
     // Compra plataformas (Distribuidores y resellers)
     router.get(
-        "/dashboard/plataformas",
+        '/dashboard/plataformas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1064,7 +1057,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/plataformas/compraCuentaNormal",
+        '/plataformas/compraCuentaNormal',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1072,7 +1065,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/plataformas/compraCuentaPedido",
+        '/plataformas/compraCuentaPedido',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1080,7 +1073,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/plataformas/compraCuentaRenovacion",
+        '/plataformas/compraCuentaRenovacion',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1088,7 +1081,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/plataformas/compraCuentaPersonalizada",
+        '/plataformas/compraCuentaPersonalizada',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1096,7 +1089,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/plataformas/compraCuentaFreefire",
+        '/plataformas/compraCuentaFreefire',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1104,7 +1097,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/plataformas/compraCuentaCallofduty",
+        '/plataformas/compraCuentaCallofduty',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1113,7 +1106,7 @@ module.exports = function () {
 
     // Reportar consignaciones
     router.get(
-        "/dashboard/reportarConsignacion",
+        '/dashboard/reportarConsignacion',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1121,7 +1114,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reportarConsignacion/subirConsignacion",
+        '/reportarConsignacion/subirConsignacion',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1130,7 +1123,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reportarConsignacion/infoMedio",
+        '/reportarConsignacion/infoMedio',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1139,7 +1132,7 @@ module.exports = function () {
 
     // Links PSE
     router.get(
-        "/dashboard/linkPse",
+        '/dashboard/linkPse',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1147,7 +1140,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/linkPse/solicitarLink",
+        '/linkPse/solicitarLink',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1156,7 +1149,7 @@ module.exports = function () {
 
     // Insidencias
     router.get(
-        "/dashboard/reportarInsidencia",
+        '/dashboard/reportarInsidencia',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1164,7 +1157,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reportarInsidencia/crearInsidencia",
+        '/reportarInsidencia/crearInsidencia',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1173,7 +1166,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reportarInsidencia/infoInsidencia",
+        '/reportarInsidencia/infoInsidencia',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1181,7 +1174,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reportarInsidencia/insidencias",
+        '/reportarInsidencia/insidencias',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1189,7 +1182,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reportarInsidencia/sinResponder",
+        '/reportarInsidencia/sinResponder',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1198,7 +1191,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reportarInsidencia/respondidas",
+        '/reportarInsidencia/respondidas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1208,7 +1201,7 @@ module.exports = function () {
     // Administración de cuentas
 
     router.get(
-        "/dashboard/cuentasVendidas",
+        '/dashboard/cuentasVendidas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1216,7 +1209,7 @@ module.exports = function () {
     );
 
     router.get(
-        "/dashboard/cuentasBajoPedido",
+        '/dashboard/cuentasBajoPedido',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1224,7 +1217,7 @@ module.exports = function () {
     );
 
     router.get(
-        "/dashboard/cuentasRenovaciones",
+        '/dashboard/cuentasRenovaciones',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1232,7 +1225,7 @@ module.exports = function () {
     );
 
     router.get(
-        "/dashboard/cuentasPersonalizadas",
+        '/dashboard/cuentasPersonalizadas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1240,7 +1233,7 @@ module.exports = function () {
     );
 
     router.get(
-        "/dashboard/cuentasJuegos",
+        '/dashboard/cuentasJuegos',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1248,7 +1241,7 @@ module.exports = function () {
     );
 
     router.get(
-        "/dashboard/tablaPrecios",
+        '/dashboard/tablaPrecios',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1256,7 +1249,7 @@ module.exports = function () {
     );
 
     router.get(
-        "/dashboard/faq",
+        '/dashboard/faq',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1266,7 +1259,7 @@ module.exports = function () {
     // Repotes
 
     router.get(
-        "/dashboard/reporteCompras",
+        '/dashboard/reporteCompras',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1274,7 +1267,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reporteCompras/reporteComprasSaldo",
+        '/reporteCompras/reporteComprasSaldo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1282,7 +1275,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reporteCompras/eliminarArchivo",
+        '/reporteCompras/eliminarArchivo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1290,7 +1283,7 @@ module.exports = function () {
     );
 
     router.get(
-        "/dashboard/reporteVentas",
+        '/dashboard/reporteVentas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1298,7 +1291,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reporteVentas/reporteVentasSaldo",
+        '/reporteVentas/reporteVentasSaldo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1306,7 +1299,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reporteVentas/eliminarArchivo",
+        '/reporteVentas/eliminarArchivo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1314,7 +1307,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/cuentasVendidas/reporteCuentas",
+        '/cuentasVendidas/reporteCuentas',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1322,7 +1315,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/cuentasVendidas/eliminarArchivo",
+        '/cuentasVendidas/eliminarArchivo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1330,7 +1323,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reportarConsignacion/reporteConsignacionesUser",
+        '/reportarConsignacion/reporteConsignacionesUser',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1338,7 +1331,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/reportarConsignacion/eliminarArchivo",
+        '/reportarConsignacion/eliminarArchivo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1347,7 +1340,7 @@ module.exports = function () {
 
     // reporte ganancias distribuidor
     router.post(
-        "/gananciasRed/reporteConsignacionesDistribuidor",
+        '/gananciasRed/reporteConsignacionesDistribuidor',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaDistribuidor,
@@ -1355,7 +1348,7 @@ module.exports = function () {
     );
 
     router.post(
-        "/gananciasRed/eliminarArchivo",
+        '/gananciasRed/eliminarArchivo',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaUsuario,
@@ -1368,7 +1361,7 @@ module.exports = function () {
 
     // Notificaciones usuario
     router.post(
-        "/notificaciones/notificacionesUsuario",
+        '/notificaciones/notificacionesUsuario',
         authController.usuarioAutenticado,
         authController.verifyToken,
         rolController.permisosPaginaGeneral,

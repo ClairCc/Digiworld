@@ -360,3 +360,18 @@ html body {
 .newsletter_r-img-2 {
     cursor: pointer;
 }
+.gallery {
+    padding: 80px;
+    display: grid;
+    grid-template-columns: repeat(4, 239px);
+    gap: 34px;
+}
+.gallery_scale img,
+.gallery_scale {
+    grid-area: 1 / 1 / 3 / 3;
+}
+.gallery img {
+    object-fit: contain;
+    height: fit-content;
+    width: 100%;
+}
