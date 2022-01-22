@@ -28,7 +28,7 @@ const publicidadController = require('../controllers/publicidadController');
 
 module.exports = function () {
     // Inicio
-    router.get('/', generalController.inicio);
+    router.get('/', generalController.home);
     router.get('/inicio', generalController.inicio);
     router.get('/pruebas', generalController.pruebas);
     // Nosotros

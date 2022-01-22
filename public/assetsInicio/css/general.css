@@ -18,6 +18,14 @@
 .article-l_description {
     font-weight: 500;
 }
+@font-face {
+    font-family: Wallman Love;
+    src: url(../fonts/Wallman-Bold-free.ttf);
+}
+html body {
+    margin: 0 0 0 8vw;
+    background-color: var(--blue);
+}
 html {
     font-size: 62.5%;
 }
@@ -27,10 +35,6 @@ html {
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
     font-size: var(--sm);
-}
-body {
-    margin: 0 0 0 9vw;
-    background-color: var(--blue);
 }
 .aside_figure-img2 {
     display: none;

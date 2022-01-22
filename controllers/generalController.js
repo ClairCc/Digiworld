@@ -17,10 +17,15 @@ exports.inicio = (req, res) => {
         nombrePagina: 'Inicio',
     });
 };
+exports.home = (req, res) => {
+    res.render('home', {
+        nombrePagina: 'home',
+    });
+};
 
 exports.nosotros = (req, res) => {
     res.render('nosotros', {
-        nombrePagina: 'nosotros',
+        nombrePagina: 'Nosotros',
     });
 };
 exports.pruebas = (req, res) => {
