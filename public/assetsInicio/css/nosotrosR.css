@@ -18,8 +18,8 @@
     --bg: 6.4rem;
     --bg-l: 10rem;
 }
-body {
-    background-color: var(--blue_soft);
+html body {
+    background-color: var(--white);
 }
 .slider {
     background-color: var(--blue_soft-secundary);
@@ -43,6 +43,7 @@ body {
     grid-auto-flow: column;
     width: 90vw;
     grid-template-columns: repeat(3, 1fr);
+    margin-top: 40px;
 }
 .content_skills {
     display: flex;
@@ -116,4 +117,151 @@ body {
 .content_column3 {
     justify-self: start;
     margin: 0 0 0 0px;
+}
+.content_column3 .content_skills p {
+    margin: 0 0 0 12px;
+}
+.methodology {
+    margin: 240px 0 120px 0;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    align-items: center;
+    height: 200px;
+}
+.methodology_l {
+    color: var(--orange);
+}
+.methodology_l h3,
+.methodology_l span {
+    font-size: var(--bg);
+}
+.methodology_l {
+    text-align: end;
+    padding: 0 40px;
+}
+.methodology_r br {
+    margin: 8px 0;
+}
+.methodology_r {
+    padding: 0 40px;
+}
+.methodology_r p {
+    color: var(--orange);
+    font-size: var(--sm);
+    font-weight: 500;
+}
+.ourTeam {
+    display: grid;
+}
+.ourTeam_r {
+    background: var(--orange);
+}
+.ourTeam {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.ourTeam figure,
+.ourTeam figure img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+}
+.ourTeam_r {
+    padding: 80px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.ourTeam_r {
+    color: var(--white);
+}
+.ourTeam_r p {
+    line-height: 20px;
+}
+body .ourTeam_r h5 {
+    margin-top: 40px;
+    text-align: start;
+    font-size: var(--md);
+}
+.architecture {
+    background-color: var(--blue_soft);
+    padding: 80px 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    position: relative;
+    place-items: center;
+}
+.architecture_circles {
+    background-color: var(--orange);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.architecture_circles2 {
+    height: 400px;
+    width: 400px;
+}
+.architecture_circles1,
+.architecture_circles3 {
+    width: 260px;
+    height: 260px;
+}
+.architecture_circles-int {
+    background-color: var(--white);
+    width: 88%;
+    height: 88%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.architecture_text {
+    color: var(--secundary_orange);
+    text-transform: capitalize;
+    font-size: var(--md);
+    font-weight: 500;
+}
+.architecture_text1,
+.architecture_text3 {
+    margin-top: -112px;
+}
+.architecture_text2 {
+    margin-top: 20px;
+}
+.architecture_absoulute {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+.architecture_absoulute-circle {
+    background: var(--orange);
+    border-radius: 50%;
+}
+.architecture_absoulute-circle1,
+.architecture_absoulute-circle4 {
+    width: 120px;
+    height: 120px;
+}
+.architecture_absoulute-circle2,
+.architecture_absoulute-circle3 {
+    width: 80px;
+    height: 80px;
+}
+.architecture_absoulute-circle1 {
+    grid-area: 1/5/2/6;
+    align-self: end;
+}
+.architecture_absoulute-circle3 {
+    grid-area: 4/5/5/6;
+}
+.architecture_absoulute-circle2 {
+    grid-area: 1/10/2/11;
+    place-self: center;
+}
+.architecture_absoulute-circle4 {
+    grid-area: 4/10/5/11;
 }
