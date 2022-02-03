@@ -1,0 +1,99 @@
+:root {
+    /* --orange: #ec6608; */
+    --orange: #ff6600;
+    --blue: #071329;
+    --blue_soft: #0a2351;
+    --blue_dark: #0a1d40;
+    --white: #ffffff;
+    --yellow: #ff9900;
+    --blue_soft-secundary: #132951;
+    --brown: #802e00;
+    --secundary_orange: #ff6600;
+    --tercer_orange: #d14905;
+    --sm_s: 1.55rem;
+    --sm: 1.6rem;
+    --md: 2rem;
+    --md-l: 2.4rem;
+    --bg-md: 4.4rem;
+    --bg: 6.4rem;
+    --bg-l: 10rem;
+}
+html body {
+    background-color: var(--white);
+}
+main {
+    clip-path: polygon(
+        100% 0,
+        100% 44%,
+        70% 81%,
+        35% 69%,
+        19% 76%,
+        0% 60%,
+        0 0
+    );
+    background: linear-gradient(
+        325deg,
+        rgba(19, 41, 81, 1) 0%,
+        rgba(19, 41, 81, 1) 64%,
+        rgba(255, 102, 0, 1) 50%,
+        rgba(255, 102, 0, 1) 100%
+    );
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    padding: 80px;
+}
+.objective {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+}
+.objective_itm-circles {
+    width: 30px;
+    height: 30px;
+    background-color: var(--orange);
+    border-radius: 50%;
+    position: absolute;
+    right: 0;
+    bottom: calc(50% - 15px);
+}
+.objective_l {
+    padding: 0 40px 0 0;
+}
+.objective_l-itm {
+    height: 2px;
+    background-color: var(--orange);
+    width: 100%;
+    position: relative;
+}
+.objective_l-itm2 {
+    width: 50%;
+    margin-top: 40px;
+}
+.objective_r {
+    transform: rotate(180deg);
+    margin-top: 40px;
+}
+.objective_r .objective_l-itm3 {
+    margin-top: 40px;
+}
+.objective_r {
+    padding-right: 40px;
+}
+.objective_c {
+    text-align: center;
+    color: var(--orange);
+}
+.char {
+    margin-top: 120px;
+    background-color: var(--blue);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 20px;
+    padding: 0 48px;
+}
+.char_itm {
+    background-color: var(--orange);
+    padding: 40px;
+}

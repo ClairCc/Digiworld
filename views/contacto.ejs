@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="assetsInicio/css/general.css" />
+        <link rel="stylesheet" href="assetsInicio/css/contacto.css" />
+
+        <title>Digiworld | <%- nombrePagina %></title>
+        <link
+            rel="icon"
+            type="image/png"
+            href="assetsDashboard/img/aloneCapzaWhite.svg"
+        />
+    </head>
+    <body>
+        <%- include('layauts/head') %>
+        <section class="main_article-logo">
+            <figure><img src="./assetsInicio/img/iconL.svg" alt="" /></figure>
+        </section>
+        <main class="main">
+            <section class="form">
+                <article class="form_title">
+                    <div class="cards-backend-container">
+                        <figure class="cards-backend_figure">
+                            <img src="" alt="" />
+                        </figure>
+                        <div class="cards-backend_line"></div>
+                    </div>
+                    <h4>contacto</h4>
+                    <div class="line_back"></div>
+                </article>
+                <article class="form_inputs">
+                    <input
+                        type="text"
+                        class="form_input"
+                        autocomplete="name"
+                        placeholder="Escribe tu nombre"
+                    />
+                    <input
+                        type="email"
+                        class="form_input"
+                        autocomplete="email"
+                        placeholder="Email"
+                    /><input
+                        type="text"
+                        class="form_input"
+                        placeholder="Escribe el asunto"
+                    />
+                    <textarea
+                        cols="30"
+                        rows="5"
+                        placeholder="mensaje"
+                    ></textarea>
+                    <button>Contactar</button>
+                </article>
+            </section>
+        </main>
+    </body>
+</html>
