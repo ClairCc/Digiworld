@@ -39,3 +39,8 @@ exports.contacto = (req, res) => {
         nombrePagina: 'contacto',
     });
 };
+exports.design = (req, res) => {
+    res.render('design', {
+        nombrePagina: 'design',
+    });
+};

@@ -10,6 +10,7 @@ module.exports = function () {
     router.get('/nosotros', generalController.nosotros);
     router.get('/desarrollo', generalController.desarrollo);
     router.get('/contacto', generalController.contacto);
+    router.get('/design', generalController.design);
 
     return router;
 };
