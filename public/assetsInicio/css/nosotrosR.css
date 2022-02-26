@@ -269,6 +269,14 @@ body .ourTeam_r h5 {
     width: 80px;
     height: 80px;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.purposes_itm-circle figure,
+.purposes_itm-circle figure img {
+    width: 52px;
+    height: 52px;
 }
 .purposes_itm4 {
     background-color: var(--orange);
@@ -318,6 +326,14 @@ body .ourTeam_r h5 {
     height: 132px;
     width: 132px;
     padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.team_all-figure img {
+    width: 114px;
+    height: 114px;
+    object-fit: cover;
 }
 .team_all-person {
     color: var(--white);
@@ -369,6 +385,14 @@ body .ourTeam_r h5 {
     background-color: var(--white);
     border-radius: 8px;
     margin: 0 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.app_center-itm figure,
+.app_center-itm figure img {
+    height: 32px;
+    object-fit: contain;
 }
 .app_arrow-r {
     transform: rotate(180deg);
