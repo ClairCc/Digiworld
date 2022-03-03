@@ -425,9 +425,6 @@
     }
 }
 @media (max-width: 813px) {
-    footer {
-        padding: 60px 20px;
-    }
     .nosotros {
         height: 700px;
         flex-direction: column;
@@ -443,12 +440,6 @@
     .services_l {
         width: 95%;
     }
-    .special_footer {
-        padding: 80px 20px;
-    }
-    body .special_footer-itm {
-        width: 100%;
-    }
 }
 @media (max-width: 768px) {
     html body {
@@ -462,48 +453,6 @@
     }
     .generalButton {
         margin: 0;
-    }
-    footer {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .special_footer {
-        grid-auto-flow: row;
-        grid-template-columns: none;
-    }
-    .special_footer div {
-        margin: 20px 0;
-    }
-    .footer_column:nth-child(3) {
-        grid-area: 2 / 1;
-    }
-    footer .copy {
-        grid-area: 4 / 1 / 4 / -1;
-    }
-    body .special_footer-itm {
-        width: 70%;
-        place-self: center;
-    }
-}
-@media (max-width: 666px) {
-    :root {
-        --bg-l: 10rem;
-    }
-    .world_article-line,
-    .newsletter_r-line1 {
-        width: 50%;
-    }
-    .nosotros {
-        height: 750px;
-    }
-    .nosotros_l {
-        padding: 0 15px;
-    }
-    footer {
-        grid-template-columns: repeat(1, 1fr);
-        row-gap: 30px;
-    }
-    .footer_column:nth-child(3) {
-        grid-area: 3 / 1;
     }
 }
 @media (max-width: 666px) {
