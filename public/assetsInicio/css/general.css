@@ -254,4 +254,18 @@ footer {
     .footer_column:nth-child(3) {
         grid-area: 3 / 1;
     }
+    body .special_footer-itm {
+        width: 100%;
+    }
+}
+@media (max-width: 320px) {
+    body .special_footer-itm {
+        padding: 0px;
+    }
+}
+@media (max-width: 320px) {
+    body .special_footer-itm {
+        width: 90%;
+        padding: 30px;
+    }
 }

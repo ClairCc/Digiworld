@@ -469,9 +469,7 @@
     .newsletter {
         padding: 80px 21px;
     }
-    body .special_footer-itm {
-        width: 100%;
-    }
+
     .world_code-container {
         background: linear-gradient(
             90deg,
@@ -500,6 +498,9 @@
         width: 90vw;
         height: 90vw;
     }
+    footer {
+        padding: 0;
+    }
 }
 @media (max-width: 400px) {
     .nosotros_r img {
@@ -525,6 +526,12 @@
     .services {
         height: 802px;
     }
+    .content_center3 {
+        right: 17%;
+    }
+    .content_center1 {
+        left: 19%;
+    }
 }
 @media (max-width: 320px) {
     :root {
@@ -540,10 +547,7 @@
     .services_r-title span {
         font-size: 5rem;
     }
-    body .special_footer-itm {
-        width: 90%;
-        padding: 30px;
-    }
+
     .gallery {
         grid-template-columns: repeat(2, 132px);
     }
