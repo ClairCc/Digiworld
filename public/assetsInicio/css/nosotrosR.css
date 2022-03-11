@@ -361,42 +361,7 @@ body .ourTeam_r h5 {
     margin-top: 40px;
     row-gap: 80px;
 }
-.app {
-    background-color: #0a1d40;
-    display: grid;
-    grid-template-columns: 80px 1fr 80px;
-    place-items: center;
-    padding: 80px 0;
-}
-.app_arrow-l,
-.app_arrow-l img,
-.app_arrow-r,
-.app_arrow-r img {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-}
-.app_center {
-    display: flex;
-}
-.app_center-itm {
-    height: 48px;
-    width: 160px;
-    background-color: var(--white);
-    border-radius: 8px;
-    margin: 0 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.app_center-itm figure,
-.app_center-itm figure img {
-    height: 32px;
-    object-fit: contain;
-}
-.app_arrow-r {
-    transform: rotate(180deg);
-}
+
 .special_footer {
     background-color: #0a1d40;
 }
@@ -413,23 +378,8 @@ footer {
     .purposes {
         grid-template-columns: 1fr;
     }
-    .app_center-itm {
-        margin: 0px 16px;
-    }
 }
 @media (max-width: 1200px) {
-    .app_center {
-        width: 100%;
-        justify-content: space-between;
-    }
-    .app_center-itm {
-        width: 136px;
-    }
-
-    .app_center-itm figure,
-    .app_center-itm figure img {
-        height: 24px;
-    }
     .content {
         column-gap: 40px;
     }
@@ -445,14 +395,7 @@ footer {
         width: 300px;
     }
 }
-@media (max-width: 1000px) {
-    .app {
-        grid-template-columns: 48px 1fr 48px;
-    }
-    .app_center-itm:last-child {
-        display: none;
-    }
-}
+
 @media (max-width: 900px) {
     .architecture_absoulute-circle1,
     .architecture_absoulute-circle4 {
@@ -514,16 +457,6 @@ footer {
     .content {
         width: 100vw;
     }
-    .app_center-itm:nth-child(3) {
-        display: none;
-    }
-    .app_center-itm {
-        width: 160px;
-    }
-    .app_center-itm figure,
-    .app_center-itm figure img {
-        height: 30px;
-    }
 }
 @media (max-width: 640px) {
     .content_center2,
@@ -574,12 +507,7 @@ footer {
     .architecture_absoulute-circle4 {
         grid-area: 4/12/5/11;
     }
-    .app_center-itm:nth-child(4) {
-        display: none;
-    }
-    .app_center {
-        justify-content: space-evenly;
-    }
+
     .purposes_itm {
         padding: 0 4px;
     }
@@ -606,9 +534,7 @@ footer {
     .content_column3 {
         display: none;
     }
-    .app_center-itm:nth-child(2) {
-        display: none;
-    }
+
     .architecture_absoulute {
         display: none;
     }
