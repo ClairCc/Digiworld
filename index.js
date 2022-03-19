@@ -32,15 +32,15 @@ app.use(express.static('public'));
 // habilitar cookie parser
 app.use(cookieParser());
 
-// crear session
-app.use(
-    session({
-        secret: process.env.SECRETO,
-        key: process.env.KEY,
-        resave: false,
-        saveUninitialized: false,
-    })
-);
+// // crear session
+// app.use(
+//     session({
+//         secret: process.env.SECRETO,
+//         key: process.env.KEY,
+//         resave: false,
+//         saveUninitialized: false,
+//     })
+// );
 
 // inicializar passport
 app.use(passport.initialize());

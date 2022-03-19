@@ -352,6 +352,11 @@
     height: fit-content;
     width: 100%;
 }
+.slider_figure img {
+    width: 100%;
+    object-fit: cover;
+    height: 110vh;
+}
 @media (max-width: 1203px) {
     .newsletter_r-lineback {
         width: 497px;
