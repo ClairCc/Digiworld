@@ -13,7 +13,7 @@ const moment = require('moment');
 
 // Variables de entorno
 dotenv.config({
-    path: path.resolve(__dirname, 'development.env'),
+    path: path.resolve(__dirname, '.env'),
 });
 
 // crear el servidor

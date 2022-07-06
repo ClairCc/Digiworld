@@ -3,7 +3,7 @@ const path = require("path");
 const dotenv = require("dotenv");
 
 dotenv.config({
-  path: path.resolve(__dirname, "../development.env"),
+  path: path.resolve(__dirname, "../.env"),
 });
 
 const db = new Sequelize({
